@@ -56,7 +56,7 @@
                     <ul class="dev-page-navigation">
                         <li class="title">Mis PQRS</li>
                         <li>
-                            <a href="#"><i class="fa fa-globe"></i><span>Via Web</span> <span class="badge badge-dark">2</span></a>
+                            <a href="#"><i class="fa fa-globe"></i><span>Via Web</span> <span class="badge badge-dark" style="float:right;">2</span></a>
                             <ul>
                                 <li>
                                     <a href="#">Todas</a>

@@ -41,17 +41,24 @@
             <div class="dev-page-login-block">
                 <a class="dev-page-login-block__logo">PQRS</a>
                 <div class="dev-page-login-block__form">                    
-                    <form action="inicio.jsp" method="post">                        
+                    <form id="fregistro" role="form" action="javascript:registrar();" method="post">
                         <div class="row">
                             <div class="col-md-6">                                    
                                 <div class="form-group">                            
-                                    <input type="text" class="form-control" placeholder="Nombres" name="nombres">
+                                    <input type="text" class="form-control" placeholder="Nombres" name="nombre">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">                            
-                                    <input type="text" class="form-control" placeholder="Apellidos" name="apellidos">
-                                </div>    
+                                    <input type="text" class="form-control" placeholder="Apellidos" name="apellido">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">                                    
+                                <div class="form-group">                            
+                                    <input type="text" class="form-control" placeholder="Identificación" name="identificacion">
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -63,12 +70,12 @@
                             <div class="col-md-6">
                                 <div class="form-group">     
                                     <select id="tipo_usuario" class="form-control" name="tipo_usuario">
-                                        <option>Seleccionar</option>
-                                        <option value="BAS">Estudiante</option>
+                                        <option selected value=""></option>
+                                        <option value="EST">Estudiante</option>
                                         <option value="EGR">Egresado</option>
-                                        <option value="PRF">Docente</option>
-                                        <option value="EXT">Particular</option>
-                                        <option value="NTD">Aspirante</option>
+                                        <option value="PRO">Docente</option>
+                                        <option value="PAR">Particular</option>
+                                        <option value="ASP">Aspirante</option>
                                     </select>
                                 </div>    
                             </div>
@@ -80,10 +87,10 @@
                                     <input type="text" class="form-control" placeholder="Correo" name="correo">
                                 </div>
                                 <div class="form-group">                            
-                                    <input type="text" class="form-control" placeholder="Clave" name="password">
+                                    <input type="password" class="form-control" placeholder="Clave" name="password" id="password2">
                                 </div>
                                 <div class="form-group">                            
-                                    <input type="text" class="form-control" placeholder="Repetir Clave" name="re_password">
+                                    <input type="password" class="form-control" placeholder="Repetir Clave" name="re_password">
                                 </div>
                             </div>
                         </div>
@@ -104,6 +111,73 @@
         <!-- javascript -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>       
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery-validate/jquery.validate.min.js"></script>     
+        <script type="text/javascript" src="js/dev-layout-default.js"></script>
+        <script type="text/javascript">
+            "use strict";
+
+            var demo_form_validation1 = {
+                init: function() {
+
+                    if ($("#fregistro").length > 0) {
+                        $("#fregistro").validate({
+                            errorClass: "has-error",
+                            validClass: "has-success",
+                            errorElement: "span",
+                            ignore: [],
+                            errorPlacement: function(error, element) {
+                                $(element).after(error);
+                                $(element).parents(".form-group").addClass("has-error");
+                            },
+                            highlight: function(element, errorClass) {
+                                $(element).parents(".form-group").removeClass("has-success").addClass(errorClass);
+                                dev_layout_alpha_content.init(dev_layout_alpha_settings);
+                            },
+                            unhighlight: function(element, errorClass, validClass) {
+                                $(element).parents(".form-group").removeClass(errorClass).addClass(validClass);
+                                dev_layout_alpha_content.init(dev_layout_alpha_settings);
+                            },
+                            rules: {
+                                nombre: {required: true, minlength: 2},
+                                apellido: {required: true, minlength: 2},
+                                identificacion: {required: true, minlength: 2, maxlength: 12},
+                                celular: {required: true, minlength: 7, maxlength: 20},
+                                tipo_usuario: {required: true},
+                                password: {required: true, minlength: 5, maxlength: 20},
+                                're_password': {required: true, minlength: 5, maxlength: 20, equalTo: "#password2"},
+                                correo: {required: true, email: true}
+                            }
+                        });
+                    }
+                }
+            };
+            function registrar() {
+                $.ajax({
+                    url: 'Controller?accion=registrarReclamante',
+                    data: $("#fregistro").serialize(),
+                    type: 'post',
+                    success: function(msg) {
+
+                        if (msg === '1')
+                        {
+                            document.location = 'login.jsp';
+
+
+                        } else {
+                            if (msg === '2') {
+                                alert("ha ocurrido un error al crear el reclamante");
+                            }
+
+                        }
+                    }
+
+                });
+            }
+
+            $(function() {
+                demo_form_validation1.init();
+            });
+        </script>
         <!-- ./javascript -->
     </body>
 </html>
