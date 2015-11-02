@@ -41,7 +41,7 @@
             <div class="dev-page-login-block">
                 <a class="dev-page-login-block__logo">PQRS</a>
                 <div class="dev-page-login-block__form">                    
-                    <form id="fregistro" role="form" action="javascript:registrar();" method="post">
+                    <form id="fregistro" role="form" method="post">
                         <div class="row">
                             <div class="col-md-6">                                    
                                 <div class="form-group">                            
@@ -71,11 +71,11 @@
                                 <div class="form-group">     
                                     <select id="tipo_usuario" class="form-control" name="tipo_usuario">
                                         <option selected value=""></option>
-                                        <option value="EST">Estudiante</option>
-                                        <option value="EGR">Egresado</option>
-                                        <option value="PRO">Docente</option>
-                                        <option value="PAR">Particular</option>
-                                        <option value="ASP">Aspirante</option>
+                                        <option value="ESTUDIANTE">Estudiante</option>
+                                        <option value="EGRESADO">Egresado</option>
+                                        <option value="PROFESOR">Docente</option>
+                                        <option value="PARTICULAR">Particular</option>
+                                        <option value="ASPIRANTE">Aspirante</option>
                                     </select>
                                 </div>    
                             </div>
@@ -115,7 +115,6 @@
         <script type="text/javascript" src="js/dev-layout-default.js"></script>
         <script type="text/javascript">
             "use strict";
-
             var demo_form_validation1 = {
                 init: function() {
 
@@ -146,34 +145,33 @@
                                 password: {required: true, minlength: 5, maxlength: 20},
                                 're_password': {required: true, minlength: 5, maxlength: 20, equalTo: "#password2"},
                                 correo: {required: true, email: true}
+                            },
+                            submitHandler: function() {
+                                $.ajax({
+                                    url: 'Controller?accion=registrarReclamante',
+                                    data: $("#fregistro").serialize(),
+                                    type: 'post',
+                                    success: function(msg) {
+
+                                        if (msg === '1')
+                                        {
+                                            document.location = 'login.jsp';
+                                        } else {
+                                            if (msg === '2') {
+                                                alert("ha ocurrido un error al crear el reclamante");
+                                            }
+
+                                        }
+                                    }
+
+                                });
+
                             }
+
                         });
                     }
                 }
             };
-            function registrar() {
-                $.ajax({
-                    url: 'Controller?accion=registrarReclamante',
-                    data: $("#fregistro").serialize(),
-                    type: 'post',
-                    success: function(msg) {
-
-                        if (msg === '1')
-                        {
-                            document.location = 'login.jsp';
-
-
-                        } else {
-                            if (msg === '2') {
-                                alert("ha ocurrido un error al crear el reclamante");
-                            }
-
-                        }
-                    }
-
-                });
-            }
-
             $(function() {
                 demo_form_validation1.init();
             });

@@ -56,16 +56,16 @@
                     <ul class="dev-page-navigation">
                         <li class="title">Mis PQRS</li>
                         <li class="active">
-                            <a href="indexPeticionario.jsp"><i class="fa fa-question-circle"></i> <span>PQRS activas</span></a>
+                            <a href="#listarPQRS"><i class="fa fa-question-circle"></i> <span>PQRS activas</span></a>
                         </li>                        
                         <li>
-                            <a href="indexPeticionario"><i class="fa fa-history"></i> <span>Historial PQRS</span></a>
+                            <a href="#historialPQRS"><i class="fa fa-history"></i> <span>Historial PQRS</span></a>
                         </li>                        
                         <li>
-                            <a href="crearPQRS.jsp"><i class="fa fa-plus"></i> <span>Crear PQRS</span></a>
+                            <a href="#crearPQRS"><i class="fa fa-plus"></i> <span>Crear PQRS</span></a>
                         </li>
                         <li>
-                            <a href="inicio.jsp"><i class="fa fa-power-off"></i> <span>Cerrar sesi&oacute;n</span></a>
+                            <a href="#cerrarSesion"><i class="fa fa-power-off"></i> <span>Cerrar sesi&oacute;n</span></a>
                         </li>
                     </ul>
 
@@ -75,69 +75,7 @@
                 <!-- page content -->
                 <div class="dev-page-content">                    
                     <!-- page content container -->
-                    <div class="container">
 
-                        <div class="page-profile" style="background-image: url(assets/images/user_images/udc.png);">
-
-                            <div class="profile profile-transparent">
-                                <div class="profile-image">
-                                    <img src="assets/images/users/user.jpg">
-                                    <div class="profile-status online"></div>
-                                </div>
-                                <div class="profile-info">
-                                    <h4>Nelson torres</h4>
-                                    <span><i class="fa fa-user"></i> Estudiante</span>
-                                </div>                            
-                            </div>
-                        </div>
-                        <div class="wrapper wrapper-white">
-                            <div class="page-subtitle">
-                                <h3>Mis PQRS activas</h3>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-sortable">
-                                    <thead>
-                                        <tr>
-                                            <th>Codigo</th>
-                                            <th>Fecha de Ingreso</th>
-                                            <th>Medio de Ingreso</th>
-                                            <th>Correo</th>
-                                            <th>Celular</th>
-                                            <th>Estado</th>
-                                        </tr>
-                                    </thead>                               
-                                    <tbody>
-                                        <tr>
-                                            <td>201500001</td>
-                                            <td>2015/09/01</td>
-                                            <td>Web</td>
-                                            <td>juan@gmail.com</td>
-                                            <td>30000000</td>
-                                            <td>En Proceso</td>
-                                        </tr>
-                                        <tr>
-                                            <td>201500002</td>
-                                            <td>2015/09/02</td>
-                                            <td>Web</td>
-                                            <td>pedro@gmail.com</td>
-                                            <td>30000001</td>
-                                            <td>En Proceso</td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Copyright -->
-                        <div class="copyright">
-                            <div class="pull-left">
-                                &copy; 2015 <strong>Universidad de Cartagena</strong>. Todos los derechos reservados.
-                            </div>
-                        </div>
-                        <!-- ./Copyright -->
-
-                    </div>
                     <!-- ./page content container -->
 
                 </div>
@@ -160,21 +98,31 @@
         <!-- ./gallery -->
 
         <!-- javascript -->
-        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>       
+        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
-
-        <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>        
-        <script type="text/javascript" src="js/plugins/moment/moment.js"></script>
-
-        <script type="text/javascript" src="js/plugins/knob/jquery.knob.min.js"></script>
-        <script type="text/javascript" src="js/plugins/sparkline/jquery.sparkline.min.js"></script>        
-
-        <script type="text/javascript" src="js/plugins/datatables/jquery.dataTables.min.js"></script>
-
-        <script type="text/javascript" src="js/plugins/sortable/sortable.min.js"></script>
-
-        <script type="text/javascript" src="js/dev-layout-default.js"></script>
-        <script type="text/javascript" src="js/dev-app.js"></script>
+ 
+         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>        
+         <script type="text/javascript" src="js/plugins/moment/moment.js"></script>
+ 
+         <script type="text/javascript" src="js/plugins/knob/jquery.knob.min.js"></script>
+         <script type="text/javascript" src="js/plugins/sparkline/jquery.sparkline.min.js"></script>        
+ 
+         <script type="text/javascript" src="js/plugins/datatables/jquery.dataTables.min.js"></script>
+ 
+         <script type="text/javascript" src="js/plugins/sortable/sortable.min.js"></script> 
+ 
+         <script type="text/javascript" src="js/dev-layout-default.js"></script>
+         <script type="text/javascript" src="js/dev-app.js"></script>-->
+        <script type="text/javascript" src="js/jquery.ba-hashchange.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery-validate/jquery.validate.min.js"></script> 
+        <script type="text/javascript" src="js/peticionario.js"></script>
+        <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
+        <script src="js/vendor/jquery.ui.widget.js"></script>
+        <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+        <script src="js/jquery.iframe-transport.js"></script>
+        <!-- The basic File Upload plugin -->
+        <script src="js/jquery.fileupload.js"></script>
         <!-- ./javascript -->                
     </body>
 </html>

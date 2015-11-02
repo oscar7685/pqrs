@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,53 +57,27 @@
                     <ul class="dev-page-navigation">
                         <li class="title">Mis PQRS</li>
                         <li>
-                            <a href="#"><i class="fa fa-globe"></i><span>Via Web</span> <span class="badge badge-dark" style="float:right;">2</span></a>
-                            <ul>
-                                <li>
-                                    <a href="#">Todas</a>
-                                </li>
-                                <li>
-                                    <a href="#">PQRS pendientes</a>
-                                </li>
-                                <li>
-                                    <a href="#">Pendientes por enviar</a>
-                                </li>
-
-
-                            </ul>
-                        </li>   
-                        <li>
-                            <a href="#"><i class="fa fa-envelope"></i> <span>Via Correo</span></a>
-                            <ul>
-                                <li>
-                                    <a href="#">Todas</a>
-                                </li>
-                                <li>
-                                    <a href="#">PQRS pendientes</a>
-                                </li>
-                                <li>
-                                    <a href="#">Pendientes por enviar</a>
-                                </li>
-
-
-                            </ul>
+                            <a href="#pqrsWeb"><i class="fa fa-globe"></i> <span>Via Web</span></a>
                         </li>  
                         <li>
-                            <a href="#"><i class="fa fa-file-text"></i> <span>Via Manual</span></a>
-                            <ul>
-                                <li>
-                                    <a href="#">Todas</a>
-                                </li>
-                                <li>
-                                    <a href="#">PQRS pendientes</a>
-                                </li>
-                                <li>
-                                    <a href="#">Pendientes por enviar</a>
-                                </li>
+                            <a href="#pqrsCorreo"><i class="fa fa-envelope"></i> <span>Via Correo</span></a>
+                        </li>  
+                        <li>
+                            <a href="#pqrsManual"><i class="fa fa-hand-o-up"></i> <span>Via Manual</span></a>
+                        </li>  
+                        <li>
+                            <a href="#nuevaPQRS"><i class="fa fa-plus-circle"></i> <span>Agregar PQRS</span></a>
+                        </li>  
+                        <li>
+                            <a href="#dependencias"><i class="fa fa-plus-circle"></i> <span>Dependencias</span></a>
+                        </li> 
+                        <li>
+                            <a href="#responsablesD"><i class="fa fa-plus-circle"></i> <span>Responsables dependencias</span></a>
+                        </li> 
 
-
-                            </ul>
-                        </li>   
+                        <li>
+                            <a href="#cerrarSesion"><i class="fa fa-power-off"></i> <span>Cerrar sesi&oacute;n</span></a>
+                        </li>
                     </ul>
 
                 </div>
@@ -110,71 +85,7 @@
 
                 <!-- page content -->
                 <div class="dev-page-content">                    
-                    <!-- page content container -->
-                    <div class="container">
 
-                        <div class="page-profile" style="background-image: url(assets/images/user_images/udc.png);">
-
-                            <div class="profile profile-transparent">
-                                <div class="profile-image">
-                                    <img src="assets/images/users/user.jpg">
-                                    <div class="profile-status online"></div>
-                                </div>
-                                <div class="profile-info">
-                                    <h4>Nelson torres</h4>
-                                    <span><i class="fa fa-user"></i> Estudiante</span>
-                                </div>                            
-                            </div>
-                        </div>
-                        <div class="wrapper wrapper-white">
-                            <div class="page-subtitle">
-                                <h3>Mis PQRS activas</h3>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-sortable">
-                                    <thead>
-                                        <tr>
-                                            <th>Codigo</th>
-                                            <th>Fecha de Ingreso</th>
-                                            <th>Medio de Ingreso</th>
-                                            <th>Correo</th>
-                                            <th>Celular</th>
-                                            <th>Estado</th>
-                                        </tr>
-                                    </thead>                               
-                                    <tbody>
-                                        <tr>
-                                            <td>201500001</td>
-                                            <td>2015/09/01</td>
-                                            <td>Web</td>
-                                            <td>juan@gmail.com</td>
-                                            <td>30000000</td>
-                                            <td>En Proceso</td>
-                                        </tr>
-                                        <tr>
-                                            <td>201500002</td>
-                                            <td>2015/09/02</td>
-                                            <td>Web</td>
-                                            <td>pedro@gmail.com</td>
-                                            <td>30000001</td>
-                                            <td>En Proceso</td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Copyright -->
-                        <div class="copyright">
-                            <div class="pull-left">
-                                &copy; 2015 <strong>Universidad de Cartagena</strong>. Todos los derechos reservados.
-                            </div>
-                        </div>
-                        <!-- ./Copyright -->
-
-                    </div>
-                    <!-- ./page content container -->
 
                 </div>
                 <!-- ./page content -->                                               
@@ -182,18 +93,6 @@
             <!-- ./page container -->
         </div>
         <!-- ./page wrapper -->
-
-        <!-- gallery -->
-        <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-            <div class="slides"></div>
-            <h3 class="title"></h3>
-            <a class="prev">‹</a>
-            <a class="next">›</a>
-            <a class="close">×</a>
-            <a class="play-pause"></a>
-            <ol class="indicator"></ol>
-        </div>
-        <!-- ./gallery -->
 
         <!-- javascript -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>       
@@ -211,6 +110,9 @@
 
         <script type="text/javascript" src="js/dev-layout-default.js"></script>
         <script type="text/javascript" src="js/dev-app.js"></script>
+        <script type="text/javascript" src="js/jquery.ba-hashchange.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery-validate/jquery.validate.min.js"></script>  
+        <script type="text/javascript" src="js/responsable.js"></script>
         <!-- ./javascript -->                
     </body>
 </html>

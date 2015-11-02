@@ -1,24 +1,29 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Ususario
+ * @author Oscar
  */
 @Entity
 @Table(name = "reclamante", catalog = "pqrs", schema = "")
@@ -49,15 +54,11 @@ public class Reclamante implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "apellido")
     private String apellido;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "celular")
     private String celular;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100)
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
@@ -70,6 +71,8 @@ public class Reclamante implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "tipo")
     private String tipo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reclamanteIdreclamante")
+    private List<Pqrs> pqrsList;
 
     public Reclamante() {
     }
@@ -78,12 +81,10 @@ public class Reclamante implements Serializable {
         this.idreclamante = idreclamante;
     }
 
-    public Reclamante(Integer idreclamante, String nombre, String apellido, String celular, String email, String password, String tipo) {
+    public Reclamante(Integer idreclamante, String nombre, String apellido, String password, String tipo) {
         this.idreclamante = idreclamante;
         this.nombre = nombre;
         this.apellido = apellido;
-        this.celular = celular;
-        this.email = email;
         this.password = password;
         this.tipo = tipo;
     }
@@ -142,6 +143,15 @@ public class Reclamante implements Serializable {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    @XmlTransient
+    public List<Pqrs> getPqrsList() {
+        return pqrsList;
+    }
+
+    public void setPqrsList(List<Pqrs> pqrsList) {
+        this.pqrsList = pqrsList;
     }
 
     @Override

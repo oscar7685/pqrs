@@ -1,3 +1,17 @@
+<%
+    HttpSession session1 = request.getSession();
+    String aux = (String) session1.getAttribute("TipoUsuario");
+    if (aux == null || aux.isEmpty()) {
+        session1.invalidate();
+    } else if (aux.equals("responsableArea")) {
+        RequestDispatcher rd = request.getRequestDispatcher("/Controller?accion=indexRA");
+        rd.forward(request, response);
+    } else if (aux.equals("reclamante")) {
+        RequestDispatcher rd = request.getRequestDispatcher("/Controller?accion=indexRe");
+        rd.forward(request, response);
+    }
+%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +56,7 @@
                 <a class="dev-page-login-block__logo">PQRS</a>
                 <div class="dev-page-login-block__form">
                     <div class="title"><strong>Bienvenido</strong>, por favor ingrese</div>
-                    <form id="flogin" role="form" action="javascript:loguear();" method="post">                        
+                    <form id="flogin" role="form" method="post">                        
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -105,34 +119,32 @@
                                 codigo: {required: true, minlength: 2, maxlength: 12},
                                 pass: {required: true, minlength: 5, maxlength: 20}
 
+                            },
+                            submitHandler: function() {
+                                $.ajax({
+                                    url: 'Controller?accion=loguear',
+                                    data: $("#flogin").serialize(),
+                                    type: 'post',
+                                    success: function(msg) {
+
+                                        if (msg === '1')
+                                        {
+                                            document.location.reload();
+                                        } else {
+                                            if (msg === '2') {
+                                                alert("ha ocurrido un error al intentar entrar");
+                                            }
+
+                                        }
+                                    }
+
+                                });
+
                             }
                         });
                     }
                 }
             };
-
-
-            function loguear() {
-                $.ajax({
-                    url: 'Controller?accion=loguear',
-                    data: $("#flogin").serialize(),
-                    type: 'post',
-                    success: function(msg) {
-
-                        if (msg === '1')
-                        {
-                            document.location = 'indexPeticionario.jsp';
-                        } else {
-                            if (msg === '2') {
-                                alert("ha ocurrido un error al intentar entrar");
-                            }
-
-                        }
-                    }
-
-                });
-            }
-
             $(function() {
                 demo_form_validation.init();
             });

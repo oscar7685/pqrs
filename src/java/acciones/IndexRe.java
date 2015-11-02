@@ -23,39 +23,16 @@ import sesionbeans.ResponsableAreaFacade;
  *
  * @author Ususario
  */
-public class Loguear implements Action {
+public class IndexRe implements Action {
 
     ResponsableAreaFacade responsableAreaFacade = lookupResponsableAreaFacadeBean();
     ReclamanteFacade reclamanteFacade = lookupReclamanteFacadeBean();
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
-        String identificacion = request.getParameter("codigo");
-        String password = request.getParameter("pass");
-        HttpSession session = request.getSession();
+      //  HttpSession session = request.getSession();
 
-        try {
-            System.out.println("OK3");
-            ResponsableArea ra = responsableAreaFacade.find(Integer.parseInt(identificacion));
-            if (ra != null && ra.getPassword().equals(password)) {
-                session.setAttribute("responsableArea", ra);
-                session.setAttribute("TipoUsuario", "responsableArea");
-                return "1";
-            } else {
-                Reclamante r = reclamanteFacade.find(Integer.parseInt(identificacion));
-                if (r != null && r.getPassword().equals(password)) {
-                    session.setAttribute("reclamante", r);
-                    session.setAttribute("TipoUsuario", "reclamante");
-                    return "1";
-                } else {
-                    return "2";
-                }
-            }
-
-
-        } catch (Exception e) {
-            return "2";
-        }
+        return "indexPeticionario.jsp";
 
 
 

@@ -4,13 +4,25 @@
         <servlet-name>Controller</servlet-name>
         <servlet-class>controlador.Controller</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SubirAdjunto</servlet-name>
+        <servlet-class>controlador.SubirAdjunto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubirAdjunto</servlet-name>
+        <url-pattern>/SubirAdjunto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/pages-error-404.html</location>
+    </error-page>
 </web-app>

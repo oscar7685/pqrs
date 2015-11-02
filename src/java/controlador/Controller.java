@@ -21,9 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 public class Controller extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -45,24 +44,31 @@ public class Controller extends HttpServlet {
             if (longitudRuta > 2) {
                 RequestDispatcher rd = request.getRequestDispatcher(ruta);
                 rd.forward(request, response);
-            } else if (longitudRuta == 2 && ruta.equals("NA") ) {
+            } else if (longitudRuta == 2 && ruta.equals("NA")) {
                 //NO pasa nada
-            } else if (longitudRuta == 1) {
+            } else if (isNumeric(ruta)) {
                 out.print(ruta);
             }
-            
 
         } catch (Exception e) {
             System.out.println("Error " + e);
-            RequestDispatcher rd = request.getRequestDispatcher("error404.html");
+            RequestDispatcher rd = request.getRequestDispatcher("error2.jsp");
             rd.forward(request, response);
         }
     }
 
+    public static boolean isNumeric(String str) {
+        try {
+            int d = Integer.parseInt(str);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP
-     * <code>GET</code> method.
+     * Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
      * @param response servlet response
@@ -76,8 +82,7 @@ public class Controller extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
-     * <code>POST</code> method.
+     * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
      * @param response servlet response

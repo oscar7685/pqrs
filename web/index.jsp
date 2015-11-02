@@ -1,3 +1,17 @@
+<%
+    HttpSession session1 = request.getSession();
+    String aux = (String) session1.getAttribute("TipoUsuario");
+    if (aux == null || aux.isEmpty()) {
+        session1.invalidate();
+    } else if (aux.equals("responsableArea")) {
+        RequestDispatcher rd = request.getRequestDispatcher("/Controller?accion=indexRA");
+        rd.forward(request, response);
+    } else if (aux.equals("reclamante")) {
+        RequestDispatcher rd = request.getRequestDispatcher("/Controller?accion=indexRe");
+        rd.forward(request, response);
+    }
+%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">

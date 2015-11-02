@@ -16,6 +16,8 @@ import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import sesionbeans.AreaFacade;
+import sesionbeans.PqrsFacade;
 import sesionbeans.ReclamanteFacade;
 import sesionbeans.ResponsableAreaFacade;
 
@@ -23,48 +25,37 @@ import sesionbeans.ResponsableAreaFacade;
  *
  * @author Ususario
  */
-public class Loguear implements Action {
-
+public class ListarResponsablesD implements Action {
     ResponsableAreaFacade responsableAreaFacade = lookupResponsableAreaFacadeBean();
-    ReclamanteFacade reclamanteFacade = lookupReclamanteFacadeBean();
+
+    PqrsFacade pqrsFacade = lookupPqrsFacadeBean();
+    AreaFacade areaFacade = lookupAreaFacadeBean();
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
-        String identificacion = request.getParameter("codigo");
-        String password = request.getParameter("pass");
         HttpSession session = request.getSession();
 
-        try {
-            System.out.println("OK3");
-            ResponsableArea ra = responsableAreaFacade.find(Integer.parseInt(identificacion));
-            if (ra != null && ra.getPassword().equals(password)) {
-                session.setAttribute("responsableArea", ra);
-                session.setAttribute("TipoUsuario", "responsableArea");
-                return "1";
-            } else {
-                Reclamante r = reclamanteFacade.find(Integer.parseInt(identificacion));
-                if (r != null && r.getPassword().equals(password)) {
-                    session.setAttribute("reclamante", r);
-                    session.setAttribute("TipoUsuario", "reclamante");
-                    return "1";
-                } else {
-                    return "2";
-                }
-            }
-
-
-        } catch (Exception e) {
-            return "2";
-        }
+        session.setAttribute("responsables", responsableAreaFacade.findAll());
+        return "responsable/listar.jsp";
 
 
 
     }
 
-    private ReclamanteFacade lookupReclamanteFacadeBean() {
+    private AreaFacade lookupAreaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ReclamanteFacade) c.lookup("java:global/pqrs/ReclamanteFacade!sesionbeans.ReclamanteFacade");
+            return (AreaFacade) c.lookup("java:global/pqrs/AreaFacade!sesionbeans.AreaFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private PqrsFacade lookupPqrsFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (PqrsFacade) c.lookup("java:global/pqrs/PqrsFacade!sesionbeans.PqrsFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
