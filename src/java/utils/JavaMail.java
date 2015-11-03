@@ -27,7 +27,7 @@ public class JavaMail {
     String Asunto = "PQRS nueva";
 
     public void sendMail() {
-        
+
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -51,10 +51,50 @@ public class JavaMail {
             message.setText(Mensage);
 
             Transport.send(message);
-        
+
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static String getUsername() {
+        return Username;
+    }
+
+    public static void setUsername(String Username) {
+        JavaMail.Username = Username;
+    }
+
+    public static String getPassWord() {
+        return PassWord;
+    }
+
+    public static void setPassWord(String PassWord) {
+        JavaMail.PassWord = PassWord;
+    }
+
+    public String getMensage() {
+        return Mensage;
+    }
+
+    public void setMensage(String Mensage) {
+        this.Mensage = Mensage;
+    }
+
+    public String getTo() {
+        return To;
+    }
+
+    public void setTo(String To) {
+        this.To = To;
+    }
+
+    public String getAsunto() {
+        return Asunto;
+    }
+
+    public void setAsunto(String Asunto) {
+        this.Asunto = Asunto;
     }
 }

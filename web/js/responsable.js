@@ -12,9 +12,10 @@ $(function() {
         if (hash === "#cerrarSesion") {
             $.post('Controller?accion=cerrarSesion', function() {
                 location = "/pqrs";
-            }); //fin post
-        } else {
-
+            });
+            //fin post
+        } else { 
+            
             var url3 = hash.replace('#', "Controller?accion=");
             $("div.dev-page-content").empty();
             $.ajax({

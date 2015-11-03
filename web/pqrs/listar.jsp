@@ -42,7 +42,7 @@
                                     <td>${row.medioIngreso}</td>
                                     <td>${row.reclamanteIdreclamante.email}</td>
                                     <td>${row.reclamanteIdreclamante.celular}</td>
-                                    <td>${row.estado}</td>
+                                    <td>${row.estadoSolicitud}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>

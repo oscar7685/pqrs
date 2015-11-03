@@ -28,6 +28,7 @@ import sesionbeans.AreaFacade;
 import sesionbeans.PqrsFacade;
 import sesionbeans.ReclamanteFacade;
 import sesionbeans.ResponsableAreaFacade;
+import utils.JavaMail;
 
 /**
  *
@@ -35,27 +36,30 @@ import sesionbeans.ResponsableAreaFacade;
  */
 public class CrearPQRSAdmin2 implements Action {
 
+    ReclamanteFacade reclamanteFacade = lookupReclamanteFacadeBean();
+
     PqrsFacade pqrsFacade = lookupPqrsFacadeBean();
     AreaFacade areaFacade = lookupAreaFacadeBean();
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
-        Reclamante r = (Reclamante) sesion.getAttribute("reclamante");
+
         String tipoPQRS = request.getParameter("tipo_solicitud");
         String dependencia = request.getParameter("dependencia");
         String notificar_mail = request.getParameter("notificar_mail");
         String descripcion = request.getParameter("descripcion");
         String medio = request.getParameter("medio");
+        String peticionario = request.getParameter("peticionario");
 
         Area a = areaFacade.find(Integer.parseInt(dependencia));
+        Reclamante r = reclamanteFacade.find(Integer.parseInt(peticionario));
 
         Pqrs pqrs = new Pqrs();
         pqrs.setTipo(tipoPQRS);
         pqrs.setNotificarMail(notificar_mail);
         pqrs.setDescripcion(descripcion);
-
-        //pqrs.setAdjunto(adjunto);
+        pqrs.setEstadoSolicitud("Verificacion PQRS");
         pqrs.setAreaIdarea(a);
         pqrs.setEstado("Activa");
         pqrs.setMedioIngreso(medio);
@@ -63,9 +67,10 @@ public class CrearPQRSAdmin2 implements Action {
         pqrs.setFechaCreacion(date);
         pqrs.setReclamanteIdreclamante(r);
         pqrsFacade.create(pqrs);
-        return "pqrs/listar.jsp";
 
+        sesion.setAttribute("ultimaPQRS", pqrsFacade.findUltimo("idpqrs").getIdpqrs());
 
+        return "NA";
 
     }
 
@@ -83,6 +88,16 @@ public class CrearPQRSAdmin2 implements Action {
         try {
             Context c = new InitialContext();
             return (PqrsFacade) c.lookup("java:global/pqrs/PqrsFacade!sesionbeans.PqrsFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ReclamanteFacade lookupReclamanteFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (ReclamanteFacade) c.lookup("java:global/pqrs/ReclamanteFacade!sesionbeans.ReclamanteFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

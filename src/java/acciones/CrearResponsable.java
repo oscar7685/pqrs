@@ -5,7 +5,6 @@
 package acciones;
 
 import entidades.Reclamante;
-import entidades.ResponsableArea;
 import interfaz.Action;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -17,27 +16,20 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import sesionbeans.AreaFacade;
-import sesionbeans.ReclamanteFacade;
-import sesionbeans.ResponsableAreaFacade;
+
 
 /**
  *
  * @author Ususario
  */
-public class CrearPQRSAdmin implements Action {
-
-    ReclamanteFacade reclamanteFacade = lookupReclamanteFacadeBean();
-
+public class CrearResponsable implements Action {
     AreaFacade areaFacade = lookupAreaFacadeBean();
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
-        HttpSession session = request.getSession();
-        session.setAttribute("areas", areaFacade.findAll());
-        session.setAttribute("peticionarios", reclamanteFacade.findAll());
-
-        return "pqrs/crearPQRSAdmin.jsp";
-
+        HttpSession sesion = request.getSession();
+        sesion.setAttribute("areas", areaFacade.findAll());
+        return "responsable/crear.jsp";
     }
 
     private AreaFacade lookupAreaFacadeBean() {
@@ -50,13 +42,5 @@ public class CrearPQRSAdmin implements Action {
         }
     }
 
-    private ReclamanteFacade lookupReclamanteFacadeBean() {
-        try {
-            Context c = new InitialContext();
-            return (ReclamanteFacade) c.lookup("java:global/pqrs/ReclamanteFacade!sesionbeans.ReclamanteFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
+   
 }

@@ -4,7 +4,7 @@
  */
 package acciones;
 
-import entidades.Reclamante;
+import entidades.Area;
 import entidades.ResponsableArea;
 import interfaz.Action;
 import java.io.IOException;
@@ -15,29 +15,45 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import sesionbeans.AreaFacade;
-import sesionbeans.ReclamanteFacade;
 import sesionbeans.ResponsableAreaFacade;
 
 /**
  *
  * @author Ususario
  */
-public class CrearPQRSAdmin implements Action {
+public class RegistrarFuncionario implements Action {
 
-    ReclamanteFacade reclamanteFacade = lookupReclamanteFacadeBean();
+    ResponsableAreaFacade responsableAreaFacade = lookupResponsableAreaFacadeBean();
 
     AreaFacade areaFacade = lookupAreaFacadeBean();
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
-        HttpSession session = request.getSession();
-        session.setAttribute("areas", areaFacade.findAll());
-        session.setAttribute("peticionarios", reclamanteFacade.findAll());
+        String nombre = request.getParameter("nombre");
+        String apellido = request.getParameter("apellido");
+        String identificacion = request.getParameter("identificacion");
+        String celular = request.getParameter("celular");
+        String dependencia = request.getParameter("dependencia");
+        String correo = request.getParameter("correo");
+        String password = request.getParameter("password");
 
-        return "pqrs/crearPQRSAdmin.jsp";
+        Area a = areaFacade.find(Integer.parseInt(dependencia));
 
+        ResponsableArea funcionario = new ResponsableArea();
+        funcionario.setNombre(nombre);
+        funcionario.setApellido(apellido);
+        funcionario.setIdresponsableArea(Integer.parseInt(identificacion));
+        funcionario.setCelular(celular);
+        funcionario.setAreaIdarea(a);
+        funcionario.setEmail(correo);
+        funcionario.setPassword(password);
+        try {
+            responsableAreaFacade.create(funcionario);
+            return "1";
+        } catch (Exception e) {
+            return "2";
+        }
     }
 
     private AreaFacade lookupAreaFacadeBean() {
@@ -50,10 +66,10 @@ public class CrearPQRSAdmin implements Action {
         }
     }
 
-    private ReclamanteFacade lookupReclamanteFacadeBean() {
+    private ResponsableAreaFacade lookupResponsableAreaFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (ReclamanteFacade) c.lookup("java:global/pqrs/ReclamanteFacade!sesionbeans.ReclamanteFacade");
+            return (ResponsableAreaFacade) c.lookup("java:global/pqrs/ResponsableAreaFacade!sesionbeans.ResponsableAreaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

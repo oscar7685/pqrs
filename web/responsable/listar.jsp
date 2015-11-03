@@ -14,8 +14,7 @@
                         <th>Nombre</th>
                         <th>Apellido</th>
                         <th>Email</th>
-                        <th>Celular</th>
-                        <th>Telefono</th>
+                        <th>Telefono/Celular</th>
                         <th>Area</th>
                     </tr>
                 </thead>                               
@@ -27,8 +26,16 @@
                             <td>${row.apellido}</td>
                             <td>${row.email}</td>
                             <td>${row.celular}</td>
-                            <td>${row.telefono}</td>
-                            <td>${row.areaIdarea.nombre}</td>
+                            <c:choose>
+                                <c:when test="${row.areaIdarea.idarea != 1000}">
+                                    <td>${row.areaIdarea.nombre}</td> 
+                                </c:when>
+                                <c:otherwise>
+                                    <td>Administrador</td> 
+                                </c:otherwise>
+                            </c:choose>
+
+
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -51,35 +58,35 @@
 </div>
 <script type="text/javascript" src="js/plugins/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-    $(function() {
+    $(function () {
         if ($(".table-sortable").length > 0) {
             /* init default sortable table */
             $(".table-sortable").DataTable({
-                "fnInitComplete": function() {
+                "fnInitComplete": function () {
                     $(".dataTables_wrapper").find("select,input").addClass("form-control");
                 }
             });
             /* ./init default sortable table */
 
             /* udate page content on page change */
-            $(".table-sortable").on('page.dt', function() {
-                setTimeout(function() {
+            $(".table-sortable").on('page.dt', function () {
+                setTimeout(function () {
                     dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 }, 100);
             });
             /* ./udate page content on page change */
 
             /* update page content on search */
-            $(".table-sortable").on('search.dt', function() {
-                setTimeout(function() {
+            $(".table-sortable").on('search.dt', function () {
+                setTimeout(function () {
                     dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 }, 200);
             });
             /* ./update page content on search */
 
             /* uppdate page content on change length */
-            $('.table-sortable').on('length.dt', function() {
-                setTimeout(function() {
+            $('.table-sortable').on('length.dt', function () {
+                setTimeout(function () {
                     dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 }, 100);
             });

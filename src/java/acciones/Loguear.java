@@ -35,7 +35,6 @@ public class Loguear implements Action {
         HttpSession session = request.getSession();
 
         try {
-            System.out.println("OK3");
             ResponsableArea ra = responsableAreaFacade.find(Integer.parseInt(identificacion));
             if (ra != null && ra.getPassword().equals(password)) {
                 session.setAttribute("responsableArea", ra);

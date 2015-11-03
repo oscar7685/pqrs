@@ -54,7 +54,7 @@
                         <c:when test="${responsableArea.areaIdarea.idarea == 1000}">
                             <c:forEach items="${pqrsM}" var="row" varStatus="iter">
                                 <tr>
-                                    <td>${row.tipo}</td>
+                                    <td><a href="#editarPQRS&id=${row.idpqrs}">${row.tipo}</a></td>
                                     <td> <fmt:formatDate value="${row.fechaCreacion}" pattern="yyyy/MM/dd" /></td>
                                     <td>${row.medioIngreso}</td>
                                     <td>${row.reclamanteIdreclamante.email}</td>
