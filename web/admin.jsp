@@ -74,6 +74,9 @@
                         <li>
                             <a href="#responsablesD"><i class="fa fa-plus-circle"></i> <span>Responsables dependencias</span></a>
                         </li> 
+                        <li>
+                            <a href="#editarDiasHabiles"><i class="fa fa-plus-circle"></i> <span>Configurar calendario</span></a>
+                        </li> 
 
                         <li>
                             <a href="#cerrarSesion"><i class="fa fa-power-off"></i> <span>Cerrar sesi&oacute;n</span></a>
@@ -95,7 +98,8 @@
         <!-- ./page wrapper -->
 
         <!-- javascript -->
-        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>       
+        <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>       
+        <!--<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>-->
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
 
         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>        
