@@ -1,3 +1,6 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="css/pickmeup.css" type="text/css" />
 <link rel="stylesheet" media="screen" type="text/css" href="css/demo.css" />
 <div class="container">
@@ -45,18 +48,29 @@
 <script type="text/javascript">
     $(function () {
         var Rpickme = $('.multiple').pickmeup({
-            flat: true,
-            mode: 'multiple',
-            first_day: 0,
-            default_date: false,
-            select_month: false,
-            min: '01-11-2015',
-            date: '01-11-2015'
+        flat: true,
+                mode: 'multiple',
+                first_day: 0,
+                default_date: false,
+                select_month: false,
+                min: '01-11-2015',
+                date:[
+    <c:forEach items = "${diasNoHabiles}" var = "row" varStatus = "loop" >
+                '<fmt:formatDate value="${row.dias}" pattern="dd-MM-yyyy"/>'
+        <c:if test="${!loop.last}">,</c:if>
+    </c:forEach>
+                ]
+    });
+    $("#actualizarCalendario").click(function () {
 
+        $.ajax({
+            url: 'Controller?accion=editarDiasHabiles2',
+            data: 'fechas=' + $('.multiple').pickmeup('get_date', 'Y-m-d'),
+            type: 'post',
+            success: function () {
+                alert("Dias No Habiles Editados correctamente");
+            }
         });
-
-        $("#actualizarCalendario").click(function () {
-            console.log($('.multiple').pickmeup('get_date', false));
-        });
+    });
     });
 </script>

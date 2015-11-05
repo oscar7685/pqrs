@@ -4,6 +4,7 @@
  */
 package sesionbeans;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -85,4 +86,20 @@ public abstract class AbstractFacade<T> {
         q.setMaxResults(1);
         return (T) q.getSingleResult();
     }
+
+    public void removeAll() {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("DELETE FROM " + entityClass.getSimpleName() + " m", entityClass);
+        q.executeUpdate();
+    }
+
+    public void removeWhereDate(Date d) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("DELETE FROM " + entityClass.getSimpleName() + " m where m.dias=:dia", entityClass);
+        q.setParameter("dia", d);
+        q.executeUpdate();
+    }
+
 }

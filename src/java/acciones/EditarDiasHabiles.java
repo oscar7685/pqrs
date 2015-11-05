@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import sesionbeans.AreaFacade;
+import sesionbeans.DiasNoHabilesFacade;
 import sesionbeans.ReclamanteFacade;
 import sesionbeans.ResponsableAreaFacade;
 
@@ -26,26 +27,23 @@ import sesionbeans.ResponsableAreaFacade;
  */
 public class EditarDiasHabiles implements Action {
 
-    AreaFacade areaFacade = lookupAreaFacadeBean();
+    DiasNoHabilesFacade diasNoHabilesFacade = lookupDiasNoHabilesFacadeBean();
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession session = request.getSession();
-        session.setAttribute("areas", areaFacade.findAll());
-
+        session.setAttribute("diasNoHabiles", diasNoHabilesFacade.findAll());
         return "diasHabiles/editarDiasHabiles.jsp";
-
-
-
     }
 
-    private AreaFacade lookupAreaFacadeBean() {
+    private DiasNoHabilesFacade lookupDiasNoHabilesFacadeBean() {
         try {
             Context c = new InitialContext();
-            return (AreaFacade) c.lookup("java:global/pqrs/AreaFacade!sesionbeans.AreaFacade");
+            return (DiasNoHabilesFacade) c.lookup("java:global/pqrs/DiasNoHabilesFacade!sesionbeans.DiasNoHabilesFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
         }
     }
+
 }
