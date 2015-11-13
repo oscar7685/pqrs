@@ -71,26 +71,7 @@ public class SubirAdjunto extends HttpServlet {
                         Pqrs pqrs = pqrsFacade.find(idUltimaPQRS);
                         pqrs.setAdjunto(fichero.getName());
                         pqrsFacade.edit(pqrs);
-                        /*File fichero1 = new File(str);
-                         //lista de ficheros
-                         String[] ficheros = fichero1.list();
-                         String aux = "";
-                         if (ficheros != null) {
-                            
-                         for (int i = 0; i < ficheros.length; i++) {
-                         String elementos[] = ficheros[i].split("\\.");
-                         if (!aux.equals("")) {
-
-                         aux += ",{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/pqrs/adjuntos/" + ficheros[i] + "\",\"thumbnailUrl\":\"/pqrs/thumbnails/" + ficheros[i] + "\",\"deleteUrl\":\"/pqrs/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
-
-                         } else {
-
-                         aux += "{\"name\":\"" + ficheros[i] + "\",\"size\":\"" + 2000 + "\",\"url\":\"/pqrs/adjuntos/" + ficheros[i] + "\",\"thumbnailUrl\":\"/pqrs/thumbnails/" + ficheros[i] + "\",\"deleteUrl\":\"/pqrs/Subir?file=" + ficheros[i] + "\",\"deleteType\":\"DELETE\",\"type\":\"" + elementos[1] + "\"}";
-
-                         }
-                         }
-                         writer.write("{\"files\":[" + aux + "]}");
-                         }*/
+                       
                         String aux = "{\"name\":\"" + fichero.getName()
                                 + "\",\"size\":\"" + 2000 + "\",\"url\":\"/pqrs/adjuntos/" + fichero.getName()
                                 + "\",\"thumbnailUrl\":\"/pqrs/thumbnails/" + fichero.getName()

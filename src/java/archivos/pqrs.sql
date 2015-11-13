@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50542
 File Encoding         : 65001
 
-Date: 2015-11-03 22:31:52
+Date: 2015-11-12 22:32:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -185,13 +185,31 @@ CREATE TABLE `asignacion` (
   CONSTRAINT `fk_asignacion_pqrs1` FOREIGN KEY (`pqrs_idpqrs`) REFERENCES `pqrs` (`idpqrs`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_asignacion_responsable_area1` FOREIGN KEY (`asignado_por`) REFERENCES `responsable_area` (`idresponsable_area`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_asignacion_responsable_area2` FOREIGN KEY (`asignado_a`) REFERENCES `responsable_area` (`idresponsable_area`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of asignacion
 -- ----------------------------
-INSERT INTO `asignacion` VALUES ('1', '4', '1047408359', '1051660552', '2015-11-02');
-INSERT INTO `asignacion` VALUES ('2', '6', '1047408359', '1051660552', '2015-11-02');
+
+-- ----------------------------
+-- Table structure for dias_no_habiles
+-- ----------------------------
+DROP TABLE IF EXISTS `dias_no_habiles`;
+CREATE TABLE `dias_no_habiles` (
+  `iddias_no_habiles` int(11) NOT NULL AUTO_INCREMENT,
+  `dias` date DEFAULT NULL,
+  PRIMARY KEY (`iddias_no_habiles`)
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of dias_no_habiles
+-- ----------------------------
+INSERT INTO `dias_no_habiles` VALUES ('39', '2015-11-02');
+INSERT INTO `dias_no_habiles` VALUES ('40', '2015-11-16');
+INSERT INTO `dias_no_habiles` VALUES ('42', '2015-11-11');
+INSERT INTO `dias_no_habiles` VALUES ('43', '2015-11-12');
+INSERT INTO `dias_no_habiles` VALUES ('44', '2015-11-13');
+INSERT INTO `dias_no_habiles` VALUES ('60', '2015-12-08');
 
 -- ----------------------------
 -- Table structure for mail
@@ -231,17 +249,11 @@ CREATE TABLE `pqrs` (
   KEY `fk_pqrs_reclamante1_idx` (`reclamante_idreclamante`),
   CONSTRAINT `fk_pqrs_area1` FOREIGN KEY (`area_idarea`) REFERENCES `area` (`idarea`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_pqrs_reclamante1` FOREIGN KEY (`reclamante_idreclamante`) REFERENCES `reclamante` (`idreclamante`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pqrs
 -- ----------------------------
-INSERT INTO `pqrs` VALUES ('1', 'Peticion', '1000', 'on', 'esta es una petición', null, '2015-11-02', 'Activa', 'Web', '22999635', 'Verificacion PQRS');
-INSERT INTO `pqrs` VALUES ('2', 'Peticion', '137', 'on', 'Necesito saber cuando llega mi pedido', '2-inicio y recuperacion.png', '2015-11-02', 'Activa', 'Manual', '22999635', 'Verificacion PQRS');
-INSERT INTO `pqrs` VALUES ('3', 'Peticion', '92', 'on', 'otra peticion', '3-4.jpg', '2015-11-02', 'Activa', 'Correo', '22999635', 'Verificacion PQRS');
-INSERT INTO `pqrs` VALUES ('4', 'Peticion', '79', 'on', 'esto es una prueba', '4-Penguins.jpg', '2015-11-02', 'Activa', 'Web', '22999635', 'Asignado a dependencia');
-INSERT INTO `pqrs` VALUES ('5', 'Reclamo', '1000', 'on', 'aopsdfsdofs', '5-Koala.jpg', '2015-11-02', 'Activa', 'Web', '22999635', 'Verificacion PQRS');
-INSERT INTO `pqrs` VALUES ('6', 'Queja', '79', 'on', 'dfgdfg', '6-Chrysanthemum.jpg', '2015-11-02', 'Activa', 'Correo', '22999635', 'Asignado a dependencia');
 
 -- ----------------------------
 -- Table structure for reclamante
@@ -261,7 +273,7 @@ CREATE TABLE `reclamante` (
 -- ----------------------------
 -- Records of reclamante
 -- ----------------------------
-INSERT INTO `reclamante` VALUES ('22999635', 'Diana', 'Padilla', '3002755225', 'artemus1@gmail.com', '123456', 'PROFESOR');
+INSERT INTO `reclamante` VALUES ('22999635', 'Diana', 'Padilla', '3002755225', 'artemus1@gmail.com', '123456', 'PRO');
 
 -- ----------------------------
 -- Table structure for responsable_area
@@ -285,7 +297,6 @@ CREATE TABLE `responsable_area` (
 -- Records of responsable_area
 -- ----------------------------
 INSERT INTO `responsable_area` VALUES ('1047408359', 'NELSON', 'RAMIREZ RODRIGUEZ', 'micuenta40@gmail.com', '30047474747', '6666666', '123456', '1000');
-INSERT INTO `responsable_area` VALUES ('1051660552', 'ROBER', 'FLOREZ', 'artemys6@gmail.com', '3007894561', null, '123456', '79');
 
 -- ----------------------------
 -- Table structure for respuesta
