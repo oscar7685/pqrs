@@ -62,7 +62,19 @@
                                     <td><a href="#editarPQRS&id=${row.idpqrs}">${row.tipo}</a></td>
                                     <td> <fmt:formatDate value="${row.fechaCreacion}" pattern="yyyy/MM/dd" /></td>
                                     <td>${row.estadoSolicitud}</td>
-                                    <td></td>
+                                    <c:choose>
+                                        <c:when test="${15 - diasHabilesRestantes[iter.index] > 3 }">
+                                            <td><i class="fa fa-clock-o" style="font-size: 1.5em;"></i> ${15 - diasHabilesRestantes[iter.index]} dias hábiles</td> 
+                                        </c:when>
+                                        <c:when test="${15 - diasHabilesRestantes[iter.index] < 0 }">
+                                            <td class="danger"><i class="fa fa-warning" style="font-size: 1.5em; color:#f00;"></i> ${15 - diasHabilesRestantes[iter.index]} dias hábiles</td> 
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td class="warning"><i class="fa fa-info-circle" style="font-size: 1.5em; color:#f0ad4e;"></i> ${15 - diasHabilesRestantes[iter.index]} dias hábiles</td> 
+                                        </c:otherwise>
+                                    </c:choose>
+
+
                                     <td>
                                         <c:choose>
                                             <c:when test="${row.asignacionList.size() != 0}" >

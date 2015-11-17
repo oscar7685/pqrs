@@ -7,6 +7,7 @@ package sesionbeans;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -100,6 +101,20 @@ public abstract class AbstractFacade<T> {
         Query q = getEntityManager().createQuery("DELETE FROM " + entityClass.getSimpleName() + " m where m.dias=:dia", entityClass);
         q.setParameter("dia", d);
         q.executeUpdate();
+    }
+
+    public T findWhereDate(Date d) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        try {
+            Query q = getEntityManager().createQuery("SELECT m FROM " + entityClass.getSimpleName() + " m where m.dias=:dia", entityClass);
+            q.setParameter("dia", d);
+            q.setMaxResults(1);
+            return (T) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+
     }
 
 }

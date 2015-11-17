@@ -41,7 +41,10 @@ public class Controller extends HttpServlet {
             String ruta = objeto.procesar(request);
 
             int longitudRuta = ruta.length();
-            if (longitudRuta > 2) {
+            if (ruta.startsWith("[")) {
+                response.setContentType("application/json");
+                out.print(ruta);
+            } else if (longitudRuta > 2) {
                 RequestDispatcher rd = request.getRequestDispatcher(ruta);
                 rd.forward(request, response);
             } else if (longitudRuta == 2 && ruta.equals("NA")) {

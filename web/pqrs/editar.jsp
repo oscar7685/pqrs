@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Dependencia</label>
                 <div class="col-md-8">
-                    <select name="dependencia" class="form-control">
+                    <select name="dependencia" id="dependencia" class="form-control">
                         <option></option>
                         <c:forEach items="${areas}" var="row" varStatus="iter">
                             <c:choose>
@@ -78,7 +78,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Asignada a:</label>
                 <div class="col-md-8">
-                    <select name="funcionario" class="form-control">
+                    <select name="funcionario" id="funcionario" class="form-control">
                         <option></option>
                         <c:choose>
                             <c:when test="${fn:length(funcionarios)!= 0}">
@@ -132,6 +132,16 @@
     "use strict";
 
     $(function () {
+
+        $("#dependencia").change(function () {
+            $("#funcionario").empty();
+            $.getJSON('Controller?accion=buscarFuncionarios&dependencia=' + $("#dependencia").val(), function (data) {
+                $.each(data, function (k, v) {
+                    $("#funcionario").append("<option value=\"" + v.id + "\">" + v.valor + "</option>");
+                });
+            });
+        });
+
         if ($("#feditar").length > 0) {
             $("#feditar").validate({
                 errorClass: "has-error",

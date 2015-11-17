@@ -12,6 +12,8 @@ import interfaz.Action;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,6 +53,7 @@ public class CrearPQRSAdmin2 implements Action {
         String descripcion = request.getParameter("descripcion");
         String medio = request.getParameter("medio");
         String peticionario = request.getParameter("peticionario");
+        String fechaCreacion = request.getParameter("fechaCreacion");
 
         Area a = areaFacade.find(Integer.parseInt(dependencia));
         Reclamante r = reclamanteFacade.find(Integer.parseInt(peticionario));
@@ -63,8 +66,21 @@ public class CrearPQRSAdmin2 implements Action {
         pqrs.setAreaIdarea(a);
         pqrs.setEstado("Activa");
         pqrs.setMedioIngreso(medio);
-        java.util.Date date = new java.util.Date();
-        pqrs.setFechaCreacion(date);
+
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaI = null;
+        try {
+
+            fechaI = formatoDelTexto.parse(fechaCreacion);
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+
+        }
+
+        pqrs.setFechaCreacion(fechaI);
+
         pqrs.setReclamanteIdreclamante(r);
         pqrsFacade.create(pqrs);
 

@@ -38,6 +38,12 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-md-2 control-label">Fecha de Ingreso</label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control datepicker" placeholder="DD/MM/YYYY" name="fechaCreacion">
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-md-2 control-label">Dependencia</label>
                 <div class="col-md-8">
                     <select name="dependencia" class="form-control">
@@ -121,6 +127,7 @@
     <!-- ./Copyright -->
 
 </div>
+<script type="text/javascript" src="js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <!-- ./page content container -->
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 <script src="js/vendor/jquery.ui.widget.js"></script>
@@ -133,6 +140,9 @@
     "use strict";
     var datosAsubir;
     $(function () {
+        if ($(".datepicker").length > 0)
+            $(".datepicker").datetimepicker({format: "DD/MM/YYYY"});
+
         if ($("#fpqrs").length > 0) {
             $("#fpqrs").validate({
                 errorClass: "has-error",
@@ -156,7 +166,8 @@
                     dependencia: {required: true},
                     medio: {required: true},
                     descripcion: {required: true},
-                    dependencia: {required: true}
+                    fechaCreacion: {required: true},
+                    peticionario: {required: true}
 
                 },
                 submitHandler: function () {

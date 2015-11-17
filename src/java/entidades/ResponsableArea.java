@@ -195,7 +195,7 @@ public class ResponsableArea implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.ResponsableArea[ idresponsableArea=" + idresponsableArea + " ]";
+        return "entidades.ResponsableArea[ idresponsableArea=" + idresponsableArea + "," +nombre + " "+ apellido+" ]";
     }
     
 }
