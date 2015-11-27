@@ -98,8 +98,8 @@
                         <c:otherwise>
                             <c:forEach items="${asignaciones}" var="row" varStatus="iter">
                                 <tr>
-                                    <td>${row.pqrsIdpqrs.tipo}</td>
-                                    <td> <fmt:formatDate value="${row.fechaAsignacion}" pattern="yyyy/MM/dd" /></td>
+                                    <td><a href="#responderPqrs&id=${row.pqrsIdpqrs.idpqrs}">${row.pqrsIdpqrs.tipo}</a></td>
+                                    <td><fmt:formatDate value="${row.fechaAsignacion}" pattern="yyyy/MM/dd" /></td>
                                     <td>${row.asignadoPor.nombre} ${row.asignadoPor.apellido}</td>
                                     <td>${row.pqrsIdpqrs.reclamanteIdreclamante.email}</td>
                                     <td>${row.pqrsIdpqrs.reclamanteIdreclamante.celular}</td>

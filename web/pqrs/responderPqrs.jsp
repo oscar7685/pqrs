@@ -7,7 +7,7 @@
     <!-- Horizontal Form -->
     <div class="wrapper wrapper-white">
         <div class="page-subtitle">
-            <h3>Ver PQRS</h3>
+            <h3>Responder PQRS</h3>
         </div>
 
         <form id="feditar" role="form" method="post"> 
@@ -19,27 +19,7 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-md-2 control-label">Dependencia</label>
-                <div class="col-md-8">
-                    <select name="dependencia" id="dependencia" class="form-control">
-                        <option></option>
-                        <c:forEach items="${areas}" var="row" varStatus="iter">
-                            <c:choose>
-                                <c:when test="${row.idarea != pqrs.areaIdarea.idarea}">
-                                    <option value="${row.idarea}">${row.nombre}</option>
-                                </c:when>   
-                                <c:otherwise>
-                                    <option selected value="${row.idarea}">${row.nombre}</option>    
-                                </c:otherwise>
 
-                            </c:choose>
-
-
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-8">
                     <div class="checkbox">
@@ -69,44 +49,19 @@
                     <!-- The container for the uploaded files -->
                     <div id="files" class="files">
                         <a href="adjuntos/${pqrs.adjunto}" target="_blank" title="${pqrs.adjunto}" download="${pqrs.adjunto}" >${pqrs.adjunto}</a>
-
                     </div>
                 </div>
             </div>
-
-
             <div class="form-group">
-                <label class="col-md-2 control-label">Asignada a:</label>
+                <label class="col-md-2 control-label">Respuesta</label>
                 <div class="col-md-8">
-                    <select name="funcionario" id="funcionario" class="form-control">
-                        <option></option>
-                        <c:choose>
-                            <c:when test="${fn:length(funcionarios)!= 0}">
-                                ${funcionarios.size()}
-                                <c:forEach items="${funcionarios}" var="row" varStatus="iter">
-                                    <c:choose>
-                                        <c:when test=" ${fn:length(pqrs.asignacionList)!= 0 && row.idresponsableArea == pqrs.asignacionList.get(0).asignadoA.idresponsableArea}">
-                                            <option selected="selected" value="${row.idresponsableArea}">${row.nombre} ${row.apellido}</option>             
-                                        </c:when>
-                                        <c:otherwise>
-                                            <option value="${row.idresponsableArea}">${row.nombre} ${row.apellido}</option>             
-                                        </c:otherwise>
-                                    </c:choose> 
-
-                                </c:forEach>
-
-                            </c:when>
-                        </c:choose>
-
-                    </select>
-
+                    <textarea name="respuesta" class="form-control" rows="4"></textarea>
                 </div>
             </div>            
 
-
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-8">
-                    <button type="submit" class="btn btn-primary">Editar PQRS</button>
+                    <button type="submit" class="btn btn-primary">Responder PQRS</button>
                 </div>
             </div>
 
