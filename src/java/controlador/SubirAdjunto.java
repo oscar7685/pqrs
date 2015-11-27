@@ -49,7 +49,8 @@ public class SubirAdjunto extends HttpServlet {
         PrintWriter writer = response.getWriter();
 
         response.setContentType("text/plain");
-        int idUltimaPQRS = (int) sesion.getAttribute("ultimaPQRS");
+        String idUltimaPQRS1 = (String) sesion.getAttribute("ultimaPQRS");
+        int idUltimaPQRS = Integer.parseInt(idUltimaPQRS1);
         List<FileItem> items;
         try {
             items = uploadHandler.parseRequest(request);
