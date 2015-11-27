@@ -73,6 +73,9 @@ public class ListarTodasPQRS implements Action {
 
             session.setAttribute("diasHabilesRestantes", diasHabilesRestantes);
             session.setAttribute("pqrsTotales", listaPqrs);
+            List<Asignacion> asignaciones = asignacionFacade.findByList("asignadoA", r);
+            session.setAttribute("asignaciones", asignaciones);
+
         } else {
             List<Asignacion> asignaciones = asignacionFacade.findByList("asignadoA", r);
             session.setAttribute("asignaciones", asignaciones);

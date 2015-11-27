@@ -3,28 +3,33 @@
  * and open the template in the editor.
  */
 
-$(function() {
+$(function () {
+
+    var actualizaEnlaces = function (hash) {
+        $("li").removeClass("active");
+        $("a[href='" + hash + "']").parent().addClass("active");
+    };
 
     location = "/pqrs/#inicio";
     location = "/pqrs/#listarTodasPQRS";
-    $(window).hashchange(function() {
+    $(window).hashchange(function () {
         var hash = location.hash;
         if (hash === "#cerrarSesion") {
-            $.post('Controller?accion=cerrarSesion', function() {
+            $.post('Controller?accion=cerrarSesion', function () {
                 location = "/pqrs";
             });
             //fin post
-        } else { 
-            
+        } else {
+
             var url3 = hash.replace('#', "Controller?accion=");
             $("div.dev-page-content").empty();
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function(data)
+                success: function (data)
                 {
                     $("div.dev-page-content").html(data);
-                    //actualizaEnlaces(hash);
+                    actualizaEnlaces(hash);
                 } //fin success
             }); //fin del $.ajax 
 

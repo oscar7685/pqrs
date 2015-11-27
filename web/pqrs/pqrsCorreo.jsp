@@ -28,7 +28,7 @@
     </div>
     <div class="wrapper wrapper-white">
         <div class="page-subtitle">
-            <h3>Mis PQRS via Correo Electronico</h3>
+            <h3>Mis PQRS</h3>
         </div>
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-sortable">
@@ -36,7 +36,12 @@
                     <tr>
                         <c:choose>
                             <c:when test="${responsableArea.areaIdarea.idarea == 1000}">
-                                <th>Tipo</th><th>Fecha de Ingreso</th><th>Medio de Ingreso</th><th>Correo</th><th>Celular</th><th>Estado</th>
+                                <th>Tipo</th>
+                                <th>Fecha de Ingreso</th>
+                                <th>Estado</th>
+                                <th>Tiempo de respuesta</th>
+                                <th>Asignación</th>
+                                <th>Fecha Asignación</th>
                                 </c:when>
                                 <c:otherwise>
                                 <th>Tipo</th>
@@ -52,14 +57,41 @@
                 <tbody>
                     <c:choose>
                         <c:when test="${responsableArea.areaIdarea.idarea == 1000}">
-                            <c:forEach items="${pqrsC}" var="row" varStatus="iter">
+                            <c:forEach items="${pqrsTotales}" var="row" varStatus="iter">
                                 <tr>
                                     <td><a href="#editarPQRS&id=${row.idpqrs}">${row.tipo}</a></td>
                                     <td> <fmt:formatDate value="${row.fechaCreacion}" pattern="yyyy/MM/dd" /></td>
-                                    <td>${row.medioIngreso}</td>
-                                    <td>${row.reclamanteIdreclamante.email}</td>
-                                    <td>${row.reclamanteIdreclamante.celular}</td>
-                                    <td>${row.estado}</td>
+                                    <td>${row.estadoSolicitud}</td>
+                                    <c:choose>
+                                        <c:when test="${15 - diasHabilesRestantes[iter.index] > 3 }">
+                                            <td><i class="fa fa-clock-o" style="font-size: 1.5em;"></i> ${15 - diasHabilesRestantes[iter.index]} dias hábiles</td> 
+                                        </c:when>
+                                        <c:when test="${15 - diasHabilesRestantes[iter.index] < 0 }">
+                                            <td class="danger"><i class="fa fa-warning" style="font-size: 1.5em; color:#f00;"></i> ${15 - diasHabilesRestantes[iter.index]} dias hábiles</td> 
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td class="warning"><i class="fa fa-info-circle" style="font-size: 1.5em; color:#f0ad4e;"></i> ${15 - diasHabilesRestantes[iter.index]} dias hábiles</td> 
+                                        </c:otherwise>
+                                    </c:choose>
+
+
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${row.asignacionList.size() != 0}" >
+                                                ${row.asignacionList.get(0).asignadoA.nombre} ${row.asignacionList.get(0).asignadoA.apellido}</td>
+                                            </c:when>
+                                        </c:choose>
+
+
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${row.asignacionList.size() != 0}" >
+                                                <fmt:formatDate value="${row.asignacionList.get(0).fechaAsignacion}" pattern="yyyy/MM/dd" />
+                                            </c:when>
+                                        </c:choose>
+
+                                    </td>
+
                                 </tr>
                             </c:forEach>
                         </c:when>

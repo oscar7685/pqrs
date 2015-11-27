@@ -56,28 +56,43 @@
 
                     <ul class="dev-page-navigation">
                         <li class="title">Mis PQRS</li>
-                        <li>
-                            <a href="#pqrsWeb"><i class="fa fa-globe"></i> <span>Via Web</span></a>
-                        </li>  
-                        <li>
-                            <a href="#pqrsCorreo"><i class="fa fa-envelope"></i> <span>Via Correo</span></a>
-                        </li>  
-                        <li>
-                            <a href="#pqrsManual"><i class="fa fa-hand-o-up"></i> <span>Via Manual</span></a>
-                        </li>  
-                        <li>
-                            <a href="#nuevaPQRS"><i class="fa fa-plus-circle"></i> <span>Agregar PQRS</span></a>
-                        </li>  
-                        <li>
-                            <a href="#dependencias"><i class="fa fa-plus-circle"></i> <span>Dependencias</span></a>
-                        </li> 
-                        <li>
-                            <a href="#responsablesD"><i class="fa fa-plus-circle"></i> <span>Responsables dependencias</span></a>
-                        </li> 
-                        <li>
-                            <a href="#editarDiasHabiles"><i class="fa fa-plus-circle"></i> <span>Configurar calendario</span></a>
-                        </li> 
 
+                        <li>
+                            <a href="#"><i class="fa fa-question-circle"></i> <span>PQRS</span></a>
+                            <ul>
+                                <li>
+                                    <a href="#listarTodasPQRS"><i class="fa fa-question-circle"></i> <span>Todas PQRS</span></a>
+                                </li> 
+                                <li>
+                                    <a href="#pqrsWeb"><i class="fa fa-globe"></i> <span>Via Web</span></a>
+                                </li> 
+                                <li>
+                                    <a href="#pqrsCorreo"><i class="fa fa-envelope"></i> <span>Via Correo</span></a>
+                                </li> 
+                                <li>
+                                    <a href="#pqrsManual"><i class="fa fa-hand-o-up"></i> <span>Via Manual</span></a>
+                                </li>  
+                            </ul>
+                        </li>   
+                        <c:choose>
+                            <c:when test="${responsableArea.areaIdarea.idarea == 1000}">
+                                <li>
+                                    <a href="#nuevaPQRS"><i class="fa fa-plus-circle"></i> <span>Agregar PQRS</span></a>
+                                </li>
+                                <li>
+                                    <a href="#listarPeticionarios"><i class="fa fa-user"></i> <span>Listar Peticionarios</span></a>
+                                </li>
+                                <li>
+                                    <a href="#dependencias"><i class="fa fa-building-o"></i> <span>Dependencias</span></a>
+                                </li>
+                                <li>
+                                    <a href="#responsablesD"><i class="fa fa-users"></i> <span>Responsables dependencias</span></a>
+                                </li> 
+                                <li>
+                                    <a href="#editarDiasHabiles"><i class="fa fa-calendar"></i> <span>Configurar calendario</span></a>
+                                </li> 
+                            </c:when>
+                        </c:choose>
                         <li>
                             <a href="#cerrarSesion"><i class="fa fa-power-off"></i> <span>Cerrar sesi&oacute;n</span></a>
                         </li>

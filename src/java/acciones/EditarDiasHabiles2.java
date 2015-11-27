@@ -81,21 +81,6 @@ public class EditarDiasHabiles2 implements Action {
             diasNoHabilesFacade.create(aux);
         }
 
-        /*List<Date> dates = new ArrayList<Date>();
-         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-         for (int i = 0; i < fechas.length; i++) {
-         try {
-         Date aux = formatter.parse(fechas[i]);
-         DiasNoHabiles dnh = new DiasNoHabiles();
-         dnh.setDias(aux);
-         diasNoHabilesFacade.create(dnh);
-         } catch (ParseException ex) {
-         Logger.getLogger(EditarDiasHabiles2.class.getName()).log(Level.SEVERE, null, ex);
-         }
-         }*/
-        /*long tiempoFinal = System.currentTimeMillis() - tiempoInicio;
-        System.out.println("El tiempo de demora es :" + tiempoFinal + " miliseg");*/
-        
         System.out.println("");
         //session.setAttribute("diasNoHabiles", diasNoHabilesFacade.findAll());
         return "NA";
