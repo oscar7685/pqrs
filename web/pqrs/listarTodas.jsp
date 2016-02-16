@@ -36,15 +36,15 @@
                     <tr>
                         <c:choose>
                             <c:when test="${responsableArea.areaIdarea.idarea == 1000}">
-                                <th>Tipo</th>
+                                <th>Código</th>
                                 <th>Fecha de Ingreso</th>
                                 <th>Estado</th>
-                                <th>Tiempo de respuesta</th>
+                                <th>Dias habiles transcurridos</th>
                                 <th>Asignación</th>
                                 <th>Fecha Asignación</th>
                                 </c:when>
                                 <c:otherwise>
-                                <th>Tipo</th>
+                                <th>Código</th>
                                 <th>Fecha de Asignacion</th>
                                 <th>Asignado por</th>
                                 <th>Correo</th>
@@ -59,18 +59,18 @@
                         <c:when test="${responsableArea.areaIdarea.idarea == 1000}">
                             <c:forEach items="${pqrsTotales}" var="row" varStatus="iter">
                                 <tr>
-                                    <td><a href="#editarPQRS&id=${row.idpqrs}">${row.tipo}</a></td>
+                                    <td><a href="#editarPQRS&id=${row.idpqrs}">${row.codigo}</a></td>
                                     <td> <fmt:formatDate value="${row.fechaCreacion}" pattern="yyyy/MM/dd" /></td>
                                     <td>${row.estadoSolicitud}</td>
                                     <c:choose>
-                                        <c:when test="${15 - diasHabilesRestantes[iter.index] > 3 }">
-                                            <td><i class="fa fa-clock-o" style="font-size: 1.5em;"></i> ${15 - diasHabilesRestantes[iter.index]} dias hábiles</td> 
+                                        <c:when test="${diasHabilesRestantes[iter.index] > 8 }">
+                                            <td><i class="warning fa fa-info-circle" style="font-size: 1.5em; color:#f0ad4e;"></i> ${diasHabilesRestantes[iter.index]} dias</td> 
                                         </c:when>
-                                        <c:when test="${15 - diasHabilesRestantes[iter.index] < 0 }">
-                                            <td class="danger"><i class="fa fa-warning" style="font-size: 1.5em; color:#f00;"></i> ${15 - diasHabilesRestantes[iter.index]} dias hábiles</td> 
+                                        <c:when test="${diasHabilesRestantes[iter.index] > 15 }">
+                                            <td class="danger"><i class="fa fa-warning" style="font-size: 1.5em; color:#f00;"></i> ${diasHabilesRestantes[iter.index]} dias</td> 
                                         </c:when>
                                         <c:otherwise>
-                                            <td class="warning"><i class="fa fa-info-circle" style="font-size: 1.5em; color:#f0ad4e;"></i> ${15 - diasHabilesRestantes[iter.index]} dias hábiles</td> 
+                                            <td><i class="fa fa-clock-o" style="font-size: 1.5em;"></i> ${diasHabilesRestantes[iter.index]} dias</td> 
                                         </c:otherwise>
                                     </c:choose>
 
@@ -98,7 +98,7 @@
                         <c:otherwise>
                             <c:forEach items="${asignaciones}" var="row" varStatus="iter">
                                 <tr>
-                                    <td><a href="#responderPqrs&id=${row.pqrsIdpqrs.idpqrs}">${row.pqrsIdpqrs.tipo}</a></td>
+                                    <td><a href="#responderPqrs&id=${row.pqrsIdpqrs.idpqrs}">${row.pqrsIdpqrs.codigo}</a></td>
                                     <td><fmt:formatDate value="${row.fechaAsignacion}" pattern="yyyy/MM/dd" /></td>
                                     <td>${row.asignadoPor.nombre} ${row.asignadoPor.apellido}</td>
                                     <td>${row.pqrsIdpqrs.reclamanteIdreclamante.email}</td>

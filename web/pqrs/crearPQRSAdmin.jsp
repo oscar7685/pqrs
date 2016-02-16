@@ -3,14 +3,106 @@
 <link rel="stylesheet" href="css/jquery.fileupload.css">
 <!-- page content container -->
 <div class="container">
+    <form id="fpqrs" role="form" method="post"> 
+        <!-- basic form elements -->
+        <div class="wrapper wrapper-white">
+            <div class="page-subtitle">
+                <h3>PETICIONARIO</h3>
+            </div>
+            <div id="existentes">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <select name="peticionario" class="form-control">
+                            <option></option>
+                            <c:forEach items="${peticionarios}" var="row" varStatus="iter">
+                                <option selected value="${row.idreclamante}">${row.nombre} ${row.apellido}</option>    
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div> 
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <button type="button" id="crearNuevoPeticionario" class="btn btn-default">Crear Nuevo Peticionario</button>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Horizontal Form -->
-    <div class="wrapper wrapper-white">
-        <div class="page-subtitle">
-            <h3>Crear PQRS</h3>
-        </div>
+            <div id="nuevo" >
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Identificación</label>
+                            <input type="text" class="form-control" value="" name="identificacion" placeholder="Identificación"/>
+                        </div>
+                    </div>
 
-        <form id="fpqrs" role="form" method="post"> 
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" class="form-control" value="" name="nombre" placeholder="Nombre"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Apellido</label>
+                            <input type="text" class="form-control" value="" name="apellido" placeholder="Apellido"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Tipo</label>
+                            <select name="tipo_peticionario" class="form-control">
+                                <option selected value=""></option>
+                                <option value="ESTUDIANTE">Estudiante</option>
+                                <option value="EGRESADO">Egresado</option>
+                                <option value="PROFESOR">Docente</option>
+                                <option value="PARTICULAR">Particular</option>
+                                <option value="ASPIRANTE">Aspirante</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Celular</label>
+                            <input type="text" class="form-control" value="" name="celular" placeholder="Celular"/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Correo Electronico</label>
+                            <input type="text" class="form-control" value="" name="correo" placeholder="Correo Electronico"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Clave</label>
+                            <input type="password" class="form-control" value="" placeholder="Clave" name="password" id="password2"/>
+                        </div>
+                    </div>                    
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Repetir Clave</label>
+                            <input type="password" class="form-control" value="" placeholder="Repetir Clave"  name="re_password"/>
+                        </div>
+                    </div>   
+                </div> 
+            </div>
+
+        </div>                        
+        <!-- ./basic form elements -->
+
+
+        <!-- Horizontal Form -->
+        <div class="wrapper">
+            <div class="page-subtitle">
+                <h3>Crear PQRS</h3>
+            </div>
             <div class="form-group">
                 <label class="col-md-2 control-label">Tipo de solicitud</label>
                 <div class="col-md-8">
@@ -29,11 +121,14 @@
                     <select name="medio" class="form-control">
                         <option></option>
                         <option value="Web">Web</option>
-                        <option value="Correo">Email</option>
-                        <option value="Manual">Manual</option>
-                        <option value="Telefono">Telefono</option>
-                        <option value="Verbal">Verbal</option>
-                        <option value="Fax">Fax</option>
+                        <option value="Correo">Correo Electrónico</option>
+                        <option value="Telefono">Atención Telefónica </option>
+                        <optgroup label="Atención Personalizada "> 
+                            <option value="Manual">Escrito</option>
+                            <option value="Verbal">Verbal</option>
+                            <option value="Fax">Fax</option>
+                        </optgroup>
+
                     </select>
                 </div>
             </div>
@@ -96,28 +191,16 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-2 control-label">Peticionario</label>
-                <div class="col-md-8">
-                    <select name="peticionario" class="form-control">
-                        <option></option>
-                        <c:forEach items="${peticionarios}" var="row" varStatus="iter">
-                            <option selected value="${row.idreclamante}">${row.nombre} ${row.apellido}</option>    
-                        </c:forEach>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
                 <div class="col-md-offset-2 col-md-8">
                     <button type="submit" class="btn btn-default">Crear PQRS</button>
                 </div>
             </div>
 
-        </form>
 
-    </div>
-    <!-- ./Horizontal Form -->
 
+        </div>
+        <!-- ./Horizontal Form -->
+    </form>
     <!-- Copyright -->
     <div class="copyright">
         <div class="pull-left">
@@ -140,15 +223,18 @@
     "use strict";
     var datosAsubir;
     $(function () {
+        $("#nuevo").hide();
+        $("#crearNuevoPeticionario").click(function () {
+            $("#existentes").hide();
+            $("#nuevo").show();
+        });
         if ($(".datepicker").length > 0)
             $(".datepicker").datetimepicker({format: "DD/MM/YYYY"});
-
         if ($("#fpqrs").length > 0) {
             $("#fpqrs").validate({
                 errorClass: "has-error",
                 validClass: "has-success",
                 errorElement: "span",
-                ignore: [],
                 errorPlacement: function (error, element) {
                     $(element).after(error);
                     $(element).parents(".form-group").addClass("has-error");
@@ -167,8 +253,15 @@
                     medio: {required: true},
                     descripcion: {required: true},
                     fechaCreacion: {required: true},
-                    peticionario: {required: true}
-
+                    peticionario: {required: true},
+                    nombre: {required: true, minlength: 2},
+                    apellido: {required: true, minlength: 2},
+                    identificacion: {required: true, minlength: 2, maxlength: 12},
+                    celular: {required: true, minlength: 7, maxlength: 20},
+                    tipo_peticionario: {required: true},
+                    correo: {required: true, email: true},
+                    password: {required: true, minlength: 5, maxlength: 20},
+                    re_password: {required: true, minlength: 5, maxlength: 20, equalTo: "#password2"}
                 },
                 submitHandler: function () {
                     $.ajax({

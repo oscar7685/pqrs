@@ -13,6 +13,7 @@ import interfaz.Action;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +57,23 @@ public class EditarPQRS2 implements Action {
 
         String dependencia = request.getParameter("dependencia");
         String funcionario = request.getParameter("funcionario");
+        String fechaCreacion = request.getParameter("fechaCreacion");
+        
+        SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
+        Date fechaI = null;
+        try {
+
+            fechaI = formatoDelTexto.parse(fechaCreacion);
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+
+        }
+
+        p.setFechaCreacion(fechaI);
+        
+        
 
         ResponsableArea ra = responsableAreaFacade.find(Integer.parseInt(funcionario));
 

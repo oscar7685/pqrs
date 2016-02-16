@@ -26,7 +26,7 @@
                     <table class="table table-bordered table-striped table-sortable">
                         <thead>
                             <tr>
-                                <th>Tipo</th>
+                                <th>Código</th>
                                 <th>Fecha de Ingreso</th>
                                 <th>Medio de Ingreso</th>
                                 <th>Correo</th>
@@ -37,7 +37,7 @@
                         <tbody>
                             <c:forEach items="${pqrsH}" var="row" varStatus="iter">
                                 <tr>
-                                    <td>${row.tipo}</td>
+                                    <td>${row.codigo}</td>
                                     <td> <fmt:formatDate value="${row.fechaCreacion}" pattern="yyyy/MM/dd" /></td>
                                     <td>${row.medioIngreso}</td>
                                     <td>${row.reclamanteIdreclamante.email}</td>

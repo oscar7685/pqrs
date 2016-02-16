@@ -40,9 +40,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pqrs.findByIdpqrs", query = "SELECT p FROM Pqrs p WHERE p.idpqrs = :idpqrs"),
     @NamedQuery(name = "Pqrs.findByTipo", query = "SELECT p FROM Pqrs p WHERE p.tipo = :tipo"),
     @NamedQuery(name = "Pqrs.findByNotificarMail", query = "SELECT p FROM Pqrs p WHERE p.notificarMail = :notificarMail"),
+    @NamedQuery(name = "Pqrs.findByCodigo", query = "SELECT p FROM Pqrs p WHERE p.codigo = :codigo"),
     @NamedQuery(name = "Pqrs.findByDescripcion", query = "SELECT p FROM Pqrs p WHERE p.descripcion = :descripcion"),
     @NamedQuery(name = "Pqrs.findByAdjunto", query = "SELECT p FROM Pqrs p WHERE p.adjunto = :adjunto"),
     @NamedQuery(name = "Pqrs.findByFechaCreacion", query = "SELECT p FROM Pqrs p WHERE p.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "Pqrs.findByAnio", query = "SELECT count(p) FROM Pqrs p WHERE p.fechaCreacion >= :f1 and p.fechaCreacion <= :f2"),
     @NamedQuery(name = "Pqrs.findByEstado", query = "SELECT p FROM Pqrs p WHERE p.estado = :estado"),
     @NamedQuery(name = "Pqrs.findByMedioIngreso", query = "SELECT p FROM Pqrs p WHERE p.medioIngreso = :medioIngreso"),
     @NamedQuery(name = "Pqrs.findByEstadoSolicitud", query = "SELECT p FROM Pqrs p WHERE p.estadoSolicitud = :estadoSolicitud")})
@@ -61,6 +63,9 @@ public class Pqrs implements Serializable {
     @Size(max = 45)
     @Column(name = "notificar_mail")
     private String notificarMail;
+    @Size(max = 45)
+    @Column(name = "codigo")
+    private String codigo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5000)
@@ -95,6 +100,14 @@ public class Pqrs implements Serializable {
     private List<Respuesta> respuestaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pqrsIdpqrs")
     private List<Asignacion> asignacionList;
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
     public Pqrs() {
     }

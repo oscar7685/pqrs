@@ -12,6 +12,7 @@ import interfaz.Action;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,6 +62,21 @@ public class CrearPQRS2 implements Action {
         java.util.Date date = new java.util.Date();
         pqrs.setFechaCreacion(date);
         pqrs.setReclamanteIdreclamante(r);
+        
+        Calendar fecha = Calendar.getInstance();
+        int anio = fecha.get(Calendar.YEAR);
+        //armamos el codigo
+        String codigo = (tipoPQRS.equals("Peticion") ? "P" : tipoPQRS.equals("Queja") ? "Q" : tipoPQRS.equals("Reclamo") ? "R" : "S");
+        codigo += anio;
+        int consecutivo = pqrsFacade.consecutivo(anio) + 1;
+        int longitud = String.valueOf(consecutivo).length();
+        int ceros = 5 - longitud;
+        for (int i = 0; i < ceros; i++) {
+            codigo += "0";
+        }
+        codigo += consecutivo;
+
+        pqrs.setCodigo(codigo);
         pqrsFacade.create(pqrs);
 
         sesion.setAttribute("ultimaPQRS", pqrsFacade.findUltimo("idpqrs").getIdpqrs());

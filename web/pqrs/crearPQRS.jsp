@@ -79,7 +79,9 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-8">
-                    <button type="submit" class="btn btn-default">Crear PQRS</button>
+                    <button type="submit" id="btnCrearPqrs" data-loading-text="Creando PQRS..." class="btn btn-primary" autocomplete="off">
+                        Crear PQRS
+                    </button>
                 </div>
             </div>
 
@@ -131,6 +133,7 @@
 
                 },
                 submitHandler: function () {
+                    $("#btnCrearPqrs").button('loading');
                     $.ajax({
                         url: 'Controller?accion=crearPQRS2',
                         data: $("#fpqrs").serialize(),

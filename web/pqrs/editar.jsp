@@ -1,13 +1,69 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>             
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="css/jquery.fileupload.css">
 <!-- page content container -->
 <div class="container">
 
+    <!-- basic form elements -->
+    <div class="wrapper wrapper-white">
+        <div class="page-subtitle">
+            <h3>PETICIONARIO</h3>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Identificación</label>
+                    <input type="text" disabled="disabled" class="form-control" value="${pqrs.reclamanteIdreclamante.idreclamante}"/>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" disabled="disabled" class="form-control" value="${pqrs.reclamanteIdreclamante.nombre}"/>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Apellido</label>
+                    <input type="text" disabled="disabled" class="form-control" value="${pqrs.reclamanteIdreclamante.apellido}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <select name="tipo_solicitud" class="form-control">
+                        <option>${pqrs.reclamanteIdreclamante.tipo}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Celular</label>
+                    <input type="text" disabled="disabled" class="form-control" value="${pqrs.reclamanteIdreclamante.celular}"/>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Correo Electronico</label>
+                    <input type="text" disabled="disabled" class="form-control" value="${pqrs.reclamanteIdreclamante.email}"/>
+                </div>
+            </div>
+        </div>
+    </div>                        
+    <!-- ./basic form elements -->
+
+
     <!-- Horizontal Form -->
     <div class="wrapper wrapper-white">
         <div class="page-subtitle">
-            <h3>Ver PQRS</h3>
+            <h3>PQRS</h3>
         </div>
 
         <form id="feditar" role="form" method="post"> 
@@ -17,6 +73,20 @@
                     <select name="tipo_solicitud" class="form-control">
                         <option>${pqrs.tipo}</option>
                     </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Medio de ingreso</label>
+                <div class="col-md-8">
+                    <select name="medioIngreso" class="form-control">
+                        <option>${pqrs.medioIngreso}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Fecha de ingreso</label>
+                <div class="col-md-8">
+                    <input type="text" value="<fmt:formatDate value="${pqrs.fechaCreacion}" pattern="dd/MM/yyyy" />" class="form-control datepicker" placeholder="DD/MM/YYYY" name="fechaCreacion">
                 </div>
             </div>
             <div class="form-group">
@@ -127,7 +197,7 @@
 <!-- ./page content container -->
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 
-
+<script type="text/javascript" src="js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="js/vendor/jquery.ui.widget.js"></script>
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 <script src="js/jquery.iframe-transport.js"></script>
@@ -137,12 +207,15 @@
 <script type="text/javascript">
     "use strict";
 
-    $(function() {
+    $(function () {
+        if ($(".datepicker").length > 0) {
+            $(".datepicker").datetimepicker({format: "DD/MM/YYYY"});
+        }
 
-        $("#dependencia").change(function() {
+        $("#dependencia").change(function () {
             $("#funcionario").empty();
-            $.getJSON('Controller?accion=buscarFuncionarios&dependencia=' + $("#dependencia").val(), function(data) {
-                $.each(data, function(k, v) {
+            $.getJSON('Controller?accion=buscarFuncionarios&dependencia=' + $("#dependencia").val(), function (data) {
+                $.each(data, function (k, v) {
                     $("#funcionario").append("<option value=\"" + v.id + "\">" + v.valor + "</option>");
                 });
             });
@@ -154,15 +227,15 @@
                 validClass: "has-success",
                 errorElement: "span",
                 ignore: [],
-                errorPlacement: function(error, element) {
+                errorPlacement: function (error, element) {
                     $(element).after(error);
                     $(element).parents(".form-group").addClass("has-error");
                 },
-                highlight: function(element, errorClass) {
+                highlight: function (element, errorClass) {
                     $(element).parents(".form-group").removeClass("has-success").addClass(errorClass);
                     // dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 },
-                unhighlight: function(element, errorClass, validClass) {
+                unhighlight: function (element, errorClass, validClass) {
                     $(element).parents(".form-group").removeClass(errorClass).addClass(validClass);
                     //dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 },
@@ -170,15 +243,16 @@
                     tipo_solicitud: {required: true},
                     dependencia: {required: true},
                     descripcion: {required: true},
-                    funcionario: {required: true}
+                    funcionario: {required: true},
+                    fechaCreacion: {required: true}
 
                 },
-                submitHandler: function() {
+                submitHandler: function () {
                     $.ajax({
                         url: 'Controller?accion=editarPQRS2',
                         data: $("#feditar").serialize(),
                         type: 'post',
-                        success: function(msg) {
+                        success: function (msg) {
                             document.location = "#listarTodasPQRS"
 
                         }
@@ -194,19 +268,19 @@
             autoUpload: false,
             dataType: 'json',
             acceptFileTypes: /(\.|\/)(xlsm)$/i,
-            done: function(e, data) {
+            done: function (e, data) {
                 $('#files').empty();
-                $.each(data.result.files, function(index, file) {
+                $.each(data.result.files, function (index, file) {
                     $('<p/>').text(file.name).appendTo('#files');
                 });
             },
-            progressall: function(e, data) {
+            progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
                 $('#progress .progress-bar').css('width', progress + '%');
             },
-            add: function(e, data) {
+            add: function (e, data) {
                 $(".fileinput-button").addClass('disabled');
-                $.each(data.files, function(index, file) {
+                $.each(data.files, function (index, file) {
                     $('<p/>').text(file.name).appendTo('#files');
                 });
                 datosAsubir = data;

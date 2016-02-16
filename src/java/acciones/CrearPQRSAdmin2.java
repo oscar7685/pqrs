@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -66,7 +67,20 @@ public class CrearPQRSAdmin2 implements Action {
         pqrs.setAreaIdarea(a);
         pqrs.setEstado("Activa");
         pqrs.setMedioIngreso(medio);
+         Calendar fecha = Calendar.getInstance();
+        int anio = fecha.get(Calendar.YEAR);
+        //armamos el codigo
+        String codigo = (tipoPQRS.equals("Peticion") ? "P" : tipoPQRS.equals("Queja") ? "Q" : tipoPQRS.equals("Reclamo") ? "R" : "S");
+        codigo += anio;
+        int consecutivo = pqrsFacade.consecutivo(anio) + 1;
+        int longitud = String.valueOf(consecutivo).length();
+        int ceros = 5 - longitud;
+        for (int i = 0; i < ceros; i++) {
+            codigo += "0";
+        }
+        codigo += consecutivo;
 
+        pqrs.setCodigo(codigo);
         SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
         Date fechaI = null;
         try {
