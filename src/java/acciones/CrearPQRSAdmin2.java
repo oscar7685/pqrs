@@ -40,7 +40,6 @@ import utils.JavaMail;
 public class CrearPQRSAdmin2 implements Action {
 
     ReclamanteFacade reclamanteFacade = lookupReclamanteFacadeBean();
-
     PqrsFacade pqrsFacade = lookupPqrsFacadeBean();
     AreaFacade areaFacade = lookupAreaFacadeBean();
 
@@ -67,7 +66,7 @@ public class CrearPQRSAdmin2 implements Action {
         pqrs.setAreaIdarea(a);
         pqrs.setEstado("Activa");
         pqrs.setMedioIngreso(medio);
-         Calendar fecha = Calendar.getInstance();
+        Calendar fecha = Calendar.getInstance();
         int anio = fecha.get(Calendar.YEAR);
         //armamos el codigo
         String codigo = (tipoPQRS.equals("Peticion") ? "P" : tipoPQRS.equals("Queja") ? "Q" : tipoPQRS.equals("Reclamo") ? "R" : "S");
@@ -97,9 +96,51 @@ public class CrearPQRSAdmin2 implements Action {
 
         pqrs.setReclamanteIdreclamante(r);
         pqrsFacade.create(pqrs);
+        Pqrs aux = pqrsFacade.findUltimo("idpqrs");
+        sesion.setAttribute("ultimaPQRS", ""+aux.getIdpqrs());
 
-        sesion.setAttribute("ultimaPQRS", pqrsFacade.findUltimo("idpqrs").getIdpqrs());
+        String msg = "NOTIFICACIÓN DE APERTURA PQRS - " + aux.getCodigo() + "\n"
+                + "PETICIONARIO: " + aux.getReclamanteIdreclamante().getIdreclamante() + " - " + aux.getReclamanteIdreclamante().getNombre()
+                + " " + aux.getReclamanteIdreclamante().getApellido() + "\n"
+                + "\n"
+                + "Estimado Usuario,\n"
+                + "Hemos recibido su PQRS satisfactoriamente. Recibirá notificaciones a través de correo electrónico conforme al trámite de la misma.\n"
+                + "Para verificar las novedades debe ingresar a la plataforma virtual y consultar el estado de su PQRS\n"
+                + "_____________________________________________________________________________________________\n"
+                + "\n"
+                + "INFORMACIÓN REPORTADA\n"
+                + "\n"
+                + "TIPO: " + aux.getTipo() + "\n"
+                + "\n"
+                + "MODO DE INGRESO: " + aux.getMedioIngreso() + "\n"
+                + "\n"
+                + "Información de PQRS\n"
+                + aux.getReclamanteIdreclamante().getNombre() + " " + aux.getReclamanteIdreclamante().getApellido() + "<" + aux.getReclamanteIdreclamante().getEmail() + "> " + formatoDelTexto.format(new Date()) + "\n"
+                + "Responder a: " + aux.getReclamanteIdreclamante().getNombre() + " " + aux.getReclamanteIdreclamante().getApellido() + "<" + aux.getReclamanteIdreclamante().getEmail() + "> " + "\n"
+                + "Para: pqrs@unicartagena.edu.co\n"
+                + "[Nombre y Apellidos Completos] " + aux.getReclamanteIdreclamante().getNombre() + " " + aux.getReclamanteIdreclamante().getApellido() + "\n"
+                + "[Correo Electrónico] " + aux.getReclamanteIdreclamante().getEmail() + "\n"
+                + "[No. de Identificación] " + aux.getReclamanteIdreclamante().getIdreclamante() + "\n"
+                + "[Teléfono / Celular] " + aux.getReclamanteIdreclamante().getCelular() + "\n"
+                + "[Es usted] " + aux.getReclamanteIdreclamante().getTipo() + "\n"
+                + "[Asunto] " + aux.getTipo() + "\n"
+                + "[Dependencia a la que dirige la PQRS] " + aux.getAreaIdarea().getNombre() + "\n"
+                + "[Comentario] " + aux.getDescripcion() + "\n"
+                + "\n"
+                + "Agradecemos la utilización del procedimiento de peticiones, quejas, reclamos y sugerencias, lo que sin duda contribuye al mejoramiento continuo de nuestra Institución.\n"
+                + "Cordialmente,\n"
+                + "\n"
+                + "SECRETARIA GENERAL\n"
+                + "UNIVERSIDAD DE CARTAGENA\n"
+                + formatoDelTexto.format(new Date());
 
+
+        JavaMail jm = new JavaMail();
+        jm.setAsunto("Apertura de PQRS - " + aux.getCodigo());
+        jm.setMensage(msg);
+        jm.setTo("" + aux.getReclamanteIdreclamante().getEmail());
+        jm.setCc("micuenta40@gmail.com");
+        jm.sendMail();
         return "NA";
 
     }

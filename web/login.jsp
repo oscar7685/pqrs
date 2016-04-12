@@ -48,7 +48,7 @@
             <div class="dev-page-header">
 
                 <div class="dph-logo">
-                    <a href="inicio.jsp">Pqrs</a>
+                    <a href="index.jsp">Pqrs</a>
                 </div>
             </div>
             <!-- ./page header -->
@@ -70,9 +70,9 @@
                             </div>
                         </div>
                         <div class="form-group no-border margin-top-20">
-                            <button class="btn btn-success btn-block">Ingresar</button>
+                            <button class="btn btn-primary btn-block">Ingresar</button>
                             <!-- <a href="indexPeticionario.jsp" class="btn btn-success btn-block">Ingresar</a>-->
-                            <a href="registro.jsp" class="btn btn-danger btn-block">Registrarse</a>
+                            <a href="registro.jsp" class="btn btn-block" style="background-color: #000000">Registrarse</a>
                         </div>
                         <p><a href="#">¿Olvidó su contraseña?</a></p>                        
                     </form>
@@ -133,6 +133,11 @@
                                         } else {
                                             if (msg === '2') {
                                                 alert("ha ocurrido un error al intentar entrar");
+                                            } else {
+                                                if (msg === '3') {
+                                                    alert("Debe confirmar su registro antes de continuar, Por favor revise su correo electrónico");
+                                                }
+
                                             }
 
                                         }

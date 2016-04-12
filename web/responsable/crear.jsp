@@ -3,7 +3,7 @@
 <!-- page wrapper -->
 <div class="container">
     <!-- Horizontal Form -->
-    <div class="wrapper wrapper-white">
+    <div class="wrapper">
         <div class="page-subtitle">
             <h3>Crear Funcionario</h3>
         </div>            

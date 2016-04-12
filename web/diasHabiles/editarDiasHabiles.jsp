@@ -6,7 +6,7 @@
 <div class="container">
 
     <!-- Horizontal Form -->
-    <div class="wrapper wrapper-white">
+    <div class="wrapper">
         <div class="page-subtitle">
             <h3>Configurar calendario</h3>
         </div>
@@ -51,7 +51,6 @@
         flat: true,
                 mode: 'multiple',
                 first_day: 0,
-                default_date: false,
                 select_month: false,
                 min: '01-11-2015',
                 date:[

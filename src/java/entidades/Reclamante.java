@@ -38,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Reclamante.findByPassword", query = "SELECT r FROM Reclamante r WHERE r.password = :password"),
     @NamedQuery(name = "Reclamante.findByTipo", query = "SELECT r FROM Reclamante r WHERE r.tipo = :tipo")})
 public class Reclamante implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -71,6 +72,22 @@ public class Reclamante implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "tipo")
     private String tipo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "estado")
+    private String estado;
+    @Size(min = 1, max = 100)
+    @Column(name = "modalidad")
+    private String modalidad;
+
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
+    }
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reclamanteIdreclamante")
     private List<Pqrs> pqrsList;
 
@@ -79,6 +96,14 @@ public class Reclamante implements Serializable {
 
     public Reclamante(Integer idreclamante) {
         this.idreclamante = idreclamante;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Reclamante(Integer idreclamante, String nombre, String apellido, String password, String tipo) {
@@ -178,5 +203,4 @@ public class Reclamante implements Serializable {
     public String toString() {
         return "entidades.Reclamante[ idreclamante=" + idreclamante + " ]";
     }
-    
 }

@@ -26,7 +26,7 @@
             </div>                            
         </div>
     </div>
-    <div class="wrapper wrapper-white">
+    <div class="wrapper">
         <div class="page-subtitle">
             <h3>Mis PQRS</h3>
         </div>
@@ -40,6 +40,7 @@
                                 <th>Fecha de Ingreso</th>
                                 <th>Estado</th>
                                 <th>Dias habiles transcurridos</th>
+                                <th>Recordatorio / Requerimientos</th>
                                 <th>Asignación</th>
                                 <th>Fecha Asignación</th>
                                 </c:when>
@@ -74,11 +75,36 @@
                                         </c:otherwise>
                                     </c:choose>
 
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"><span class="caret"></span></button>
+                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 
+                                                <li role="presentation"
+                                                    <c:if test="${diasHabilesRestantes[iter.index]< 8}">
+                                                        class="disabled"
+                                                    </c:if>
+                                                    ><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-clock-o"></i> Recordatorio</a>
+                                                </li>
+                                                <li role="presentation"
+                                                    <c:if test="${diasHabilesRestantes[iter.index]< 16}">
+                                                        class="disabled"
+                                                    </c:if>
+                                                    ><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-bell-o"></i> 1er requerimiento</a>
+                                                </li>
+                                                <li role="presentation"
+                                                    <c:if test="${diasHabilesRestantes[iter.index]< 18}">
+                                                        class="disabled"
+                                                    </c:if>
+                                                    ><a role="menuitem" tabindex="-1" href="#"><i class="fa fa-bell"></i> 2do requerimiento</a>
+                                                </li>
+                                            </ul>
+                                        </div>   
+                                    </td>
                                     <td>
                                         <c:choose>
                                             <c:when test="${row.asignacionList.size() != 0}" >
-                                                ${row.asignacionList.get(0).asignadoA.nombre} ${row.asignacionList.get(0).asignadoA.apellido}</td>
+                                                ${row.asignacionList.get(0).asignadoA.nombre} ${row.asignacionList.get(row.asignacionList.size()-1).asignadoA.apellido}</td>
                                             </c:when>
                                         </c:choose>
 
@@ -86,7 +112,7 @@
                                     <td>
                                         <c:choose>
                                             <c:when test="${row.asignacionList.size() != 0}" >
-                                                <fmt:formatDate value="${row.asignacionList.get(0).fechaAsignacion}" pattern="yyyy/MM/dd" />
+                                                <fmt:formatDate value="${row.asignacionList.get(row.asignacionList.size()-1).fechaAsignacion}" pattern="yyyy/MM/dd" />
                                             </c:when>
                                         </c:choose>
 

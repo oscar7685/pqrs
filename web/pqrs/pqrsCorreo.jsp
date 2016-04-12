@@ -26,7 +26,7 @@
             </div>                            
         </div>
     </div>
-    <div class="wrapper wrapper-white">
+    <div class="wrapper">
         <div class="page-subtitle">
             <h3>Mis PQRS</h3>
         </div>

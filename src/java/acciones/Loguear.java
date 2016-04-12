@@ -43,9 +43,14 @@ public class Loguear implements Action {
             } else {
                 Reclamante r = reclamanteFacade.find(Integer.parseInt(identificacion));
                 if (r != null && r.getPassword().equals(password)) {
-                    session.setAttribute("reclamante", r);
-                    session.setAttribute("TipoUsuario", "reclamante");
-                    return "1";
+                    if (r.getEstado().equals("activo")) {
+                        session.setAttribute("reclamante", r);
+                        session.setAttribute("TipoUsuario", "reclamante");
+                        return "1";
+                    } else {
+                        return "3";
+                    }
+
                 } else {
                     return "2";
                 }

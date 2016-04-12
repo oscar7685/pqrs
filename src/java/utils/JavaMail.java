@@ -12,6 +12,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import javax.mail.Address;
 import javax.mail.Session;
 
 /**
@@ -25,6 +26,15 @@ public class JavaMail {
     String Mensage = "Una nueva PQRS ha sido registrada en el sistema";
     String To = "micuenta40@gmail.com";
     String Asunto = "PQRS nueva";
+    String Cc = "";
+
+    public String getCc() {
+        return Cc;
+    }
+
+    public void setCc(String Cc) {
+        this.Cc = Cc;
+    }
 
     public void sendMail() {
 
@@ -36,10 +46,10 @@ public class JavaMail {
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(Username, PassWord);
-                    }
-                });
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Username, PassWord);
+            }
+        });
 
         try {
 
@@ -47,10 +57,46 @@ public class JavaMail {
             message.setFrom(new InternetAddress(Username));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(To));
+            message.setRecipients(Message.RecipientType.CC,
+                    InternetAddress.parse(Cc));
             message.setSubject(Asunto);
             message.setText(Mensage);
 
             Transport.send(message);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void sendConfirmacion() {
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(Username, PassWord);
+            }
+        });
+
+        try {
+
+            MimeMessage simpleMessage = new MimeMessage(session);
+            simpleMessage.setFrom(new InternetAddress(Username));
+            simpleMessage.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(To));
+            simpleMessage.setRecipients(Message.RecipientType.CC,
+                    InternetAddress.parse(Cc));
+            simpleMessage.setSubject(Asunto);
+            simpleMessage.setText(Mensage, "utf-8", "html");
+
+            Transport.send(simpleMessage);
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);

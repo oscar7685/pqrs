@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="css/blue-white.css" id="dev-css">
+<link rel="stylesheet" type="text/css" href="css/dark.css" id="dev-css">
 <div class="dev-page-error">
 
     <div class="dev-page-error-block">

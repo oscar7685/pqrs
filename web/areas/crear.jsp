@@ -4,7 +4,7 @@
 <div class="container">
 
     <!-- Horizontal Form -->
-    <div class="wrapper wrapper-white">
+    <div class="wrapper">
         <div class="page-subtitle">
             <h3>Crear dependencia</h3>
         </div>

@@ -5,7 +5,7 @@
 <div class="container">
     <form id="fpqrs" role="form" method="post"> 
         <!-- basic form elements -->
-        <div class="wrapper wrapper-white">
+        <div class="wrapper">
             <div class="page-subtitle">
                 <h3>PETICIONARIO</h3>
             </div>
@@ -192,7 +192,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-8">
-                    <button type="submit" class="btn btn-default">Crear PQRS</button>
+                    <button type="submit" class="btn btn-primary" id="btnCrearPqrs" data-loading-text="Creando PQRS..." autocomplete="off">Crear PQRS</button>
                 </div>
             </div>
 
@@ -222,9 +222,9 @@
 <script type="text/javascript">
     "use strict";
     var datosAsubir;
-    $(function () {
+    $(function() {
         $("#nuevo").hide();
-        $("#crearNuevoPeticionario").click(function () {
+        $("#crearNuevoPeticionario").click(function() {
             $("#existentes").hide();
             $("#nuevo").show();
         });
@@ -235,15 +235,15 @@
                 errorClass: "has-error",
                 validClass: "has-success",
                 errorElement: "span",
-                errorPlacement: function (error, element) {
+                errorPlacement: function(error, element) {
                     $(element).after(error);
                     $(element).parents(".form-group").addClass("has-error");
                 },
-                highlight: function (element, errorClass) {
+                highlight: function(element, errorClass) {
                     $(element).parents(".form-group").removeClass("has-success").addClass(errorClass);
                     // dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 },
-                unhighlight: function (element, errorClass, validClass) {
+                unhighlight: function(element, errorClass, validClass) {
                     $(element).parents(".form-group").removeClass(errorClass).addClass(validClass);
                     //dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 },
@@ -263,18 +263,19 @@
                     password: {required: true, minlength: 5, maxlength: 20},
                     re_password: {required: true, minlength: 5, maxlength: 20, equalTo: "#password2"}
                 },
-                submitHandler: function () {
+                submitHandler: function() {
+                    $("#btnCrearPqrs").button('loading');
                     $.ajax({
                         url: 'Controller?accion=crearPQRSAdmin2',
                         data: $("#fpqrs").serialize(),
                         type: 'post',
-                        success: function (msg) {
+                        success: function(msg) {
                             //$("div.dev-page-content").html(data);
                             if (!datosAsubir) {
                                 document.location = "#listarTodasPQRS";
                             } else {
-                                datosAsubir.submit().always(function () {
-                                    setTimeout(function () {
+                                datosAsubir.submit().always(function() {
+                                    setTimeout(function() {
                                         document.location = "#listarTodasPQRS";
                                     }, 1000);
                                 });
@@ -292,19 +293,19 @@
             autoUpload: false,
             dataType: 'json',
             acceptFileTypes: /(\.|\/)(xlsm)$/i,
-            done: function (e, data) {
+            done: function(e, data) {
                 $('#files').empty();
-                $.each(data.result.files, function (index, file) {
+                $.each(data.result.files, function(index, file) {
                     $('<p/>').text(file.name).appendTo('#files');
                 });
             },
-            progressall: function (e, data) {
+            progressall: function(e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
                 $('#progress .progress-bar').css('width', progress + '%');
             },
-            add: function (e, data) {
+            add: function(e, data) {
                 $(".fileinput-button").addClass('disabled');
-                $.each(data.files, function (index, file) {
+                $.each(data.files, function(index, file) {
                     $('<p/>').text(file.name).appendTo('#files');
                 });
                 datosAsubir = data;

@@ -6,7 +6,7 @@
 <div class="container">
 
     <!-- basic form elements -->
-    <div class="wrapper wrapper-white">
+    <div class="wrapper">
         <div class="page-subtitle">
             <h3>PETICIONARIO</h3>
         </div>
@@ -61,7 +61,7 @@
 
 
     <!-- Horizontal Form -->
-    <div class="wrapper wrapper-white">
+    <div class="wrapper">
         <div class="page-subtitle">
             <h3>PQRS</h3>
         </div>
@@ -96,9 +96,12 @@
                         <option></option>
                         <c:forEach items="${areas}" var="row" varStatus="iter">
                             <c:choose>
-                                <c:when test="${row.idarea != pqrs.areaIdarea.idarea}">
+                                <c:when test="${fn:length(pqrs.asignacionList)!= 0 &&  row.idarea != pqrs.asignacionList.get(pqrs.asignacionList.size()-1).asignadoA.areaIdarea.idarea}">
                                     <option value="${row.idarea}">${row.nombre}</option>
-                                </c:when>   
+                                </c:when>  
+                                <c:when test="${fn:length(pqrs.asignacionList)== 0 &&  row.idarea != pqrs.areaIdarea.idarea}">
+                                    <option value="${row.idarea}">${row.nombre}</option>
+                                </c:when>  
                                 <c:otherwise>
                                     <option selected value="${row.idarea}">${row.nombre}</option>    
                                 </c:otherwise>
@@ -152,10 +155,9 @@
                         <option></option>
                         <c:choose>
                             <c:when test="${fn:length(funcionarios)!= 0}">
-                                ${funcionarios.size()}
                                 <c:forEach items="${funcionarios}" var="row" varStatus="iter">
                                     <c:choose>
-                                        <c:when test=" ${fn:length(pqrs.asignacionList)!= 0 && row.idresponsableArea == pqrs.asignacionList.get(0).asignadoA.idresponsableArea}">
+                                        <c:when test="${fn:length(pqrs.asignacionList)!= 0 && (row.idresponsableArea eq pqrs.asignacionList.get(pqrs.asignacionList.size()-1).asignadoA.idresponsableArea)}">
                                             <option selected="selected" value="${row.idresponsableArea}">${row.nombre} ${row.apellido}</option>             
                                         </c:when>
                                         <c:otherwise>
@@ -207,15 +209,15 @@
 <script type="text/javascript">
     "use strict";
 
-    $(function () {
+    $(function() {
         if ($(".datepicker").length > 0) {
             $(".datepicker").datetimepicker({format: "DD/MM/YYYY"});
         }
 
-        $("#dependencia").change(function () {
+        $("#dependencia").change(function() {
             $("#funcionario").empty();
-            $.getJSON('Controller?accion=buscarFuncionarios&dependencia=' + $("#dependencia").val(), function (data) {
-                $.each(data, function (k, v) {
+            $.getJSON('Controller?accion=buscarFuncionarios&dependencia=' + $("#dependencia").val(), function(data) {
+                $.each(data, function(k, v) {
                     $("#funcionario").append("<option value=\"" + v.id + "\">" + v.valor + "</option>");
                 });
             });
@@ -227,15 +229,15 @@
                 validClass: "has-success",
                 errorElement: "span",
                 ignore: [],
-                errorPlacement: function (error, element) {
+                errorPlacement: function(error, element) {
                     $(element).after(error);
                     $(element).parents(".form-group").addClass("has-error");
                 },
-                highlight: function (element, errorClass) {
+                highlight: function(element, errorClass) {
                     $(element).parents(".form-group").removeClass("has-success").addClass(errorClass);
                     // dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 },
-                unhighlight: function (element, errorClass, validClass) {
+                unhighlight: function(element, errorClass, validClass) {
                     $(element).parents(".form-group").removeClass(errorClass).addClass(validClass);
                     //dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 },
@@ -247,12 +249,12 @@
                     fechaCreacion: {required: true}
 
                 },
-                submitHandler: function () {
+                submitHandler: function() {
                     $.ajax({
                         url: 'Controller?accion=editarPQRS2',
                         data: $("#feditar").serialize(),
                         type: 'post',
-                        success: function (msg) {
+                        success: function(msg) {
                             document.location = "#listarTodasPQRS"
 
                         }
@@ -268,19 +270,19 @@
             autoUpload: false,
             dataType: 'json',
             acceptFileTypes: /(\.|\/)(xlsm)$/i,
-            done: function (e, data) {
+            done: function(e, data) {
                 $('#files').empty();
-                $.each(data.result.files, function (index, file) {
+                $.each(data.result.files, function(index, file) {
                     $('<p/>').text(file.name).appendTo('#files');
                 });
             },
-            progressall: function (e, data) {
+            progressall: function(e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
                 $('#progress .progress-bar').css('width', progress + '%');
             },
-            add: function (e, data) {
+            add: function(e, data) {
                 $(".fileinput-button").addClass('disabled');
-                $.each(data.files, function (index, file) {
+                $.each(data.files, function(index, file) {
                     $('<p/>').text(file.name).appendTo('#files');
                 });
                 datosAsubir = data;

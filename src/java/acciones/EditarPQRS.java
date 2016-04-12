@@ -40,8 +40,12 @@ public class EditarPQRS implements Action {
         String idPqrs = request.getParameter("id");
         Pqrs p = pqrsFacade.find(Integer.parseInt(idPqrs));
         session.setAttribute("pqrs", p);
-        session.setAttribute("funcionarios", responsableAreaFacade.findByList("areaIdarea", p.getAreaIdarea()));
-        
+        if (p.getAsignacionList().size() > 0) {
+            session.setAttribute("funcionarios", responsableAreaFacade.findByList("areaIdarea", p.getAsignacionList().get(p.getAsignacionList().size() - 1).getAsignadoA().getAreaIdarea()));
+        } else {
+            session.setAttribute("funcionarios", responsableAreaFacade.findByList("areaIdarea", p.getAreaIdarea()));
+        }
+
         return "pqrs/editar.jsp";
 
     }

@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Respuesta.findByIdrespuesta", query = "SELECT r FROM Respuesta r WHERE r.idrespuesta = :idrespuesta"),
     @NamedQuery(name = "Respuesta.findByFechaRespuesta", query = "SELECT r FROM Respuesta r WHERE r.fechaRespuesta = :fechaRespuesta")})
 public class Respuesta implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +54,19 @@ public class Respuesta implements Serializable {
     @JoinColumn(name = "pqrs_idpqrs", referencedColumnName = "idpqrs")
     @ManyToOne(optional = false)
     private Pqrs pqrsIdpqrs;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 5000)
+    @Column(name = "respuesta")
+    private String respuesta;
+
+    public String getRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(String respuesta) {
+        this.respuesta = respuesta;
+    }
 
     public Respuesta() {
     }
@@ -121,5 +136,4 @@ public class Respuesta implements Serializable {
     public String toString() {
         return "entidades.Respuesta[ idrespuesta=" + idrespuesta + " ]";
     }
-    
 }

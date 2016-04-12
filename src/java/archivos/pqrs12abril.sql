@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50542
 File Encoding         : 65001
 
-Date: 2015-11-26 21:49:29
+Date: 2016-04-12 06:45:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -185,12 +185,16 @@ CREATE TABLE `asignacion` (
   CONSTRAINT `fk_asignacion_pqrs1` FOREIGN KEY (`pqrs_idpqrs`) REFERENCES `pqrs` (`idpqrs`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_asignacion_responsable_area1` FOREIGN KEY (`asignado_por`) REFERENCES `responsable_area` (`idresponsable_area`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_asignacion_responsable_area2` FOREIGN KEY (`asignado_a`) REFERENCES `responsable_area` (`idresponsable_area`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of asignacion
 -- ----------------------------
-INSERT INTO `asignacion` VALUES ('1', '4', '1047408359', '2345678', '2015-11-20');
+INSERT INTO `asignacion` VALUES ('2', '13', '1047408359', '1047408359', '2016-02-13');
+INSERT INTO `asignacion` VALUES ('4', '14', '1047408359', '147852369', '2016-04-09');
+INSERT INTO `asignacion` VALUES ('5', '15', '1047408359', '1051660552', '2016-04-09');
+INSERT INTO `asignacion` VALUES ('6', '21', '1047408359', '147852369', '2016-04-09');
+INSERT INTO `asignacion` VALUES ('7', '16', '1047408359', '2345678', '2016-04-09');
 
 -- ----------------------------
 -- Table structure for dias_no_habiles
@@ -200,7 +204,7 @@ CREATE TABLE `dias_no_habiles` (
   `iddias_no_habiles` int(11) NOT NULL AUTO_INCREMENT,
   `dias` date DEFAULT NULL,
   PRIMARY KEY (`iddias_no_habiles`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dias_no_habiles
@@ -213,6 +217,7 @@ INSERT INTO `dias_no_habiles` VALUES ('44', '2015-11-13');
 INSERT INTO `dias_no_habiles` VALUES ('60', '2015-12-08');
 INSERT INTO `dias_no_habiles` VALUES ('61', '2015-11-09');
 INSERT INTO `dias_no_habiles` VALUES ('62', '2015-11-10');
+INSERT INTO `dias_no_habiles` VALUES ('63', '2016-02-10');
 
 -- ----------------------------
 -- Table structure for mail
@@ -247,20 +252,26 @@ CREATE TABLE `pqrs` (
   `medio_ingreso` varchar(45) DEFAULT NULL,
   `reclamante_idreclamante` int(11) NOT NULL,
   `estadoSolicitud` varchar(100) DEFAULT NULL,
+  `codigo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idpqrs`),
   KEY `fk_pqrs_area1_idx` (`area_idarea`),
   KEY `fk_pqrs_reclamante1_idx` (`reclamante_idreclamante`),
   CONSTRAINT `fk_pqrs_area1` FOREIGN KEY (`area_idarea`) REFERENCES `area` (`idarea`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_pqrs_reclamante1` FOREIGN KEY (`reclamante_idreclamante`) REFERENCES `reclamante` (`idreclamante`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of pqrs
 -- ----------------------------
-INSERT INTO `pqrs` VALUES ('1', 'Peticion', '1000', 'on', 'una pqrs', null, '2015-11-16', 'Activa', 'Correo', '22999635', 'Verificacion PQRS');
-INSERT INTO `pqrs` VALUES ('2', 'Queja', '145', 'on', 'el sma no funciona', '2-Penguins.jpg', '2015-10-10', 'Activa', 'Web', '22999635', 'Verificacion PQRS');
-INSERT INTO `pqrs` VALUES ('3', 'Reclamo', '1000', 'on', 'Nadie me contesta el telefono', null, '2015-10-23', 'Activa', 'Correo', '22999635', 'Verificacion PQRS');
-INSERT INTO `pqrs` VALUES ('4', 'Peticion', '92', 'on', 'una descripción', '4-Chrysanthemum.jpg', '2015-11-16', 'Activa', 'Manual', '22999635', 'Asignado a dependencia');
+INSERT INTO `pqrs` VALUES ('13', 'Peticion', '1000', 'on', 'peticion1', null, '2016-02-01', 'Activa', 'Web', '3456789', 'Asignado a dependencia', 'P201600009');
+INSERT INTO `pqrs` VALUES ('14', 'Queja', '1000', 'on', 'queja2016', null, '2016-03-25', 'Activa', 'Web', '3456789', 'Verificacion PQRS', 'Q201600010');
+INSERT INTO `pqrs` VALUES ('15', 'Reclamo', '1000', 'on', 'Reclamo2016', null, '2016-03-31', 'Activa', 'Web', '3456789', 'Verificacion PQRS', 'R201600011');
+INSERT INTO `pqrs` VALUES ('16', 'Sugerencia', '1000', 'on', 'Sugerencia 2016', null, '2016-03-28', 'Activa', 'Web', '3456789', 'Verificacion PQRS', 'S201600012');
+INSERT INTO `pqrs` VALUES ('17', 'Queja', '1000', 'on', 'hola', null, '2016-02-12', 'Activa', 'Correo', '22999635', 'Verificacion PQRS', 'Q201600005');
+INSERT INTO `pqrs` VALUES ('18', 'Peticion', '1000', 'on', 'Peticion X', null, '2016-02-11', 'Activa', 'Correo', '22999635', 'Verificacion PQRS', 'P201600006');
+INSERT INTO `pqrs` VALUES ('19', 'Peticion', '1000', 'on', 'Peticion Y', null, '2016-02-13', 'Activa', 'Web', '22999635', 'Verificacion PQRS', 'P201600007');
+INSERT INTO `pqrs` VALUES ('20', 'Peticion', '2', 'on', 'Esto es una peticion', null, '2016-04-08', 'Activa', 'Telefono', '123456789', 'Verificacion PQRS', 'P201600008');
+INSERT INTO `pqrs` VALUES ('21', 'Peticion', '2', 'on', 'ERsto es una prueba', '21-Parlache.jpg', '2016-04-07', 'Activa', 'Correo', '73214802', 'Respuesta enviada al usuario', 'P201600009');
 
 -- ----------------------------
 -- Table structure for reclamante
@@ -274,14 +285,19 @@ CREATE TABLE `reclamante` (
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(100) NOT NULL,
   `tipo` varchar(100) NOT NULL,
+  `estado` varchar(100) NOT NULL,
+  `modalidad` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`idreclamante`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of reclamante
 -- ----------------------------
-INSERT INTO `reclamante` VALUES ('3456789', 'Margarita', 'Martinez Perez', '3009876543', 'margarita@gmail.com', '123456', 'ASPIRANTE');
-INSERT INTO `reclamante` VALUES ('22999635', 'Diana', 'Padilla', '3002755225', 'artemus1@gmail.com', '123456', 'PROFESOR');
+INSERT INTO `reclamante` VALUES ('3456789', 'Margarita', 'Martinez Perez', '3009876543', 'margarita@gmail.com', '123456', 'ASPIRANTE', 'inactivo', null);
+INSERT INTO `reclamante` VALUES ('12345678', 'Diana', 'Perez', '3000001456', 'oscar7685@gmail.com', '123456', 'PROFESOR', 'inactivo', null);
+INSERT INTO `reclamante` VALUES ('22999635', 'Diana', 'Padilla', '3002755225', 'artemus1@gmail.com', '123456', 'PROFESOR', 'inactivo', null);
+INSERT INTO `reclamante` VALUES ('73214802', 'Oscar', 'Ballestero', '3012685233', 'oscar7685@gmail.com', '123456', 'EGRESADO', 'activo', null);
+INSERT INTO `reclamante` VALUES ('123456789', 'Lucero', 'Perez', '3007894561', 'oscar7685@hotmail.com', '123456', 'PROFESOR', 'activo', null);
 
 -- ----------------------------
 -- Table structure for responsable_area
@@ -305,7 +321,7 @@ CREATE TABLE `responsable_area` (
 -- Records of responsable_area
 -- ----------------------------
 INSERT INTO `responsable_area` VALUES ('2345678', 'MARTHA', 'YANEZ CONTRERAS', 'oscar7685@gmail.com', '3001234564', null, '123456', '92');
-INSERT INTO `responsable_area` VALUES ('147852369', 'PEDRO', 'PEREIRA', 'pedritopereira@gmail.com', '3000000000', null, '123456', '2');
+INSERT INTO `responsable_area` VALUES ('147852369', 'PEDRO', 'PEREIRA', 'oscar7685@hotmail.com', '3000000000', null, '123456', '2');
 INSERT INTO `responsable_area` VALUES ('1047408359', 'NELSON', 'RAMIREZ RODRIGUEZ', 'micuenta40@gmail.com', '30047474747', '6666666', '123456', '1000');
 INSERT INTO `responsable_area` VALUES ('1051660552', 'ROBER', 'FLOREZ', 'rober@unicartagena.edu.co', '3002005001', null, '123456', '2');
 
@@ -318,13 +334,15 @@ CREATE TABLE `respuesta` (
   `pqrs_idpqrs` int(11) NOT NULL,
   `responsable_area_idresponsable_area` int(11) NOT NULL,
   `fecha_respuesta` date NOT NULL,
+  `respuesta` varchar(5000) NOT NULL,
   PRIMARY KEY (`idrespuesta`),
   KEY `fk_respuesta_pqrs1_idx` (`pqrs_idpqrs`),
   KEY `fk_respuesta_responsable_area1_idx` (`responsable_area_idresponsable_area`),
   CONSTRAINT `fk_respuesta_pqrs1` FOREIGN KEY (`pqrs_idpqrs`) REFERENCES `pqrs` (`idpqrs`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_respuesta_responsable_area1` FOREIGN KEY (`responsable_area_idresponsable_area`) REFERENCES `responsable_area` (`idresponsable_area`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of respuesta
 -- ----------------------------
+INSERT INTO `respuesta` VALUES ('1', '21', '147852369', '2016-04-09', 'Esto es una respuesta');

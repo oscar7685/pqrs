@@ -1,15 +1,68 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>             
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>     
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="css/jquery.fileupload.css">
 <!-- page content container -->
 <div class="container">
 
     <!-- Horizontal Form -->
-    <div class="wrapper wrapper-white">
+    <div class="wrapper">
         <div class="page-subtitle">
             <h3>Responder PQRS</h3>
         </div>
+        <!-- basic form elements -->
+        <div class="wrapper">
+            <div class="page-subtitle">
+                <h3>PETICIONARIO</h3>
+            </div>
 
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Identificación</label>
+                        <input type="text" disabled="disabled" class="form-control" value="${pqrs.reclamanteIdreclamante.idreclamante}"/>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" disabled="disabled" class="form-control" value="${pqrs.reclamanteIdreclamante.nombre}"/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Apellido</label>
+                        <input type="text" disabled="disabled" class="form-control" value="${pqrs.reclamanteIdreclamante.apellido}"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Tipo</label>
+                        <select name="tipo_solicitud" class="form-control">
+                            <option>${pqrs.reclamanteIdreclamante.tipo}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Celular</label>
+                        <input type="text" disabled="disabled" class="form-control" value="${pqrs.reclamanteIdreclamante.celular}"/>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Correo Electronico</label>
+                        <input type="text" disabled="disabled" class="form-control" value="${pqrs.reclamanteIdreclamante.email}"/>
+                    </div>
+                </div>
+            </div>
+        </div>                        
+        <!-- ./basic form elements -->
         <form id="feditar" role="form" method="post"> 
             <div class="form-group">
                 <label class="col-md-2 control-label">Tipo de solicitud</label>
@@ -17,6 +70,20 @@
                     <select name="tipo_solicitud" class="form-control">
                         <option>${pqrs.tipo}</option>
                     </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Medio de ingreso</label>
+                <div class="col-md-8">
+                    <select name="medioIngreso" class="form-control">
+                        <option>${pqrs.medioIngreso}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Fecha de ingreso</label>
+                <div class="col-md-8">
+                    <input type="text" value="<fmt:formatDate value="${pqrs.fechaCreacion}" pattern="dd/MM/yyyy" />" class="form-control" disabled="disabled" placeholder="DD/MM/YYYY" name="fechaCreacion">
                 </div>
             </div>
 
@@ -61,7 +128,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-8">
-                    <button type="submit" class="btn btn-primary">Responder PQRS</button>
+                    <button type="submit" data-loading-text="Respondiendo PQRS..." class="btn btn-primary" autocomplete="off" id="btnResponder">Responder PQRS</button>
                 </div>
             </div>
 
@@ -125,12 +192,14 @@
                     tipo_solicitud: {required: true},
                     dependencia: {required: true},
                     descripcion: {required: true},
-                    funcionario: {required: true}
+                    funcionario: {required: true},
+                    respuesta: {required: true}
 
                 },
                 submitHandler: function() {
+                    $("#btnResponder").button('loading');
                     $.ajax({
-                        url: 'Controller?accion=editarPQRS2',
+                        url: 'Controller?accion=responderPQRS2',
                         data: $("#feditar").serialize(),
                         type: 'post',
                         success: function(msg) {

@@ -15,6 +15,7 @@ import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import sesionbeans.ReclamanteFacade;
+import utils.JavaMail;
 
 /**
  *
@@ -34,7 +35,14 @@ public class RegistrarReclamante implements Action {
         String correo = request.getParameter("correo");
         String password = request.getParameter("password");
 
+
+
+
         Reclamante reclamante = new Reclamante();
+        if (tipo_usuario.equals("ESTUDIANTE")) {
+            String modalidad = request.getParameter("modalidad");
+            reclamante.setModalidad(modalidad);
+        }
         reclamante.setNombre(nombre);
         reclamante.setApellido(apellido);
         reclamante.setIdreclamante(Integer.parseInt(identificacion));
@@ -42,8 +50,17 @@ public class RegistrarReclamante implements Action {
         reclamante.setTipo(tipo_usuario);
         reclamante.setEmail(correo);
         reclamante.setPassword(password);
+        reclamante.setEstado("inactivo");
         try {
             reclamanteFacade.create(reclamante);
+            String msg = "Bienvenido a PQRS<br/>"
+                    + "Para confirmar tu cuenta por favor haz click en el siguiente enlace <a href='http://localhost:8080" + request.getContextPath() + "/Activar?id=" + identificacion + "'>Confirmar cuenta</a>";
+
+            JavaMail jm = new JavaMail();
+            jm.setAsunto("Confirmar cuenta PQRS");
+            jm.setMensage(msg);
+            jm.setCc(correo);
+            jm.sendConfirmacion();
             return "1";
         } catch (Exception e) {
             return "2";

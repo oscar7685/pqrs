@@ -34,7 +34,7 @@
             <div class="dev-page-header">
 
                 <div class="dph-logo">
-                    <a href="inicio.jsp">Pqrs</a>
+                    <a href="index.jsp">Pqrs</a>
                 </div>
             </div>
             <!-- ./page header -->
@@ -84,6 +84,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <select id="modalidad" class="form-control hide" name="modalidad" >
+                                        <option selected value=""></option>
+                                        <option value="Presencial">Presencial</option>
+                                        <option value="Distancia">Distancia</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Correo" name="correo">
                                 </div>
                                 <div class="form-group">                            
@@ -96,7 +103,7 @@
                         </div>
 
                         <div class="form-group no-border">
-                            <button class="btn btn-danger btn-block">Registrarse</button>
+                            <button id="botonRegisto" class="btn btn-primary btn-block" data-loading-text="Registrando usuario..." autocomplete="off">Registrarse</button>
                         </div>
                     </form>
                 </div>
@@ -123,7 +130,7 @@
                             errorClass: "has-error",
                             validClass: "has-success",
                             errorElement: "span",
-                            ignore: [],
+                            ignore: '',
                             errorPlacement: function(error, element) {
                                 $(element).after(error);
                                 $(element).parents(".form-group").addClass("has-error");
@@ -147,6 +154,7 @@
                                 correo: {required: true, email: true}
                             },
                             submitHandler: function() {
+                                $("#botonRegisto").button('loading');
                                 $.ajax({
                                     url: 'Controller?accion=registrarReclamante',
                                     data: $("#fregistro").serialize(),
@@ -155,7 +163,7 @@
 
                                         if (msg === '1')
                                         {
-                                            document.location = 'login.jsp';
+                                            alert("Antes de comenzar a usar PQRS debe confirmar el registro, por favor revise su correo electronico para activar su usuario");
                                         } else {
                                             if (msg === '2') {
                                                 alert("ha ocurrido un error al crear el reclamante");
@@ -173,6 +181,16 @@
                 }
             };
             $(function() {
+
+                $("#tipo_usuario").change(function() {
+                    if ("ESTUDIANTE" === $('#tipo_usuario :selected').val()) {
+                        $("#modalidad").removeClass("hide");
+                    } else {
+                        $("#modalidad").addClass("hide");
+                    }
+
+                });
+
                 demo_form_validation1.init();
             });
         </script>

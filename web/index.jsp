@@ -23,7 +23,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" >
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" >
 
-        <link rel="icon" href="favicon.ico" type="image/x-icon" >
         <!-- ./meta section -->
 
         <!-- css styles -->
@@ -50,7 +49,7 @@
             <div class="dev-page-header">
 
                 <div class="dph-logo">
-                    <a href="inicio.jsp">Pqrs</a>
+                    <a href="index.jsp">Pqrs</a>
                 </div>
             </div>
             <!-- ./page header -->
@@ -66,7 +65,7 @@
                             <h1>Tenga en cuenta</h1>
                             <p>Apreciado usuario por medio del sistema de PQRS de la
                                 Universidad de Cartagena, usted podrá presentar peticiones, quejas, reclamos y sugerencias por motivos de interes general o particular, para ello
-                                debe registrarse en el sistema para poder registrar su solicitud, tenga en cuenta que el tiempo de respuesta para sus PQRS es de 15 dias habiiles</p>
+                                debe registrarse en el sistema para poder registrar su solicitud, tenga en cuenta que el tiempo de respuesta para sus PQRS es de 15 dias habiiles</p><br/>
                         </div>   
                         <div class="wrapper">
 
@@ -119,7 +118,12 @@
                                             <h3 class="panel-title">Sugerencia</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <p>Es una insinuación o formulación de ideas tendientes al mejoramiento de un servicio o de la misma entidad. Hace referencia a las preguntas, inquietudes, propuestas, ofrecimientos o consejos que se reciban por parte de los usuarios.</p>
+                                            <p>Es una insinuación o formulación de ideas tendientes al mejoramiento de un servicio o de la misma entidad. Hace referencia a las preguntas, inquietudes, propuestas, 
+                                                ofrecimientos o consejos que se reciban por parte de los usuarios. &nbsp;&nbsp;&nbsp
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            </p>
                                         </div>
                                     </div>
                                     <!-- ./buttons in panel -->
@@ -132,10 +136,17 @@
                                     <a class="btn btn-primary" href="login.jsp">Registrar PQRS</a>                        
                                 </div>
                             </div>
-
                         </div>      
                         <!-- Copyright -->
                         <div class="copyright">
+                            <div class="row">
+                                <div style="margin-left: 0px" class="col-md-6">
+                                    <a target="_blank" href="http://www.unicartagena.edu.co/" title="Universidad de Cartagena"><img style="margin-top: 12px; margin-left: 0px;" src="img/logooficial2.png"></a>
+                                </div>
+                                <div style="margin-left: 0px" class="col-md-6">
+                                    <a href="#" title="PQRS"><img style="margin-top: 12px; margin-left: 0px;" src="img/boton-pqrs.png"></a>
+                                </div>
+                            </div>    
                             <div class="pull-left">
                                 &copy; 2015 <strong>Universidad de Cartagena</strong>. Todos los derechos reservados.
                             </div>
