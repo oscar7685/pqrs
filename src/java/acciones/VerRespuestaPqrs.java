@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import sesionbeans.AreaFacade;
 import sesionbeans.PqrsFacade;
-import sesionbeans.ProcesoFacade;
 import sesionbeans.ReclamanteFacade;
 import sesionbeans.ResponsableAreaFacade;
 
@@ -27,24 +26,25 @@ import sesionbeans.ResponsableAreaFacade;
  *
  * @author Ususario
  */
-public class ResponderPqrs implements Action {
-    ProcesoFacade procesoFacade = lookupProcesoFacadeBean();
+public class VerRespuestaPqrs implements Action {
 
-    ResponsableAreaFacade responsableAreaFacade = lookupResponsableAreaFacadeBean();
     PqrsFacade pqrsFacade = lookupPqrsFacadeBean();
     AreaFacade areaFacade = lookupAreaFacadeBean();
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
-
         HttpSession session = request.getSession();
         session.setAttribute("areas", areaFacade.findAll());
         String idPqrs = request.getParameter("id");
         Pqrs p = pqrsFacade.find(Integer.parseInt(idPqrs));
+        if (!p.getEstado().equals("Inactiva")) {
+            p.setEstado("Inactiva");
+            pqrsFacade.edit(p);
+        }
+
         session.setAttribute("pqrs", p);
-        session.setAttribute("funcionarios", responsableAreaFacade.findByList("areaIdarea", p.getAreaIdarea()));
-        session.setAttribute("procesos", procesoFacade.findAll());
-        return "pqrs/responderPqrs.jsp";
+
+        return "pqrs/verRespuesta.jsp";
 
     }
 
@@ -62,26 +62,6 @@ public class ResponderPqrs implements Action {
         try {
             Context c = new InitialContext();
             return (PqrsFacade) c.lookup("java:global/pqrs/PqrsFacade!sesionbeans.PqrsFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    private ResponsableAreaFacade lookupResponsableAreaFacadeBean() {
-        try {
-            Context c = new InitialContext();
-            return (ResponsableAreaFacade) c.lookup("java:global/pqrs/ResponsableAreaFacade!sesionbeans.ResponsableAreaFacade");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
-    private ProcesoFacade lookupProcesoFacadeBean() {
-        try {
-            Context c = new InitialContext();
-            return (ProcesoFacade) c.lookup("java:global/pqrs/ProcesoFacade!sesionbeans.ProcesoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);

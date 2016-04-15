@@ -83,6 +83,12 @@
                                     <a href="#listarPeticionarios"><i class="fa fa-user"></i> <span>Listar Peticionarios</span></a>
                                 </li>
                                 <li>
+                                    <a href="#procesos"><i class="fa fa-building-o"></i> <span>Procesos</span></a>
+                                </li>
+                                <li>
+                                    <a href="#subprocesos"><i class="fa fa-building-o"></i> <span>Subprocesos</span></a>
+                                </li>
+                                <li>
                                     <a href="#dependencias"><i class="fa fa-building-o"></i> <span>Dependencias</span></a>
                                 </li>
                                 <li>
@@ -113,7 +119,7 @@
         <!-- ./page wrapper -->
 
         <!-- javascript -->
-        <script type="text/javascript" src="//code.jquery.com/jquery-2.1.0.min.js"></script>       
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>       
         <!--<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>-->
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
 

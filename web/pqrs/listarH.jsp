@@ -32,6 +32,7 @@
                                 <th>Correo</th>
                                 <th>Celular</th>
                                 <th>Estado</th>
+                                <th></th>
                             </tr>
                         </thead>                               
                         <tbody>
@@ -43,6 +44,7 @@
                                     <td>${row.reclamanteIdreclamante.email}</td>
                                     <td>${row.reclamanteIdreclamante.celular}</td>
                                     <td>${row.estado}</td>
+                                    <td><a href="#verRespuestaPqrs&id=${row.idpqrs}"><i class="fa fa-eye"></i> <span>Ver respuesta</span></a></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

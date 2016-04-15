@@ -32,6 +32,7 @@
                                 <th>Correo</th>
                                 <th>Celular</th>
                                 <th>Estado</th>
+                                <th></th>
                             </tr>
                         </thead>                               
                         <tbody>
@@ -43,6 +44,15 @@
                                     <td>${row.reclamanteIdreclamante.email}</td>
                                     <td>${row.reclamanteIdreclamante.celular}</td>
                                     <td>${row.estadoSolicitud}</td>
+                                    <c:choose>
+                                        <c:when test="${row.estadoSolicitud == 'Respuesta enviada al usuario'}">
+                                            <td><a href="#verRespuestaPqrs&id=${row.idpqrs}"><i class="fa fa-eye"></i> <span>Ver respuesta</span></a></td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td></td>
+                                        </c:otherwise>
+                                    </c:choose>
+
                                 </tr>
                             </c:forEach>
                         </tbody>

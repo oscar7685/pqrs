@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entidades;
 
 import java.io.Serializable;
@@ -26,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Oscar
+ * @author acreditacion
  */
 @Entity
 @Table(name = "respuesta", catalog = "pqrs", schema = "")
@@ -34,9 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Respuesta.findAll", query = "SELECT r FROM Respuesta r"),
     @NamedQuery(name = "Respuesta.findByIdrespuesta", query = "SELECT r FROM Respuesta r WHERE r.idrespuesta = :idrespuesta"),
-    @NamedQuery(name = "Respuesta.findByFechaRespuesta", query = "SELECT r FROM Respuesta r WHERE r.fechaRespuesta = :fechaRespuesta")})
+    @NamedQuery(name = "Respuesta.findByFechaRespuesta", query = "SELECT r FROM Respuesta r WHERE r.fechaRespuesta = :fechaRespuesta"),
+    @NamedQuery(name = "Respuesta.findByRespuesta", query = "SELECT r FROM Respuesta r WHERE r.respuesta = :respuesta"),
+    @NamedQuery(name = "Respuesta.findByEvaluacion", query = "SELECT r FROM Respuesta r WHERE r.evaluacion = :evaluacion")})
 public class Respuesta implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,25 +50,23 @@ public class Respuesta implements Serializable {
     @Column(name = "fecha_respuesta")
     @Temporal(TemporalType.DATE)
     private Date fechaRespuesta;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 5000)
+    @Column(name = "respuesta")
+    private String respuesta;
+    @Size(max = 45)
+    @Column(name = "evaluacion")
+    private String evaluacion;
+    @JoinColumn(name = "subproceso_idsubproceso", referencedColumnName = "idsubproceso")
+    @ManyToOne(optional = false)
+    private Subproceso subprocesoIdsubproceso;
     @JoinColumn(name = "responsable_area_idresponsable_area", referencedColumnName = "idresponsable_area")
     @ManyToOne(optional = false)
     private ResponsableArea responsableAreaIdresponsableArea;
     @JoinColumn(name = "pqrs_idpqrs", referencedColumnName = "idpqrs")
     @ManyToOne(optional = false)
     private Pqrs pqrsIdpqrs;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 5000)
-    @Column(name = "respuesta")
-    private String respuesta;
-
-    public String getRespuesta() {
-        return respuesta;
-    }
-
-    public void setRespuesta(String respuesta) {
-        this.respuesta = respuesta;
-    }
 
     public Respuesta() {
     }
@@ -75,9 +75,10 @@ public class Respuesta implements Serializable {
         this.idrespuesta = idrespuesta;
     }
 
-    public Respuesta(Integer idrespuesta, Date fechaRespuesta) {
+    public Respuesta(Integer idrespuesta, Date fechaRespuesta, String respuesta) {
         this.idrespuesta = idrespuesta;
         this.fechaRespuesta = fechaRespuesta;
+        this.respuesta = respuesta;
     }
 
     public Integer getIdrespuesta() {
@@ -94,6 +95,30 @@ public class Respuesta implements Serializable {
 
     public void setFechaRespuesta(Date fechaRespuesta) {
         this.fechaRespuesta = fechaRespuesta;
+    }
+
+    public String getRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(String respuesta) {
+        this.respuesta = respuesta;
+    }
+
+    public String getEvaluacion() {
+        return evaluacion;
+    }
+
+    public void setEvaluacion(String evaluacion) {
+        this.evaluacion = evaluacion;
+    }
+
+    public Subproceso getSubprocesoIdsubproceso() {
+        return subprocesoIdsubproceso;
+    }
+
+    public void setSubprocesoIdsubproceso(Subproceso subprocesoIdsubproceso) {
+        this.subprocesoIdsubproceso = subprocesoIdsubproceso;
     }
 
     public ResponsableArea getResponsableAreaIdresponsableArea() {
@@ -136,4 +161,5 @@ public class Respuesta implements Serializable {
     public String toString() {
         return "entidades.Respuesta[ idrespuesta=" + idrespuesta + " ]";
     }
+    
 }

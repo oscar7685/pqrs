@@ -43,7 +43,7 @@
     </head>
     <body>
         <!-- page wrapper -->
-        <div class="dev-page">
+        <div class="dev-page dev-page-loaded dev-page-sidebar-collapsed">
 
             <!-- page header -->    
             <div class="dev-page-header">

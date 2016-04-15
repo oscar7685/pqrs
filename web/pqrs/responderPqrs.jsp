@@ -125,6 +125,25 @@
                     <textarea name="respuesta" class="form-control" rows="4"></textarea>
                 </div>
             </div>            
+            <div class="form-group">
+                <label class="col-md-2 control-label">Proceso</label>
+                <div class="col-md-8">
+                    <select class="form-control" name="proceso" id="proceso">
+                        <option></option>
+                        <c:forEach items="${procesos}" var="row" varStatus="iter">
+                            <option value="${row.idproceso}">${row.proceso}</option>    
+                        </c:forEach>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Subproceso</label>
+                <div class="col-md-8">
+                    <select class="form-control" name="subproceso" id="subproceso">
+                        <option></option>
+                    </select>
+                </div>
+            </div>       
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-8">
@@ -169,7 +188,6 @@
                 });
             });
         });
-
         if ($("#feditar").length > 0) {
             $("#feditar").validate({
                 errorClass: "has-error",
@@ -193,6 +211,8 @@
                     dependencia: {required: true},
                     descripcion: {required: true},
                     funcionario: {required: true},
+                    proceso: {required: true},
+                    subproceso: {required: true},
                     respuesta: {required: true}
 
                 },
@@ -237,9 +257,21 @@
             }
         }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
 
+        $("#proceso").change(function() {
+            var proceso = $("#proceso").val();
+            if (proceso !== "") {
+                $.ajax({
+                    type: 'POST',
+                    url: "Controller?accion=verSubprocesos&proceso=" + proceso,
+                    success: function(data) {
+                        $("#subproceso").empty();
+                        $("#subproceso").html(data);
+                    }
+                });
+            }
+        });
 
     });
-
 </script>
 
 

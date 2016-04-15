@@ -10,6 +10,7 @@ import entidades.Pqrs;
 import entidades.Reclamante;
 import entidades.ResponsableArea;
 import entidades.Respuesta;
+import entidades.Subproceso;
 import interfaz.Action;
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +32,7 @@ import sesionbeans.AsignacionFacade;
 import sesionbeans.PqrsFacade;
 import sesionbeans.ResponsableAreaFacade;
 import sesionbeans.RespuestaFacade;
+import sesionbeans.SubprocesoFacade;
 import utils.JavaMail;
 
 /**
@@ -38,6 +40,8 @@ import utils.JavaMail;
  * @author Ususario
  */
 public class ResponderPQRS2 implements Action {
+
+    SubprocesoFacade subprocesoFacade = lookupSubprocesoFacadeBean();
 
     RespuestaFacade respuestaFacade = lookupRespuestaFacadeBean();
     ResponsableAreaFacade responsableAreaFacade = lookupResponsableAreaFacadeBean();
@@ -49,7 +53,8 @@ public class ResponderPQRS2 implements Action {
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
         Pqrs p = (Pqrs) sesion.getAttribute("pqrs");
-
+        String subproceso = request.getParameter("subproceso");
+        Subproceso sub = subprocesoFacade.find(Integer.parseInt(subproceso));
         ResponsableArea respon = (ResponsableArea) sesion.getAttribute("responsableArea");
 
         String respuesta = request.getParameter("respuesta");
@@ -59,6 +64,8 @@ public class ResponderPQRS2 implements Action {
         res.setResponsableAreaIdresponsableArea(respon);
         res.setRespuesta(respuesta);
         res.setFechaRespuesta(new Date());
+        res.setEvaluacion("NP");
+        res.setSubprocesoIdsubproceso(sub);
         respuestaFacade.create(res);
         SimpleDateFormat formatoDelTexto = new SimpleDateFormat("dd/MM/yyyy");
         Respuesta raux = respuestaFacade.findUltimo("idrespuesta");
@@ -137,6 +144,16 @@ public class ResponderPQRS2 implements Action {
         try {
             Context c = new InitialContext();
             return (RespuestaFacade) c.lookup("java:global/pqrs/RespuestaFacade!sesionbeans.RespuestaFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private SubprocesoFacade lookupSubprocesoFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (SubprocesoFacade) c.lookup("java:global/pqrs/SubprocesoFacade!sesionbeans.SubprocesoFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
