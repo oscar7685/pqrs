@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Asignacion.findByAsignacionId", query = "SELECT a FROM Asignacion a WHERE a.asignacionId = :asignacionId"),
     @NamedQuery(name = "Asignacion.findByFechaAsignacion", query = "SELECT a FROM Asignacion a WHERE a.fechaAsignacion = :fechaAsignacion")})
 public class Asignacion implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +57,16 @@ public class Asignacion implements Serializable {
     @JoinColumn(name = "pqrs_idpqrs", referencedColumnName = "idpqrs")
     @ManyToOne(optional = false)
     private Pqrs pqrsIdpqrs;
+    @Column(name = "requerimiento")
+    private Integer requerimiento;
+
+    public Integer getRequerimiento() {
+        return requerimiento;
+    }
+
+    public void setRequerimiento(Integer requerimiento) {
+        this.requerimiento = requerimiento;
+    }
 
     public Asignacion() {
     }
@@ -132,5 +144,5 @@ public class Asignacion implements Serializable {
     public String toString() {
         return "entidades.Asignacion[ asignacionId=" + asignacionId + " ]";
     }
-    
+
 }

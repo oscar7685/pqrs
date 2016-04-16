@@ -19,6 +19,16 @@ $(function () {
                 location = "/pqrs";
             });
             //fin post
+        } else if (hash.indexOf("enviar") !== -1) {
+            var url3 = hash.replace('#', "Controller?accion=");
+            $.ajax({
+                type: "POST",
+                url: url3,
+                success: function (data)
+                {
+                    
+                } //fin success
+            }); //fin del $.ajax 
         } else {
 
             var url3 = hash.replace('#', "Controller?accion=");

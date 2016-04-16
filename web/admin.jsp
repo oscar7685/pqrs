@@ -83,10 +83,10 @@
                                     <a href="#listarPeticionarios"><i class="fa fa-user"></i> <span>Listar Peticionarios</span></a>
                                 </li>
                                 <li>
-                                    <a href="#procesos"><i class="fa fa-building-o"></i> <span>Procesos</span></a>
+                                    <a href="#procesos"><i class="fa fa-stack-overflow"></i> <span>Procesos</span></a>
                                 </li>
                                 <li>
-                                    <a href="#subprocesos"><i class="fa fa-building-o"></i> <span>Subprocesos</span></a>
+                                    <a href="#subprocesos"><i class="fa fa-stack-overflow"></i> <span>Subprocesos</span></a>
                                 </li>
                                 <li>
                                     <a href="#dependencias"><i class="fa fa-building-o"></i> <span>Dependencias</span></a>

@@ -25,13 +25,9 @@ import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import sesionbeans.AreaFacade;
 import sesionbeans.AsignacionFacade;
 import sesionbeans.PqrsFacade;
-import sesionbeans.ReclamanteFacade;
 import sesionbeans.ResponsableAreaFacade;
 import utils.JavaMail;
 
@@ -72,7 +68,6 @@ public class EditarPQRS2 implements Action {
         p.setFechaCreacion(fechaI);
         pqrsFacade.edit(p);
 
-
         ResponsableArea ra = responsableAreaFacade.find(Integer.parseInt(funcionario));
 
         if (p.getAsignacionList().size() > 0) {
@@ -86,6 +81,7 @@ public class EditarPQRS2 implements Action {
                 as.setPqrsIdpqrs(p);
                 as.setAsignadoPor(asignador);
                 as.setFechaAsignacion(new Date());
+                as.setRequerimiento(new Integer("0"));
                 asignacionFacade.create(as);
 
                 Pqrs aux = pqrsFacade.find(p.getIdpqrs());
@@ -131,7 +127,6 @@ public class EditarPQRS2 implements Action {
                         + "UNIVERSIDAD DE CARTAGENA\n"
                         + "" + formatoDelTexto.format(new Date());
 
-
                 JavaMail jm = new JavaMail();
                 jm.setAsunto("Notificación de asignación de PQRS - " + p.getCodigo());
                 jm.setMensage(msg);
@@ -148,6 +143,7 @@ public class EditarPQRS2 implements Action {
             as.setPqrsIdpqrs(p);
             as.setAsignadoPor(asignador);
             as.setFechaAsignacion(new Date());
+            as.setRequerimiento(new Integer("0"));
             asignacionFacade.create(as);
 
             Pqrs aux = pqrsFacade.find(p.getIdpqrs());
@@ -193,7 +189,6 @@ public class EditarPQRS2 implements Action {
                     + "SECRETARÍA GENERAL\n"
                     + "UNIVERSIDAD DE CARTAGENA\n"
                     + "" + formatoDelTexto.format(new Date());
-
 
             JavaMail jm = new JavaMail();
             jm.setAsunto("Notificación de asignación de PQRS - " + aux.getCodigo());

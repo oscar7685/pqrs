@@ -27,10 +27,10 @@ import sesionbeans.ResponsableAreaFacade;
  * @author Ususario
  */
 public class VerRespuestaPqrs implements Action {
-
+    
     PqrsFacade pqrsFacade = lookupPqrsFacadeBean();
     AreaFacade areaFacade = lookupAreaFacadeBean();
-
+    
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession session = request.getSession();
@@ -39,15 +39,23 @@ public class VerRespuestaPqrs implements Action {
         Pqrs p = pqrsFacade.find(Integer.parseInt(idPqrs));
         if (!p.getEstado().equals("Inactiva")) {
             p.setEstado("Inactiva");
-            pqrsFacade.edit(p);
+            
         }
-
-        session.setAttribute("pqrs", p);
-
+        if (p.getEncuesta() == null) {
+            p.setEncuesta(new Integer("1"));
+        } else if (p.getEncuesta() == 1) {
+            p.setEncuesta(new Integer("2"));
+        }
+        
+        pqrsFacade.edit(p);
+        
+        session.setAttribute(
+                "pqrs", p);
+        
         return "pqrs/verRespuesta.jsp";
-
+        
     }
-
+    
     private AreaFacade lookupAreaFacadeBean() {
         try {
             Context c = new InitialContext();
@@ -57,7 +65,7 @@ public class VerRespuestaPqrs implements Action {
             throw new RuntimeException(ne);
         }
     }
-
+    
     private PqrsFacade lookupPqrsFacadeBean() {
         try {
             Context c = new InitialContext();

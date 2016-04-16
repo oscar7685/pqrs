@@ -49,6 +49,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pqrs.findByMedioIngreso", query = "SELECT p FROM Pqrs p WHERE p.medioIngreso = :medioIngreso"),
     @NamedQuery(name = "Pqrs.findByEstadoSolicitud", query = "SELECT p FROM Pqrs p WHERE p.estadoSolicitud = :estadoSolicitud")})
 public class Pqrs implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,6 +101,16 @@ public class Pqrs implements Serializable {
     private List<Respuesta> respuestaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pqrsIdpqrs")
     private List<Asignacion> asignacionList;
+    @Column(name = "encuesta")
+    private Integer encuesta;
+
+    public Integer getEncuesta() {
+        return encuesta;
+    }
+
+    public void setEncuesta(Integer encuesta) {
+        this.encuesta = encuesta;
+    }
 
     public String getCodigo() {
         return codigo;
@@ -254,5 +265,5 @@ public class Pqrs implements Serializable {
     public String toString() {
         return "entidades.Pqrs[ idpqrs=" + idpqrs + " ]";
     }
-    
+
 }

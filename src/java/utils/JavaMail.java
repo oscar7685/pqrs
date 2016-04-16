@@ -12,8 +12,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.Address;
+import javax.mail.BodyPart;
 import javax.mail.Session;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -46,10 +51,10 @@ public class JavaMail {
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(Username, PassWord);
-            }
-        });
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(Username, PassWord);
+                    }
+                });
 
         try {
 
@@ -80,10 +85,10 @@ public class JavaMail {
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(Username, PassWord);
-            }
-        });
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(Username, PassWord);
+                    }
+                });
 
         try {
 
@@ -96,6 +101,141 @@ public class JavaMail {
             simpleMessage.setSubject(Asunto);
             simpleMessage.setText(Mensage, "utf-8", "html");
 
+            Transport.send(simpleMessage);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void sendRecordatorio() {
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(Username, PassWord);
+                    }
+                });
+
+        try {
+            // Se compone la parte del texto
+            BodyPart texto = new MimeBodyPart();
+            texto.setText("" + Mensage);
+
+            // Se compone el adjunto con la imagen
+            BodyPart adjunto = new MimeBodyPart();
+            adjunto.setDataHandler(
+                    new DataHandler(new FileDataSource("" + System.getProperty("user.dir") + "/recordatorio.pdf")));
+            adjunto.setFileName("recordatorio.pdf");
+            // Una MultiParte para agrupar texto e imagen.
+            MimeMultipart multiParte = new MimeMultipart();
+            multiParte.addBodyPart(texto);
+            multiParte.addBodyPart(adjunto);
+            MimeMessage simpleMessage = new MimeMessage(session);
+            simpleMessage.setFrom(new InternetAddress(Username));
+            simpleMessage.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(To));
+            simpleMessage.setRecipients(Message.RecipientType.CC,
+                    InternetAddress.parse(Cc));
+            simpleMessage.setSubject(Asunto);
+            simpleMessage.setContent(multiParte);
+            Transport.send(simpleMessage);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void send1erRequerimiento() {
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(Username, PassWord);
+                    }
+                });
+
+        try {
+            // Se compone la parte del texto
+            BodyPart texto = new MimeBodyPart();
+            texto.setText("" + Mensage);
+
+            // Se compone el adjunto con la imagen
+            BodyPart adjunto = new MimeBodyPart();
+            adjunto.setDataHandler(
+                    new DataHandler(new FileDataSource("" + System.getProperty("user.dir") + "/requerimiento1.pdf")));
+            adjunto.setFileName("requerimiento1.pdf");
+            // Una MultiParte para agrupar texto e imagen.
+            MimeMultipart multiParte = new MimeMultipart();
+            multiParte.addBodyPart(texto);
+            multiParte.addBodyPart(adjunto);
+            MimeMessage simpleMessage = new MimeMessage(session);
+            simpleMessage.setFrom(new InternetAddress(Username));
+            simpleMessage.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(To));
+            simpleMessage.setRecipients(Message.RecipientType.CC,
+                    InternetAddress.parse(Cc));
+            simpleMessage.setSubject(Asunto);
+            simpleMessage.setContent(multiParte);
+            Transport.send(simpleMessage);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void send2doRequerimiento() {
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(Username, PassWord);
+                    }
+                });
+
+        try {
+            // Se compone la parte del texto
+            BodyPart texto = new MimeBodyPart();
+            texto.setText("" + Mensage);
+
+            // Se compone el adjunto con la imagen
+            BodyPart adjunto = new MimeBodyPart();
+            adjunto.setDataHandler(
+                    new DataHandler(new FileDataSource("" + System.getProperty("user.dir") + "/requerimiento2.pdf")));
+            adjunto.setFileName("requerimiento2.pdf");
+            // Una MultiParte para agrupar texto e imagen.
+            MimeMultipart multiParte = new MimeMultipart();
+            multiParte.addBodyPart(texto);
+            multiParte.addBodyPart(adjunto);
+            MimeMessage simpleMessage = new MimeMessage(session);
+            simpleMessage.setFrom(new InternetAddress(Username));
+            simpleMessage.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(To));
+            simpleMessage.setRecipients(Message.RecipientType.CC,
+                    InternetAddress.parse(Cc));
+            simpleMessage.setSubject(Asunto);
+            simpleMessage.setContent(multiParte);
             Transport.send(simpleMessage);
 
         } catch (MessagingException e) {

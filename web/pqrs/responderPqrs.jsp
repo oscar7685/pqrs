@@ -122,17 +122,33 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Respuesta</label>
                 <div class="col-md-8">
-                    <textarea name="respuesta" class="form-control" rows="4"></textarea>
+                    <c:choose>
+                        <c:when test="${pqrs.estadoSolicitud != 'Respuesta enviada al usuario'}">
+                            <textarea name="respuesta" class="form-control" rows="4"></textarea>
+                        </c:when>
+                        <c:otherwise>
+                            <textarea name="respuesta" class="form-control" rows="4" disabled="disabled">${pqrs.respuestaList.get(pqrs.respuestaList.size()-1).respuesta}</textarea>
+                        </c:otherwise>    
+                    </c:choose>
+
                 </div>
             </div>            
             <div class="form-group">
                 <label class="col-md-2 control-label">Proceso</label>
                 <div class="col-md-8">
                     <select class="form-control" name="proceso" id="proceso">
-                        <option></option>
-                        <c:forEach items="${procesos}" var="row" varStatus="iter">
-                            <option value="${row.idproceso}">${row.proceso}</option>    
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${pqrs.estadoSolicitud != 'Respuesta enviada al usuario'}">
+                                <option></option>
+                                <c:forEach items="${procesos}" var="row" varStatus="iter">
+                                    <option value="${row.idproceso}">${row.proceso}</option>    
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <option>${pqrs.respuestaList.get(pqrs.respuestaList.size()-1).subprocesoIdsubproceso.procesoIdproceso.proceso}</option>
+                            </c:otherwise>    
+                        </c:choose>
+
                     </select>
                 </div>
             </div>
@@ -140,14 +156,24 @@
                 <label class="col-md-2 control-label">Subproceso</label>
                 <div class="col-md-8">
                     <select class="form-control" name="subproceso" id="subproceso">
-                        <option></option>
+                        <c:choose>
+                            <c:when test="${pqrs.estadoSolicitud != 'Respuesta enviada al usuario'}">
+                                <option></option>
+                            </c:when>
+                            <c:otherwise>
+                                <option>${pqrs.respuestaList.get(pqrs.respuestaList.size()-1).subprocesoIdsubproceso.subproceso}</option>
+                            </c:otherwise>    
+                        </c:choose>
+
                     </select>
                 </div>
             </div>       
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-8">
-                    <button type="submit" data-loading-text="Respondiendo PQRS..." class="btn btn-primary" autocomplete="off" id="btnResponder">Responder PQRS</button>
+                    <c:if test="${pqrs.estadoSolicitud != 'Respuesta enviada al usuario'}">
+                        <button type="submit" data-loading-text="Respondiendo PQRS..." class="btn btn-primary" autocomplete="off" id="btnResponder">Responder PQRS</button>
+                    </c:if>
                 </div>
             </div>
 
@@ -178,12 +204,12 @@
 <script type="text/javascript">
     "use strict";
 
-    $(function() {
+    $(function () {
 
-        $("#dependencia").change(function() {
+        $("#dependencia").change(function () {
             $("#funcionario").empty();
-            $.getJSON('Controller?accion=buscarFuncionarios&dependencia=' + $("#dependencia").val(), function(data) {
-                $.each(data, function(k, v) {
+            $.getJSON('Controller?accion=buscarFuncionarios&dependencia=' + $("#dependencia").val(), function (data) {
+                $.each(data, function (k, v) {
                     $("#funcionario").append("<option value=\"" + v.id + "\">" + v.valor + "</option>");
                 });
             });
@@ -194,15 +220,15 @@
                 validClass: "has-success",
                 errorElement: "span",
                 ignore: [],
-                errorPlacement: function(error, element) {
+                errorPlacement: function (error, element) {
                     $(element).after(error);
                     $(element).parents(".form-group").addClass("has-error");
                 },
-                highlight: function(element, errorClass) {
+                highlight: function (element, errorClass) {
                     $(element).parents(".form-group").removeClass("has-success").addClass(errorClass);
                     // dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 },
-                unhighlight: function(element, errorClass, validClass) {
+                unhighlight: function (element, errorClass, validClass) {
                     $(element).parents(".form-group").removeClass(errorClass).addClass(validClass);
                     //dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 },
@@ -216,13 +242,13 @@
                     respuesta: {required: true}
 
                 },
-                submitHandler: function() {
+                submitHandler: function () {
                     $("#btnResponder").button('loading');
                     $.ajax({
                         url: 'Controller?accion=responderPQRS2',
                         data: $("#feditar").serialize(),
                         type: 'post',
-                        success: function(msg) {
+                        success: function (msg) {
                             document.location = "#listarTodasPQRS"
 
                         }
@@ -238,32 +264,32 @@
             autoUpload: false,
             dataType: 'json',
             acceptFileTypes: /(\.|\/)(xlsm)$/i,
-            done: function(e, data) {
+            done: function (e, data) {
                 $('#files').empty();
-                $.each(data.result.files, function(index, file) {
+                $.each(data.result.files, function (index, file) {
                     $('<p/>').text(file.name).appendTo('#files');
                 });
             },
-            progressall: function(e, data) {
+            progressall: function (e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
                 $('#progress .progress-bar').css('width', progress + '%');
             },
-            add: function(e, data) {
+            add: function (e, data) {
                 $(".fileinput-button").addClass('disabled');
-                $.each(data.files, function(index, file) {
+                $.each(data.files, function (index, file) {
                     $('<p/>').text(file.name).appendTo('#files');
                 });
                 datosAsubir = data;
             }
         }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
 
-        $("#proceso").change(function() {
+        $("#proceso").change(function () {
             var proceso = $("#proceso").val();
             if (proceso !== "") {
                 $.ajax({
                     type: 'POST',
                     url: "Controller?accion=verSubprocesos&proceso=" + proceso,
-                    success: function(data) {
+                    success: function (data) {
                         $("#subproceso").empty();
                         $("#subproceso").html(data);
                     }
