@@ -35,9 +35,6 @@ public class RegistrarReclamante implements Action {
         String correo = request.getParameter("correo");
         String password = request.getParameter("password");
 
-
-
-
         Reclamante reclamante = new Reclamante();
         if (tipo_usuario.equals("ESTUDIANTE")) {
             String modalidad = request.getParameter("modalidad");
@@ -54,7 +51,7 @@ public class RegistrarReclamante implements Action {
         try {
             reclamanteFacade.create(reclamante);
             String msg = "Bienvenido a PQRS<br/>"
-                    + "Para confirmar tu cuenta por favor haz click en el siguiente enlace <a href='http://localhost:8080" + request.getContextPath() + "/Activar?id=" + identificacion + "'>Confirmar cuenta</a>";
+                    + "Para confirmar tu cuenta por favor haz click en el siguiente enlace <a href='http:" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/Activar?id=" + identificacion + "'>Confirmar cuenta</a>";
 
             JavaMail jm = new JavaMail();
             jm.setAsunto("Confirmar cuenta PQRS");
@@ -65,8 +62,6 @@ public class RegistrarReclamante implements Action {
         } catch (Exception e) {
             return "2";
         }
-
-
 
     }
 

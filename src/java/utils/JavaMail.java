@@ -19,6 +19,7 @@ import javax.mail.BodyPart;
 import javax.mail.Session;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMultipart;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -26,6 +27,7 @@ import javax.mail.internet.MimeMultipart;
  */
 public class JavaMail {
 
+    private final static Logger LOGGER = Logger.getLogger(JavaMail.class);
     public static String Username = "micuenta40@gmail.com";
     public static String PassWord = "qwe789..";
     String Mensage = "Una nueva PQRS ha sido registrada en el sistema";
@@ -44,15 +46,21 @@ public class JavaMail {
     public void sendMail() {
 
         Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+        /*props.put("mail.smtp.auth", "true");
+         props.put("mail.smtp.starttls.enable", "true");
+         props.put("mail.smtp.host", "smtp.gmail.com");
+         props.put("mail.smtp.port", "587");
+         */
 
-        Session session = Session.getInstance(props,
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+        Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(Username, PassWord);
+                        return new PasswordAuthentication("micuenta40@gmail.com", "qwe789..");
                     }
                 });
 
@@ -78,15 +86,15 @@ public class JavaMail {
     public void sendConfirmacion() {
 
         Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+        Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(Username, PassWord);
+                        return new PasswordAuthentication("micuenta40@gmail.com", "qwe789..");
                     }
                 });
 
@@ -104,6 +112,7 @@ public class JavaMail {
             Transport.send(simpleMessage);
 
         } catch (MessagingException e) {
+            LOGGER.error("Se ha presentado un error", e);
             throw new RuntimeException(e);
         }
 
@@ -112,15 +121,15 @@ public class JavaMail {
     public void sendRecordatorio() {
 
         Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+        Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(Username, PassWord);
+                        return new PasswordAuthentication("micuenta40@gmail.com", "qwe789..");
                     }
                 });
 
@@ -157,15 +166,15 @@ public class JavaMail {
     public void send1erRequerimiento() {
 
         Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+        Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(Username, PassWord);
+                        return new PasswordAuthentication("micuenta40@gmail.com", "qwe789..");
                     }
                 });
 
@@ -202,15 +211,15 @@ public class JavaMail {
     public void send2doRequerimiento() {
 
         Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-
-        Session session = Session.getInstance(props,
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", "465");
+        Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(Username, PassWord);
+                        return new PasswordAuthentication("micuenta40@gmail.com", "qwe789..");
                     }
                 });
 
