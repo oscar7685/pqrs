@@ -67,7 +67,7 @@
             data: 'fechas=' + $('.multiple').pickmeup('get_date', 'Y-m-d'),
             type: 'post',
             success: function () {
-                alert("Dias No Habiles Editados correctamente");
+                sweetAlert("Bien hecho.", "Dias No Habiles Editados correctamente!", "success");
             }
         });
     });

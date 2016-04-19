@@ -15,6 +15,7 @@
 
         <!-- css styles -->
         <link rel="stylesheet" type="text/css" href="css/dark.css" id="dev-css">
+        <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
         <!-- ./css styles -->                                     
 
         <!--[if lte IE 9]>
@@ -138,6 +139,7 @@
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script type="text/javascript" src="js/sweetalert.min.js"></script>
         <!--<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>-->
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
 

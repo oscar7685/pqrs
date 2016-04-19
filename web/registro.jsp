@@ -14,6 +14,7 @@
 
         <!-- css styles -->
         <link rel="stylesheet" type="text/css" href="css/dark.css" id="dev-css">
+        <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
         <!-- ./css styles -->                                      
 
         <!--[if lte IE 9]>
@@ -120,10 +121,11 @@
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery-validate/jquery.validate.min.js"></script>     
         <script type="text/javascript" src="js/dev-layout-default.js"></script>
+        <script type="text/javascript" src="js/sweetalert.min.js"></script>
         <script type="text/javascript">
             "use strict";
             var demo_form_validation1 = {
-                init: function() {
+                init: function () {
 
                     if ($("#fregistro").length > 0) {
                         $("#fregistro").validate({
@@ -131,15 +133,15 @@
                             validClass: "has-success",
                             errorElement: "span",
                             ignore: '',
-                            errorPlacement: function(error, element) {
+                            errorPlacement: function (error, element) {
                                 $(element).after(error);
                                 $(element).parents(".form-group").addClass("has-error");
                             },
-                            highlight: function(element, errorClass) {
+                            highlight: function (element, errorClass) {
                                 $(element).parents(".form-group").removeClass("has-success").addClass(errorClass);
                                 dev_layout_alpha_content.init(dev_layout_alpha_settings);
                             },
-                            unhighlight: function(element, errorClass, validClass) {
+                            unhighlight: function (element, errorClass, validClass) {
                                 $(element).parents(".form-group").removeClass(errorClass).addClass(validClass);
                                 dev_layout_alpha_content.init(dev_layout_alpha_settings);
                             },
@@ -153,20 +155,20 @@
                                 're_password': {required: true, minlength: 5, maxlength: 20, equalTo: "#password2"},
                                 correo: {required: true, email: true}
                             },
-                            submitHandler: function() {
+                            submitHandler: function () {
                                 $("#botonRegisto").button('loading');
                                 $.ajax({
                                     url: 'Controller?accion=registrarReclamante',
                                     data: $("#fregistro").serialize(),
                                     type: 'post',
-                                    success: function(msg) {
+                                    success: function (msg) {
 
                                         if (msg === '1')
                                         {
-                                            alert("Antes de comenzar a usar PQRS debe confirmar el registro, por favor revise su correo electronico para activar su usuario");
+                                            swal("Antes de comenzar a usar PQRS debe confirmar el registro, por favor revise su correo electronico para activar su usuario!", "info");
                                         } else {
                                             if (msg === '2') {
-                                                alert("ha ocurrido un error al crear el reclamante");
+                                                swal("Ops", "Ha ocurrido un error al crear el reclamante", "error");
                                             }
 
                                         }
@@ -180,9 +182,9 @@
                     }
                 }
             };
-            $(function() {
+            $(function () {
 
-                $("#tipo_usuario").change(function() {
+                $("#tipo_usuario").change(function () {
                     if ("ESTUDIANTE" === $('#tipo_usuario :selected').val()) {
                         $("#modalidad").removeClass("hide");
                     } else {

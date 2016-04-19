@@ -27,6 +27,7 @@
 
         <!-- css styles -->
         <link rel="stylesheet" type="text/css" href="css/dark.css" id="dev-css">
+        <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
         <!-- ./css styles -->                                     
 
         <!--[if lte IE 9]>
@@ -36,7 +37,7 @@
         <!-- javascripts -->
         <script type="text/javascript" src="js/plugins/modernizr/modernizr.js"></script>
         <!-- ./javascripts -->
-
+        
         <style>
             .dev-page{visibility: hidden;}            
         </style>
@@ -166,7 +167,7 @@
         <!-- javascript -->
         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>       
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
-       
+        <script type="text/javascript" src="js/sweetalert.min.js"></script>
         <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>        
         <script type="text/javascript" src="js/plugins/moment/moment.js"></script>
 

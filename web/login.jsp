@@ -28,6 +28,7 @@
 
         <!-- css styles -->
         <link rel="stylesheet" type="text/css" href="css/dark.css" id="dev-css">
+        <link rel="stylesheet" type="text/css" href="css/sweetalert.css">
         <!-- ./css styles -->                                    
 
         <!--[if lte IE 9]>
@@ -90,12 +91,13 @@
         <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>  
         <script type="text/javascript" src="js/plugins/jquery-validate/jquery.validate.min.js"></script>     
         <script type="text/javascript" src="js/dev-layout-default.js"></script>
+        <script type="text/javascript" src="js/sweetalert.min.js"></script>
         <!-- ./javascript -->
         <script type="text/javascript">
             "use strict";
 
             var demo_form_validation = {
-                init: function() {
+                init: function () {
 
                     if ($("#flogin").length > 0) {
                         $("#flogin").validate({
@@ -103,15 +105,15 @@
                             validClass: "has-success",
                             errorElement: "span",
                             ignore: [],
-                            errorPlacement: function(error, element) {
+                            errorPlacement: function (error, element) {
                                 $(element).after(error);
                                 $(element).parents(".form-group").addClass("has-error");
                             },
-                            highlight: function(element, errorClass) {
+                            highlight: function (element, errorClass) {
                                 $(element).parents(".form-group").removeClass("has-success").addClass(errorClass);
                                 dev_layout_alpha_content.init(dev_layout_alpha_settings);
                             },
-                            unhighlight: function(element, errorClass, validClass) {
+                            unhighlight: function (element, errorClass, validClass) {
                                 $(element).parents(".form-group").removeClass(errorClass).addClass(validClass);
                                 dev_layout_alpha_content.init(dev_layout_alpha_settings);
                             },
@@ -120,22 +122,22 @@
                                 pass: {required: true, minlength: 5, maxlength: 20}
 
                             },
-                            submitHandler: function() {
+                            submitHandler: function () {
                                 $.ajax({
                                     url: 'Controller?accion=loguear',
                                     data: $("#flogin").serialize(),
                                     type: 'post',
-                                    success: function(msg) {
+                                    success: function (msg) {
 
                                         if (msg === '1')
                                         {
                                             document.location.reload();
                                         } else {
                                             if (msg === '2') {
-                                                alert("ha ocurrido un error al intentar entrar");
+                                                swal("Ops!", "Ha ocurrido un error al intentar entrar!", "error");
                                             } else {
                                                 if (msg === '3') {
-                                                    alert("Debe confirmar su registro antes de continuar, Por favor revise su correo electrónico");
+                                                    swal("Debe confirmar su registro antes de continuar, Por favor revise su correo electrónico!", "info");
                                                 }
 
                                             }
@@ -150,7 +152,7 @@
                     }
                 }
             };
-            $(function() {
+            $(function () {
                 demo_form_validation.init();
             });
         </script>
