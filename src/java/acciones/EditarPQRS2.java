@@ -74,6 +74,9 @@ public class EditarPQRS2 implements Action {
 
             if (p.getAsignacionList().get(p.getAsignacionList().size() - 1).getAsignadoA().getIdresponsableArea() != ra.getIdresponsableArea()) {
 
+                Asignacion asignacionaux = p.getAsignacionList().get(p.getAsignacionList().size() - 1);
+                asignacionaux.setEstado("Asignada a otro usuario");
+                asignacionFacade.edit(asignacionaux);
                 Area a = areaFacade.find(Integer.parseInt(dependencia));
 
                 Asignacion as = new Asignacion();
@@ -82,6 +85,7 @@ public class EditarPQRS2 implements Action {
                 as.setAsignadoPor(asignador);
                 as.setFechaAsignacion(new Date());
                 as.setRequerimiento(new Integer("0"));
+                as.setEstado("Aceptada");
                 asignacionFacade.create(as);
 
                 Pqrs aux = pqrsFacade.find(p.getIdpqrs());
@@ -143,6 +147,7 @@ public class EditarPQRS2 implements Action {
             as.setPqrsIdpqrs(p);
             as.setAsignadoPor(asignador);
             as.setFechaAsignacion(new Date());
+            as.setEstado("Aceptada");
             as.setRequerimiento(new Integer("0"));
             asignacionFacade.create(as);
 

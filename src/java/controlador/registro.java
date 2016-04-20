@@ -1,25 +1,31 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package controlador;
 
-import interfaz.Action;
+import entidades.Programa;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ResourceBundle;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.log4j.Logger;
+import javax.servlet.http.HttpSession;
+import sesionbeans.ProgramaFacade;
 
 /**
  *
- * @author Ususario
+ * @author acreditacion
  */
-public class Controller extends HttpServlet {
+public class registro extends HttpServlet {
+
+    @EJB
+    private ProgramaFacade programaFacade;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,46 +36,20 @@ public class Controller extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    private final static Logger LOGGER = Logger.getLogger(Controller.class);
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        HttpSession sesion = request.getSession();
         try {
-            ResourceBundle rb = ResourceBundle.getBundle("propiedades/action");
-            String action = request.getParameter("accion");
-            String clase = rb.getString(action);
-            Action objeto = (Action) Class.forName(clase).newInstance();
-            String ruta = objeto.procesar(request);
 
-            int longitudRuta = ruta.length();
-            if (ruta.startsWith("[")) {
-                response.setContentType("application/json");
-                out.print(ruta);
-            } else if (longitudRuta > 2) {
-                RequestDispatcher rd = request.getRequestDispatcher(ruta);
-                rd.forward(request, response);
-            } else if (longitudRuta == 2 && ruta.equals("NA")) {
-                //NO pasa nada
-            } else if (isNumeric(ruta)) {
-                out.print(ruta);
-            }
-
-        } catch (Exception e) {
-            LOGGER.error("Se ha presentado un error", e);
-            RequestDispatcher rd = request.getRequestDispatcher("error2.jsp");
+            List<Programa> programas = programaFacade.findAll();
+            sesion.setAttribute("programas", programas);
+            RequestDispatcher rd = request.getRequestDispatcher("registro.jsp");
             rd.forward(request, response);
+        } finally {
+            out.close();
         }
-    }
-
-    public static boolean isNumeric(String str) {
-        try {
-            int d = Integer.parseInt(str);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -110,4 +90,5 @@ public class Controller extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

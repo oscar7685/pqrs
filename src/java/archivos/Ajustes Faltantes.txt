@@ -1,9 +1,7 @@
-1. Opción "Devolver PQRS" en el perfil del responsable. Es decir, que el responsable de dar respuesta pueda retornar la PQRS asignada sin responderla, debido a que este considera que no es el indicado de dar respuesta o le fue asignada equívocamente.
+2. Validar el funcionamiento de los archivos adjuntos. 
+Que sean visibles para todos los perfiles (admin, peticionario y responsable).
 
-2. Validar el funcionamiento de los archivos adjuntos. Que sean visibles para todos los perfiles (admin, peticionario y responsable).
+10. Informes del comportamiento de las encuestas de satisfacciï¿½n.
 
-9.Al registrarse un estudiante, desplegar la opción del programa académico al que pertenece. Sie es estudiante a distancia, el centro tutorial al que pertenece.
-
-10. Informes del comportamiento de las encuestas de satisfacción.
-
-11. Todo los informes y lo que se te pueda ocurrir  que se pueda usar para "simular" algo de BI sea bienvenido. 
+11. Todo los informes y lo que se te pueda ocurrir  
+que se pueda usar para "simular" algo de BI sea bienvenido. 

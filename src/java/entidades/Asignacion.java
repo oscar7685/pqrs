@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Oscar
+ * @author acreditacion
  */
 @Entity
 @Table(name = "asignacion", catalog = "pqrs", schema = "")
@@ -34,7 +34,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Asignacion.findAll", query = "SELECT a FROM Asignacion a"),
     @NamedQuery(name = "Asignacion.findByAsignacionId", query = "SELECT a FROM Asignacion a WHERE a.asignacionId = :asignacionId"),
-    @NamedQuery(name = "Asignacion.findByFechaAsignacion", query = "SELECT a FROM Asignacion a WHERE a.fechaAsignacion = :fechaAsignacion")})
+    @NamedQuery(name = "Asignacion.findByFechaAsignacion", query = "SELECT a FROM Asignacion a WHERE a.fechaAsignacion = :fechaAsignacion"),
+    @NamedQuery(name = "Asignacion.findByRequerimiento", query = "SELECT a FROM Asignacion a WHERE a.requerimiento = :requerimiento"),
+    @NamedQuery(name = "Asignacion.findByEstado", query = "SELECT a FROM Asignacion a WHERE a.estado = :estado"),
+    @NamedQuery(name = "Asignacion.findByMotivo", query = "SELECT a FROM Asignacion a WHERE a.motivo = :motivo")})
 public class Asignacion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,6 +51,14 @@ public class Asignacion implements Serializable {
     @Column(name = "fecha_asignacion")
     @Temporal(TemporalType.DATE)
     private Date fechaAsignacion;
+    @Column(name = "requerimiento")
+    private Integer requerimiento;
+    @Size(max = 45)
+    @Column(name = "estado")
+    private String estado;
+    @Size(max = 2000)
+    @Column(name = "motivo")
+    private String motivo;
     @JoinColumn(name = "asignado_a", referencedColumnName = "idresponsable_area")
     @ManyToOne(optional = false)
     private ResponsableArea asignadoA;
@@ -57,16 +68,6 @@ public class Asignacion implements Serializable {
     @JoinColumn(name = "pqrs_idpqrs", referencedColumnName = "idpqrs")
     @ManyToOne(optional = false)
     private Pqrs pqrsIdpqrs;
-    @Column(name = "requerimiento")
-    private Integer requerimiento;
-
-    public Integer getRequerimiento() {
-        return requerimiento;
-    }
-
-    public void setRequerimiento(Integer requerimiento) {
-        this.requerimiento = requerimiento;
-    }
 
     public Asignacion() {
     }
@@ -94,6 +95,30 @@ public class Asignacion implements Serializable {
 
     public void setFechaAsignacion(Date fechaAsignacion) {
         this.fechaAsignacion = fechaAsignacion;
+    }
+
+    public Integer getRequerimiento() {
+        return requerimiento;
+    }
+
+    public void setRequerimiento(Integer requerimiento) {
+        this.requerimiento = requerimiento;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
     }
 
     public ResponsableArea getAsignadoA() {
@@ -144,5 +169,5 @@ public class Asignacion implements Serializable {
     public String toString() {
         return "entidades.Asignacion[ asignacionId=" + asignacionId + " ]";
     }
-
+    
 }

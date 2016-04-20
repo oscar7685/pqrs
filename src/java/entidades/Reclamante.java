@@ -12,6 +12,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -23,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Oscar
+ * @author acreditacion
  */
 @Entity
 @Table(name = "reclamante", catalog = "pqrs", schema = "")
@@ -36,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Reclamante.findByCelular", query = "SELECT r FROM Reclamante r WHERE r.celular = :celular"),
     @NamedQuery(name = "Reclamante.findByEmail", query = "SELECT r FROM Reclamante r WHERE r.email = :email"),
     @NamedQuery(name = "Reclamante.findByPassword", query = "SELECT r FROM Reclamante r WHERE r.password = :password"),
-    @NamedQuery(name = "Reclamante.findByTipo", query = "SELECT r FROM Reclamante r WHERE r.tipo = :tipo")})
+    @NamedQuery(name = "Reclamante.findByTipo", query = "SELECT r FROM Reclamante r WHERE r.tipo = :tipo"),
+    @NamedQuery(name = "Reclamante.findByEstado", query = "SELECT r FROM Reclamante r WHERE r.estado = :estado")})
 public class Reclamante implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -77,17 +80,9 @@ public class Reclamante implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "estado")
     private String estado;
-    @Size(min = 1, max = 100)
-    @Column(name = "modalidad")
-    private String modalidad;
-
-    public String getModalidad() {
-        return modalidad;
-    }
-
-    public void setModalidad(String modalidad) {
-        this.modalidad = modalidad;
-    }
+    @JoinColumn(name = "programa_idprograma", referencedColumnName = "idprograma")
+    @ManyToOne
+    private Programa programaIdprograma;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reclamanteIdreclamante")
     private List<Pqrs> pqrsList;
 
@@ -98,20 +93,13 @@ public class Reclamante implements Serializable {
         this.idreclamante = idreclamante;
     }
 
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public Reclamante(Integer idreclamante, String nombre, String apellido, String password, String tipo) {
+    public Reclamante(Integer idreclamante, String nombre, String apellido, String password, String tipo, String estado) {
         this.idreclamante = idreclamante;
         this.nombre = nombre;
         this.apellido = apellido;
         this.password = password;
         this.tipo = tipo;
+        this.estado = estado;
     }
 
     public Integer getIdreclamante() {
@@ -170,6 +158,22 @@ public class Reclamante implements Serializable {
         this.tipo = tipo;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Programa getProgramaIdprograma() {
+        return programaIdprograma;
+    }
+
+    public void setProgramaIdprograma(Programa programaIdprograma) {
+        this.programaIdprograma = programaIdprograma;
+    }
+
     @XmlTransient
     public List<Pqrs> getPqrsList() {
         return pqrsList;
@@ -203,4 +207,5 @@ public class Reclamante implements Serializable {
     public String toString() {
         return "entidades.Reclamante[ idreclamante=" + idreclamante + " ]";
     }
+    
 }

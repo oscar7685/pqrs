@@ -73,7 +73,7 @@
                         <div class="form-group no-border margin-top-20">
                             <button class="btn btn-primary btn-block">Ingresar</button>
                             <!-- <a href="indexPeticionario.jsp" class="btn btn-success btn-block">Ingresar</a>-->
-                            <a href="registro.jsp" class="btn btn-block" style="background-color: #000000">Registrarse</a>
+                            <a href="registro" class="btn btn-block" style="background-color: #000000">Registrarse</a>
                         </div>
                         <p><a href="#">¿Olvidó su contraseña?</a></p>                        
                     </form>
@@ -137,7 +137,7 @@
                                                 swal("Ops!", "Ha ocurrido un error al intentar entrar!", "error");
                                             } else {
                                                 if (msg === '3') {
-                                                    swal("Debe confirmar su registro antes de continuar, Por favor revise su correo electrónico!", "info");
+                                                    swal("Confirme su registro","Debe confirmar su registro antes de continuar, Por favor revise su correo electrónico!", "info");
                                                 }
 
                                             }

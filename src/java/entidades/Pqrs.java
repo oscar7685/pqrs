@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entidades;
 
 import java.io.Serializable;
@@ -30,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Oscar
+ * @author acreditacion
  */
 @Entity
 @Table(name = "pqrs", catalog = "pqrs", schema = "")
@@ -40,16 +41,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pqrs.findByIdpqrs", query = "SELECT p FROM Pqrs p WHERE p.idpqrs = :idpqrs"),
     @NamedQuery(name = "Pqrs.findByTipo", query = "SELECT p FROM Pqrs p WHERE p.tipo = :tipo"),
     @NamedQuery(name = "Pqrs.findByNotificarMail", query = "SELECT p FROM Pqrs p WHERE p.notificarMail = :notificarMail"),
-    @NamedQuery(name = "Pqrs.findByCodigo", query = "SELECT p FROM Pqrs p WHERE p.codigo = :codigo"),
     @NamedQuery(name = "Pqrs.findByDescripcion", query = "SELECT p FROM Pqrs p WHERE p.descripcion = :descripcion"),
     @NamedQuery(name = "Pqrs.findByAdjunto", query = "SELECT p FROM Pqrs p WHERE p.adjunto = :adjunto"),
     @NamedQuery(name = "Pqrs.findByFechaCreacion", query = "SELECT p FROM Pqrs p WHERE p.fechaCreacion = :fechaCreacion"),
-    @NamedQuery(name = "Pqrs.findByAnio", query = "SELECT count(p) FROM Pqrs p WHERE p.fechaCreacion >= :f1 and p.fechaCreacion <= :f2"),
     @NamedQuery(name = "Pqrs.findByEstado", query = "SELECT p FROM Pqrs p WHERE p.estado = :estado"),
     @NamedQuery(name = "Pqrs.findByMedioIngreso", query = "SELECT p FROM Pqrs p WHERE p.medioIngreso = :medioIngreso"),
-    @NamedQuery(name = "Pqrs.findByEstadoSolicitud", query = "SELECT p FROM Pqrs p WHERE p.estadoSolicitud = :estadoSolicitud")})
+    @NamedQuery(name = "Pqrs.findByEstadoSolicitud", query = "SELECT p FROM Pqrs p WHERE p.estadoSolicitud = :estadoSolicitud"),
+    @NamedQuery(name = "Pqrs.findByCodigo", query = "SELECT p FROM Pqrs p WHERE p.codigo = :codigo"),
+    @NamedQuery(name = "Pqrs.findByEncuesta", query = "SELECT p FROM Pqrs p WHERE p.encuesta = :encuesta")})
 public class Pqrs implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,9 +64,6 @@ public class Pqrs implements Serializable {
     @Size(max = 45)
     @Column(name = "notificar_mail")
     private String notificarMail;
-    @Size(max = 45)
-    @Column(name = "codigo")
-    private String codigo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5000)
@@ -91,6 +88,11 @@ public class Pqrs implements Serializable {
     @Size(max = 100)
     @Column(name = "estadoSolicitud")
     private String estadoSolicitud;
+    @Size(max = 45)
+    @Column(name = "codigo")
+    private String codigo;
+    @Column(name = "encuesta")
+    private Integer encuesta;
     @JoinColumn(name = "reclamante_idreclamante", referencedColumnName = "idreclamante")
     @ManyToOne(optional = false)
     private Reclamante reclamanteIdreclamante;
@@ -101,24 +103,6 @@ public class Pqrs implements Serializable {
     private List<Respuesta> respuestaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pqrsIdpqrs")
     private List<Asignacion> asignacionList;
-    @Column(name = "encuesta")
-    private Integer encuesta;
-
-    public Integer getEncuesta() {
-        return encuesta;
-    }
-
-    public void setEncuesta(Integer encuesta) {
-        this.encuesta = encuesta;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
 
     public Pqrs() {
     }
@@ -207,6 +191,22 @@ public class Pqrs implements Serializable {
         this.estadoSolicitud = estadoSolicitud;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public Integer getEncuesta() {
+        return encuesta;
+    }
+
+    public void setEncuesta(Integer encuesta) {
+        this.encuesta = encuesta;
+    }
+
     public Reclamante getReclamanteIdreclamante() {
         return reclamanteIdreclamante;
     }
@@ -265,5 +265,5 @@ public class Pqrs implements Serializable {
     public String toString() {
         return "entidades.Pqrs[ idpqrs=" + idpqrs + " ]";
     }
-
+    
 }

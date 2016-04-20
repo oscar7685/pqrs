@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,10 +86,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <select id="modalidad" class="form-control hide" name="modalidad" >
+                                    <select id="programa" class="form-control hide" name="programa" >
                                         <option selected value=""></option>
-                                        <option value="Presencial">Presencial</option>
-                                        <option value="Distancia">Distancia</option>
+                                        <c:forEach items="${programas}" var="programa" varStatus="iter">
+                                            <option value="${programa.idprograma}">${programa.nombre}</option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -125,7 +127,7 @@
         <script type="text/javascript">
             "use strict";
             var demo_form_validation1 = {
-                init: function () {
+                init: function() {
 
                     if ($("#fregistro").length > 0) {
                         $("#fregistro").validate({
@@ -133,15 +135,15 @@
                             validClass: "has-success",
                             errorElement: "span",
                             ignore: '',
-                            errorPlacement: function (error, element) {
+                            errorPlacement: function(error, element) {
                                 $(element).after(error);
                                 $(element).parents(".form-group").addClass("has-error");
                             },
-                            highlight: function (element, errorClass) {
+                            highlight: function(element, errorClass) {
                                 $(element).parents(".form-group").removeClass("has-success").addClass(errorClass);
                                 dev_layout_alpha_content.init(dev_layout_alpha_settings);
                             },
-                            unhighlight: function (element, errorClass, validClass) {
+                            unhighlight: function(element, errorClass, validClass) {
                                 $(element).parents(".form-group").removeClass(errorClass).addClass(validClass);
                                 dev_layout_alpha_content.init(dev_layout_alpha_settings);
                             },
@@ -155,17 +157,26 @@
                                 're_password': {required: true, minlength: 5, maxlength: 20, equalTo: "#password2"},
                                 correo: {required: true, email: true}
                             },
-                            submitHandler: function () {
+                            submitHandler: function() {
                                 $("#botonRegisto").button('loading');
                                 $.ajax({
                                     url: 'Controller?accion=registrarReclamante',
                                     data: $("#fregistro").serialize(),
                                     type: 'post',
-                                    success: function (msg) {
+                                    success: function(msg) {
 
                                         if (msg === '1')
                                         {
-                                            swal("Antes de comenzar a usar PQRS debe confirmar el registro, por favor revise su correo electronico para activar su usuario!", "info");
+                                            swal({
+                                                title: 'Registro exitoso',
+                                                text: 'Antes de comenzar a usar PQRS debe confirmar el registro, por favor revise su correo electronico para activar su usuario!',
+                                                type: 'info',
+                                                confirmButtonText: 'OK'
+                                            }, function() {
+                                                location = "login.jsp";
+                                            });
+
+
                                         } else {
                                             if (msg === '2') {
                                                 swal("Ops", "Ha ocurrido un error al crear el reclamante", "error");
@@ -182,13 +193,13 @@
                     }
                 }
             };
-            $(function () {
+            $(function() {
 
-                $("#tipo_usuario").change(function () {
+                $("#tipo_usuario").change(function() {
                     if ("ESTUDIANTE" === $('#tipo_usuario :selected').val()) {
-                        $("#modalidad").removeClass("hide");
+                        $("#programa").removeClass("hide");
                     } else {
-                        $("#modalidad").addClass("hide");
+                        $("#programa").addClass("hide");
                     }
 
                 });

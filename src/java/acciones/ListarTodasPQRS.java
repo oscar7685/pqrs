@@ -73,11 +73,11 @@ public class ListarTodasPQRS implements Action {
 
             session.setAttribute("diasHabilesRestantes", diasHabilesRestantes);
             session.setAttribute("pqrsTotales", listaPqrs);
-            List<Asignacion> asignaciones = asignacionFacade.findByList("asignadoA", r);
+            List<Asignacion> asignaciones = asignacionFacade.findByList2("asignadoA", r, "estado", "Aceptada");
             session.setAttribute("asignaciones", asignaciones);
 
         } else {
-            List<Asignacion> asignaciones = asignacionFacade.findByList("asignadoA", r);
+            List<Asignacion> asignaciones = asignacionFacade.findByList2("asignadoA", r, "estado", "Aceptada");
             session.setAttribute("asignaciones", asignaciones);
         }
 

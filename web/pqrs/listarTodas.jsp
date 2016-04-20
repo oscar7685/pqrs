@@ -43,6 +43,7 @@
                                 <th>Recordatorio / Requerimientos</th>
                                 <th>Asignado a</th>
                                 <th>Fecha Asignación</th>
+                                <th>Estado Asignación</th>
                                 </c:when>
                                 <c:otherwise>
                                 <th>Código</th>
@@ -138,6 +139,20 @@
                                         </c:choose>
 
                                     </td>
+                                    <td>
+                                        <c:if test="${row.asignacionList.size() != 0}">
+                                            <c:choose>
+                                                <c:when test="${row.asignacionList.get(row.asignacionList.size()-1).estado == 'Rechazada'}" >
+                                                    <p data-toggle="tooltip" title="${row.asignacionList.get(row.asignacionList.size()-1).motivo}">${row.asignacionList.get(row.asignacionList.size()-1).estado}<p>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        ${row.asignacionList.get(row.asignacionList.size()-1).estado}
+                                                    </c:otherwise>    
+                                                </c:choose>
+                                            </c:if>
+
+
+                                    </td>
 
                                 </tr>
                             </c:forEach>
@@ -170,3 +185,9 @@
     <!-- ./Copyright -->
 
 </div>
+<script>
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>               
+

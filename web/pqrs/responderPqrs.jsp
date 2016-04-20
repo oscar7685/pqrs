@@ -179,6 +179,25 @@
 
         </form>
 
+        <c:if test="${pqrs.estadoSolicitud != 'Respuesta enviada al usuario'}">
+            <form id="frechazarPQRS" role="form" method="post"> 
+                <div class="page-subtitle">
+                    <h3>Rechazar PQRS</h3>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Motivo rechazo PQRS</label>
+                        <div class="col-md-8">
+                            <textarea name="motivoRechazo" class="form-control" maxlength="1999" rows="4"></textarea>
+                        </div>
+                        <input type="hidden" value="${pqrs.asignacionList.get(pqrs.asignacionList.size()-1).asignacionId}" name="asignacionID"/>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <button type="submit" data-loading-text="Rechazando PQRS..." class="btn btn-primary" autocomplete="off" id="btnRechazar">Rechazar PQRS</button>
+                        </div>
+                    </div>
+                </div>
+            </form>    
+        </c:if>
     </div>
     <!-- ./Horizontal Form -->
 
@@ -204,12 +223,12 @@
 <script type="text/javascript">
     "use strict";
 
-    $(function () {
+    $(function() {
 
-        $("#dependencia").change(function () {
+        $("#dependencia").change(function() {
             $("#funcionario").empty();
-            $.getJSON('Controller?accion=buscarFuncionarios&dependencia=' + $("#dependencia").val(), function (data) {
-                $.each(data, function (k, v) {
+            $.getJSON('Controller?accion=buscarFuncionarios&dependencia=' + $("#dependencia").val(), function(data) {
+                $.each(data, function(k, v) {
                     $("#funcionario").append("<option value=\"" + v.id + "\">" + v.valor + "</option>");
                 });
             });
@@ -220,15 +239,15 @@
                 validClass: "has-success",
                 errorElement: "span",
                 ignore: [],
-                errorPlacement: function (error, element) {
+                errorPlacement: function(error, element) {
                     $(element).after(error);
                     $(element).parents(".form-group").addClass("has-error");
                 },
-                highlight: function (element, errorClass) {
+                highlight: function(element, errorClass) {
                     $(element).parents(".form-group").removeClass("has-success").addClass(errorClass);
                     // dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 },
-                unhighlight: function (element, errorClass, validClass) {
+                unhighlight: function(element, errorClass, validClass) {
                     $(element).parents(".form-group").removeClass(errorClass).addClass(validClass);
                     //dev_layout_alpha_content.init(dev_layout_alpha_settings);
                 },
@@ -242,15 +261,50 @@
                     respuesta: {required: true}
 
                 },
-                submitHandler: function () {
+                submitHandler: function() {
                     $("#btnResponder").button('loading');
                     $.ajax({
                         url: 'Controller?accion=responderPQRS2',
                         data: $("#feditar").serialize(),
                         type: 'post',
-                        success: function (msg) {
+                        success: function(msg) {
                             document.location = "#listarTodasPQRS"
 
+                        }
+                    });
+                }
+            });
+        }
+
+        if ($("#frechazarPQRS").length > 0) {
+            $("#frechazarPQRS").validate({
+                errorClass: "has-error",
+                validClass: "has-success",
+                errorElement: "span",
+                ignore: [],
+                errorPlacement: function(error, element) {
+                    $(element).after(error);
+                    $(element).parents(".form-group").addClass("has-error");
+                },
+                highlight: function(element, errorClass) {
+                    $(element).parents(".form-group").removeClass("has-success").addClass(errorClass);
+                    // dev_layout_alpha_content.init(dev_layout_alpha_settings);
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).parents(".form-group").removeClass(errorClass).addClass(validClass);
+                    //dev_layout_alpha_content.init(dev_layout_alpha_settings);
+                },
+                rules: {
+                    motivoRechazo: {required: true}
+                },
+                submitHandler: function() {
+                    $("#btnRechazar").button('loading');
+                    $.ajax({
+                        url: 'Controller?accion=rechazarPQRS2',
+                        data: $("#frechazarPQRS").serialize(),
+                        type: 'post',
+                        success: function(msg) {
+                            document.location = "#listarTodasPQRS"
                         }
                     });
                 }
@@ -264,32 +318,32 @@
             autoUpload: false,
             dataType: 'json',
             acceptFileTypes: /(\.|\/)(xlsm)$/i,
-            done: function (e, data) {
+            done: function(e, data) {
                 $('#files').empty();
-                $.each(data.result.files, function (index, file) {
+                $.each(data.result.files, function(index, file) {
                     $('<p/>').text(file.name).appendTo('#files');
                 });
             },
-            progressall: function (e, data) {
+            progressall: function(e, data) {
                 var progress = parseInt(data.loaded / data.total * 100, 10);
                 $('#progress .progress-bar').css('width', progress + '%');
             },
-            add: function (e, data) {
+            add: function(e, data) {
                 $(".fileinput-button").addClass('disabled');
-                $.each(data.files, function (index, file) {
+                $.each(data.files, function(index, file) {
                     $('<p/>').text(file.name).appendTo('#files');
                 });
                 datosAsubir = data;
             }
         }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
 
-        $("#proceso").change(function () {
+        $("#proceso").change(function() {
             var proceso = $("#proceso").val();
             if (proceso !== "") {
                 $.ajax({
                     type: 'POST',
                     url: "Controller?accion=verSubprocesos&proceso=" + proceso,
-                    success: function (data) {
+                    success: function(data) {
                         $("#subproceso").empty();
                         $("#subproceso").html(data);
                     }

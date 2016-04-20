@@ -4,6 +4,7 @@
  */
 package acciones;
 
+import entidades.Programa;
 import entidades.Reclamante;
 import interfaz.Action;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import sesionbeans.ProgramaFacade;
 import sesionbeans.ReclamanteFacade;
 import utils.JavaMail;
 
@@ -22,8 +24,10 @@ import utils.JavaMail;
  * @author Ususario
  */
 public class RegistrarReclamante implements Action {
+    ProgramaFacade programaFacade = lookupProgramaFacadeBean();
 
     ReclamanteFacade reclamanteFacade = lookupReclamanteFacadeBean();
+    private final static org.apache.log4j.Logger LOGGER = org.apache.log4j.Logger.getLogger(RegistrarReclamante.class);
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
@@ -37,8 +41,9 @@ public class RegistrarReclamante implements Action {
 
         Reclamante reclamante = new Reclamante();
         if (tipo_usuario.equals("ESTUDIANTE")) {
-            String modalidad = request.getParameter("modalidad");
-            reclamante.setModalidad(modalidad);
+            String programa = request.getParameter("programa");
+            Programa prog = programaFacade.find(Integer.parseInt(programa));
+            reclamante.setProgramaIdprograma(prog);
         }
         reclamante.setNombre(nombre);
         reclamante.setApellido(apellido);
@@ -60,6 +65,7 @@ public class RegistrarReclamante implements Action {
             jm.sendConfirmacion();
             return "1";
         } catch (Exception e) {
+            LOGGER.error("Se ha presentado un error", e);
             return "2";
         }
 
@@ -69,6 +75,16 @@ public class RegistrarReclamante implements Action {
         try {
             Context c = new InitialContext();
             return (ReclamanteFacade) c.lookup("java:global/pqrs/ReclamanteFacade!sesionbeans.ReclamanteFacade");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
+
+    private ProgramaFacade lookupProgramaFacadeBean() {
+        try {
+            Context c = new InitialContext();
+            return (ProgramaFacade) c.lookup("java:global/pqrs/ProgramaFacade!sesionbeans.ProgramaFacade");
         } catch (NamingException ne) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
             throw new RuntimeException(ne);
