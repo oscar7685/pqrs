@@ -2,6 +2,7 @@
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>     
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="css/jquery.fileupload.css">
+<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 <!-- page content container -->
 <div class="container">
 
@@ -55,41 +56,44 @@
                                             Nivel de satisfaccion PQRS</h3>
                                     </div>
                                     <div class="panel-body">
-                                        <h4>Por favor seleccione su nivel de satisfaccion con la respuesta obtenida</h4>
+                                        <h4>Por favor seleccione su nivel de satisfaccion del SERVICIO PQRS obtenido.</h4>
 
                                         <div class="well form-group">
                                             <div class="">
                                                 <label>
                                                     <input type="radio" value="5" name="satisfaccion">
-                                                    Muy satisfecho
+                                                    Muy satisfactorio
                                                 </label>
                                             </div>   
                                             <div class="">
                                                 <label>
                                                     <input type="radio" value="4" name="satisfaccion">
-                                                    Satisfecho
+                                                    satisfactorio
                                                 </label>
                                             </div>    
                                             <div class="">
                                                 <label>
                                                     <input type="radio" value="3" name="satisfaccion">
-                                                    Medianamente Satisfecho
+                                                    Medianamente satisfactorio
                                                 </label>
                                             </div>
                                             <div class="">
                                                 <label>
                                                     <input type="radio" value="2" name="satisfaccion">
-                                                    Insatisfecho
+                                                    Insatisfactorio
                                                 </label>
                                             </div>
                                             <div class="">
                                                 <label>
                                                     <input type="radio" value="1" name="satisfaccion">
-                                                    Muy Insatisfecho
+                                                    Muy Insatisfactorio
                                                 </label>
                                             </div>                                    
                                         </div>
-
+                                        <div class="alert alert-info alert-dismissible" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <strong>Atención!</strong> Si decide no responder esta encuesta se entenderá como "Muy Satisfactorio" la atención recibida.
+                                        </div>
                                     </div>
                                 </div>
                                 <input type="hidden" name="respuesta" value="${pqrs.respuestaList.get(pqrs.respuestaList.size()-1).idrespuesta}">
@@ -168,13 +172,13 @@
 <!-- ./page content container -->
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 
-
+<script type="text/javascript" src="js/sweetalert.min.js"></script>
 <script type="text/javascript">
     "use strict";
 
-    $(function () {
+    $(function() {
 
-        $("#botonEncuesta").click(function () {
+        $("#botonEncuesta").click(function() {
             $("#fencuesta").submit();
 
         });
@@ -185,14 +189,15 @@
                 rules: {
                     satisfaccion: {required: true}
                 },
-                submitHandler: function () {
+                submitHandler: function() {
                     $("#botonEncuesta").button('loading');
                     $.ajax({
                         url: 'Controller?accion=responderEncuesta',
                         data: $("#fencuesta").serialize(),
                         type: 'post',
-                        success: function (msg) {
-                           $("#panel1").remove();
+                        success: function(msg) {
+                            swal("Bien hecho!", "Muchas gracias por su tiempo!", "success");
+                            $("#panel1").remove();
                             // document.location = "#listarTodasPQRS"
 
                         }});

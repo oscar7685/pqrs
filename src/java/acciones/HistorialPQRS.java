@@ -34,7 +34,7 @@ public class HistorialPQRS implements Action {
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession session = request.getSession();
         Reclamante r = (Reclamante) session.getAttribute("reclamante");
-        session.setAttribute("pqrsH", pqrsFacade.findByList2("reclamanteIdreclamante", r, "estado", "Inactiva"));
+        session.setAttribute("pqrsH", pqrsFacade.findByList2("reclamanteIdreclamante", r, "estado", "Resuelta"));
         return "pqrs/listarH.jsp";
 
 

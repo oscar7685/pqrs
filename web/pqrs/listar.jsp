@@ -49,7 +49,7 @@
                                             <td><a href="#verRespuestaPqrs&id=${row.idpqrs}"><i class="fa fa-eye"></i> <span>Ver respuesta</span></a></td>
                                         </c:when>
                                         <c:otherwise>
-                                            <td></td>
+                                            <td><a href="#editarPQRSUsuario&id=${row.idpqrs}"><i class="fa fa-pencil"></i> <span>Editar pqrs</span></a></td>
                                         </c:otherwise>
                                     </c:choose>
 

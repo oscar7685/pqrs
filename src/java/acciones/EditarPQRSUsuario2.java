@@ -4,11 +4,16 @@
  */
 package acciones;
 
+import entidades.Area;
 import entidades.Pqrs;
 import entidades.Reclamante;
 import entidades.ResponsableArea;
 import interfaz.Action;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
@@ -17,45 +22,48 @@ import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import sesionbeans.AreaFacade;
 import sesionbeans.PqrsFacade;
 import sesionbeans.ReclamanteFacade;
 import sesionbeans.ResponsableAreaFacade;
+import utils.JavaMail;
 
 /**
  *
  * @author Ususario
  */
-public class VerRespuestaPqrs implements Action {
-    
+public class EditarPQRSUsuario2 implements Action {
+
     PqrsFacade pqrsFacade = lookupPqrsFacadeBean();
     AreaFacade areaFacade = lookupAreaFacadeBean();
-    
+
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
-        HttpSession session = request.getSession();
-        session.setAttribute("areas", areaFacade.findAll());
-        String idPqrs = request.getParameter("id");
-        Pqrs p = pqrsFacade.find(Integer.parseInt(idPqrs));
-        if (!p.getEstado().equals("Resuelta")) {
-            p.setEstado("Resuelta");
-            
+        HttpSession sesion = request.getSession();
+        Pqrs pqrs = (Pqrs) sesion.getAttribute("pqrs");
+        String descripcion = request.getParameter("descripcion");
+
+        String descripcionAnterior = pqrs.getDescripcion();
+
+        if (!descripcionAnterior.trim().equals(descripcion.trim())) {
+            pqrs.setDescripcion(descripcion);
+            pqrsFacade.edit(pqrs);
+
+            JavaMail jm = new JavaMail();
+            jm.setAsunto("PQRS editada por el usuario");
+            jm.setTo("micuenta40@gmail.com");
+            jm.setMensage("El usuario " + pqrs.getReclamanteIdreclamante().getNombre() + " " + pqrs.getReclamanteIdreclamante().getApellido()
+                    + " editó la PQRS numero:" + pqrs.getCodigo()
+                    + " cambiando la descripción de '" + descripcionAnterior + "' a '" + descripcion + "'");
         }
-        if (p.getEncuesta() == null) {
-            p.setEncuesta(new Integer("1"));
-        } else if (p.getEncuesta() == 1) {
-            p.setEncuesta(new Integer("2"));
-        }
-        
-        pqrsFacade.edit(p);
-        
-        session.setAttribute(
-                "pqrs", p);
-        
-        return "pqrs/verRespuesta.jsp";
-        
+
+        return "NA";
+
     }
-    
+
     private AreaFacade lookupAreaFacadeBean() {
         try {
             Context c = new InitialContext();
@@ -65,7 +73,7 @@ public class VerRespuestaPqrs implements Action {
             throw new RuntimeException(ne);
         }
     }
-    
+
     private PqrsFacade lookupPqrsFacadeBean() {
         try {
             Context c = new InitialContext();

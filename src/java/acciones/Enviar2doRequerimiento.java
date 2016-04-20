@@ -45,7 +45,6 @@ import utils.JavaMail;
 public class Enviar2doRequerimiento implements Action {
 
     AsignacionFacade asignacionFacade = lookupAsignacionFacadeBean();
-
     PqrsFacade pqrsFacade = lookupPqrsFacadeBean();
     AreaFacade areaFacade = lookupAreaFacadeBean();
 
@@ -79,17 +78,19 @@ public class Enviar2doRequerimiento implements Action {
             parrafo2.add("\n");
             parrafo2.add("PARA: " + a.getAsignadoA().getIdresponsableArea() + " ­ " + a.getAsignadoA().getAreaIdarea().getNombre());
             parrafo2.add("\n\n");
-            parrafo2.add("Estimado Funcionario.\n\n");
-            parrafo2.add("En cumplimiento del procedimiento de peticiones, quejas, reclamos y sugerencias liderado por la Secretaría General, "
-                    + "y teniendo en cuenta que no existe evidencia del trámite dado a la petición presentada por "
+            parrafo2.add("Distinguido Doctor,\n\n");
+            parrafo2.add("El Procedimiento de Peticiones, Quejas, Reclamos y Sugerencias se encuentra enmarcado dentro del proceso estratégico de gestión de relaciones con usuarios y ciudadanos, que integra el sistema de calidad de la Universidad de Cartagena. Está concebido para la recepción, distribución, control eficiente y eficaz con una adecuada atención y solución integral de las quejas, reclamos y sugerencias realizadas por la comunidad universitaria y ciudadanía en general, que satisfaga sus necesidades y retroalimente el sistema de mejoramiento continuo.\n"
+                    + " \nPor tanto, es imperiosa la atención y cumplimiento estricto de las etapas de este procedimiento aprobado dentro de nuestro sistema de calidad, que se constituye en el insumo básico para la elaboración de los planes de mejoramiento de la institución.\n"
+                    + " \nEn cumplimiento de este procedimiento, liderado por la Secretaría General, y teniendo en cuenta que no existía evidencia del trámite dado a la PQRS presentada por "
                     + a.getPqrsIdpqrs().getReclamanteIdreclamante().getNombre() + " " + a.getPqrsIdpqrs().getReclamanteIdreclamante().getApellido()
-                    + " (PQRS con código: " + a.getPqrsIdpqrs().getCodigo() + "), asignada a usted oportunamente por plataforma virtual el día "
-                    + formatoDelTexto.format(a.getFechaAsignacion()) + " y  que se han vencido los 15 días hábiles para su trámite, le informamos que se le notificará a control disciplinario sobre este caso con la finalidad de que se tomen los correctivos pertinentes.\n"
+                    + " (PQRS numero: " + a.getPqrsIdpqrs().getCodigo() + "), remitida a usted oportunamente por ser de su competencia mediante oficio SG- 051-2016, "
+                    + "se le solicitó información del trámite dado a la misma mediante oficio SG- 093-2016."
                     + "\n"
-                    + "En caso de haberse tramitado, agradezco a usted enviar copia de la respuesta dada o, si no fue adelantado trámite alguno, sírvase emitir la respuesta que correspondan e informarlo a esta Secretaría o al correo electrónico pqrs@unicartagena.edu.co.\n"
-                    + "\n"
-                    + "Finalmente, es pertinente recordar que es deber de los servidores públicos atender\n"
-                    + "las PQRS y su no atención puede ocasionar sanciones o acciones contra la Institución.\n"
+                    + "Dado que a la fecha no existe evidencia de la respuesta dada a esta PQRS, solicitamos información sobre la atención a la misma. En caso de haberse tramitado, agradecemos a usted enviar copia de la respuesta dada. En caso de no haberse adelantado trámite alguno, solicitamos emitir las respuestas que correspondan e informarlo a esta Secretaría.\n"
+                    + " \nAgradecemos el informe sobre el particular a más tardar dentro del día siguiente al recibo del presente oficio.\n"
+                    + " \n"
+                    + " \n"
+                    + "Finalmente, es pertinente recordar que es deber de los servidores públicos atender los PQRS y su no atención puede ocasionar sanciones o acciones contra la Institución."
                     + "\nCordialmente,\n"
                     + "\n"
                     + "SECRETARÍA GENERAL\n"
