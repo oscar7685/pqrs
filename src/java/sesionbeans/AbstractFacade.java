@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -71,6 +72,17 @@ public abstract class AbstractFacade<T> {
         return q.getResultList();
     }
 
+    public List<T> findPQRSxTipoyRango(String tipo, Date finicio, Date ffinal) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT c FROM  Pqrs c WHERE c.tipo = :tipo and c.fechaCreacion BETWEEN :finicio and :ffinal", entityClass);
+        q.setParameter("tipo", tipo);
+        q.setParameter("finicio", finicio, TemporalType.DATE);
+        q.setParameter("ffinal", ffinal, TemporalType.DATE);
+        System.out.println("" + q.toString());
+        return q.getResultList();
+    }
+
     public List<T> findByList2(String property1, Object m1, String property2, Object m2) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -116,5 +128,4 @@ public abstract class AbstractFacade<T> {
         }
 
     }
-
 }

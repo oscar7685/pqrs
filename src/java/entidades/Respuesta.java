@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entidades;
 
 import java.io.Serializable;
@@ -39,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Respuesta.findByRespuesta", query = "SELECT r FROM Respuesta r WHERE r.respuesta = :respuesta"),
     @NamedQuery(name = "Respuesta.findByEvaluacion", query = "SELECT r FROM Respuesta r WHERE r.evaluacion = :evaluacion")})
 public class Respuesta implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -161,5 +161,4 @@ public class Respuesta implements Serializable {
     public String toString() {
         return "entidades.Respuesta[ idrespuesta=" + idrespuesta + " ]";
     }
-    
 }

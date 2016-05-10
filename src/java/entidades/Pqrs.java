@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entidades;
 
 import java.io.Serializable;
@@ -48,8 +47,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pqrs.findByMedioIngreso", query = "SELECT p FROM Pqrs p WHERE p.medioIngreso = :medioIngreso"),
     @NamedQuery(name = "Pqrs.findByEstadoSolicitud", query = "SELECT p FROM Pqrs p WHERE p.estadoSolicitud = :estadoSolicitud"),
     @NamedQuery(name = "Pqrs.findByCodigo", query = "SELECT p FROM Pqrs p WHERE p.codigo = :codigo"),
+    @NamedQuery(name = "Pqrs.findByAnio", query = "SELECT count(p) FROM Pqrs p WHERE p.fechaCreacion >= :f1 and p.fechaCreacion <= :f2"),
     @NamedQuery(name = "Pqrs.findByEncuesta", query = "SELECT p FROM Pqrs p WHERE p.encuesta = :encuesta")})
 public class Pqrs implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,6 +73,9 @@ public class Pqrs implements Serializable {
     @Size(max = 2000)
     @Column(name = "adjunto")
     private String adjunto;
+    @Size(max = 500)
+    @Column(name = "adjuntorespuesta")
+    private String adjuntorespuesta;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_creacion")
@@ -121,6 +125,14 @@ public class Pqrs implements Serializable {
 
     public Integer getIdpqrs() {
         return idpqrs;
+    }
+
+    public String getAdjuntorespuesta() {
+        return adjuntorespuesta;
+    }
+
+    public void setAdjuntorespuesta(String adjuntorespuesta) {
+        this.adjuntorespuesta = adjuntorespuesta;
     }
 
     public void setIdpqrs(Integer idpqrs) {
@@ -265,5 +277,4 @@ public class Pqrs implements Serializable {
     public String toString() {
         return "entidades.Pqrs[ idpqrs=" + idpqrs + " ]";
     }
-    
 }

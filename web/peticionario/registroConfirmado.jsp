@@ -52,7 +52,7 @@
                     <div class="container">
                         <div class="page-title">
                             <br/>
-                            <h1>Su cuenta ha sido conformada satisfactoriamete</h1>
+                            <h1>Su cuenta ha sido confirmada satisfactoriamete</h1>
                         </div>   
                         <div class="wrapper">
 

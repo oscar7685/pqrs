@@ -65,63 +65,74 @@
                                     <td> <fmt:formatDate value="${row.fechaCreacion}" pattern="yyyy/MM/dd" /></td>
                                     <td>${row.estadoSolicitud}</td>
                                     <c:choose>
-                                        <c:when test="${diasHabilesRestantes[iter.index] > 8 }">
-                                            <td><i class="warning fa fa-info-circle" style="font-size: 1.5em; color:#f0ad4e;"></i> ${diasHabilesRestantes[iter.index]} dias</td> 
-                                        </c:when>
-                                        <c:when test="${diasHabilesRestantes[iter.index] > 15 }">
-                                            <td class="danger"><i class="fa fa-warning" style="font-size: 1.5em; color:#f00;"></i> ${diasHabilesRestantes[iter.index]} dias</td> 
+                                        <c:when test="${row.estadoSolicitud == 'Respuesta enviada al usuario' }">
+                                            <td><i class="fa fa-thumbs-up" style="font-size: 1.5em;color:#1b926c;"></i> Respondida</td> 
                                         </c:when>
                                         <c:otherwise>
-                                            <td><i class="fa fa-clock-o" style="font-size: 1.5em;"></i> ${diasHabilesRestantes[iter.index]} dias</td> 
-                                        </c:otherwise>
+                                            <c:choose>
+                                                <c:when test="${diasHabilesRestantes[iter.index] > 8 }">
+                                                    <td><i class="warning fa fa-info-circle" style="font-size: 1.5em; color:#f0ad4e;"></i> ${diasHabilesRestantes[iter.index]} dias</td> 
+                                                </c:when>
+                                                <c:when test="${diasHabilesRestantes[iter.index] > 15 }">
+                                                    <td class="danger"><i class="fa fa-warning" style="font-size: 1.5em; color:#f00;"></i> ${diasHabilesRestantes[iter.index]} dias</td> 
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td><i class="fa fa-clock-o" style="font-size: 1.5em;"></i> ${diasHabilesRestantes[iter.index]} dias</td> 
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:otherwise>    
                                     </c:choose>
 
-                                    <td>
-                                        <div class="dropdown">
-                                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"><span class="caret"></span></button>
-                                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 
-                                                <li role="presentation"
-                                                    <c:choose>
-                                                        <c:when test="${diasHabilesRestantes[iter.index]< 8 
-                                                                        || row.asignacionList.size() == 0
-                                                                        || (row.asignacionList.size() != 0 && row.asignacionList.get(row.asignacionList.size()-1).requerimiento != 0)
-                                                                }">
-                                                            class="disabled"><a role="menuitem" tabindex="-1"><i class="fa fa-clock-o"></i> Recordatorio</a>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            ><a role="menuitem" tabindex="-1" href="#enviarRecordatorio&id=${row.asignacionList.get(row.asignacionList.size()-1).asignacionId}"><i class="fa fa-clock-o"></i> Recordatorio</a>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </li>
-                                                <li role="presentation"
-                                                    <c:choose>
-                                                        <c:when test="${diasHabilesRestantes[iter.index]< 16 
-                                                                        || row.asignacionList.size() == 0
-                                                                        || (row.asignacionList.size() != 0 && row.asignacionList.get(row.asignacionList.size()-1).requerimiento != 1)
-                                                                }">
-                                                            class="disabled" ><a role="menuitem" tabindex="-1"><i class="fa fa-bell-o"></i> 1er requerimiento</a>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            ><a role="menuitem" tabindex="-1" href="#enviar1erRequerimiento&id=${row.asignacionList.get(row.asignacionList.size()-1).asignacionId}"><i class="fa fa-bell-o"></i> 1er requerimiento</a>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </li>
-                                                <li role="presentation"
-                                                    <c:choose>
-                                                        <c:when test="${diasHabilesRestantes[iter.index]< 19 
-                                                                        || row.asignacionList.size() == 0 
-                                                                        || (row.asignacionList.size() != 0 && row.asignacionList.get(row.asignacionList.size()-1).requerimiento != 2)
-                                                                }">
-                                                            class="disabled" ><a role="menuitem" tabindex="-1"><i class="fa fa-bell"></i> 2do requerimiento</a>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            ><a role="menuitem" tabindex="-1" href="#enviar2doRequerimiento&id=${row.asignacionList.get(row.asignacionList.size()-1).asignacionId}"><i class="fa fa-bell"></i> 2do requerimiento</a>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </li>
-                                            </ul>
-                                        </div>   
+                                    <td>
+
+                                        <c:if test="${row.estadoSolicitud != 'Respuesta enviada al usuario' }">
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"><span class="caret"></span></button>
+                                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+
+                                                    <li role="presentation"
+                                                        <c:choose>
+                                                            <c:when test="${diasHabilesRestantes[iter.index]< 8 
+                                                                            || row.asignacionList.size() == 0
+                                                                            || (row.asignacionList.size() != 0 && row.asignacionList.get(row.asignacionList.size()-1).requerimiento != 0)
+                                                                    }">
+                                                                class="disabled"><a role="menuitem" tabindex="-1"><i class="fa fa-clock-o"></i> Recordatorio</a>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ><a role="menuitem" tabindex="-1" href="#enviarRecordatorio&id=${row.asignacionList.get(row.asignacionList.size()-1).asignacionId}"><i class="fa fa-clock-o"></i> Recordatorio</a>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </li>
+                                                    <li role="presentation"
+                                                        <c:choose>
+                                                            <c:when test="${diasHabilesRestantes[iter.index]< 16 
+                                                                            || row.asignacionList.size() == 0
+                                                                            || (row.asignacionList.size() != 0 && row.asignacionList.get(row.asignacionList.size()-1).requerimiento != 1)
+                                                                    }">
+                                                                class="disabled" ><a role="menuitem" tabindex="-1"><i class="fa fa-bell-o"></i> 1er requerimiento</a>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ><a role="menuitem" tabindex="-1" href="#enviar1erRequerimiento&id=${row.asignacionList.get(row.asignacionList.size()-1).asignacionId}"><i class="fa fa-bell-o"></i> 1er requerimiento</a>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </li>
+                                                    <li role="presentation"
+                                                        <c:choose>
+                                                            <c:when test="${diasHabilesRestantes[iter.index]< 19 
+                                                                            || row.asignacionList.size() == 0 
+                                                                            || (row.asignacionList.size() != 0 && row.asignacionList.get(row.asignacionList.size()-1).requerimiento != 2)
+                                                                    }">
+                                                                class="disabled" ><a role="menuitem" tabindex="-1"><i class="fa fa-bell"></i> 2do requerimiento</a>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ><a role="menuitem" tabindex="-1" href="#enviar2doRequerimiento&id=${row.asignacionList.get(row.asignacionList.size()-1).asignacionId}"><i class="fa fa-bell"></i> 2do requerimiento</a>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </li>
+                                                </ul>
+                                            </div>   
+                                        </c:if>
                                     </td>
                                     <td>
                                         <c:choose>

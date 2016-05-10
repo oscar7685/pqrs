@@ -28,25 +28,36 @@ import sesionbeans.ResponsableAreaFacade;
  *
  * @author Ususario
  */
-public class Comportamiento implements Action {
+public class ComportamientoFragmento implements Action {
 
     PqrsFacade pqrsFacade = lookupPqrsFacadeBean();
 
     @Override
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession sesion = request.getSession();
+
+        String finicio = request.getParameter("inicio");
+        String ffinal = request.getParameter("final");
+
+        String f1[] = finicio.split("-");
+        String f2[] = ffinal.split("-");
+
         Calendar cal1 = Calendar.getInstance();
-        cal1.set(Calendar.DAY_OF_YEAR, 1);
+
+        cal1.set(Calendar.YEAR, Integer.parseInt(f1[0]));
+        cal1.set(Calendar.MONTH, Integer.parseInt(f1[1]) - 1);
+        cal1.set(Calendar.DAY_OF_MONTH, Integer.parseInt(f1[2]));
         Date start = cal1.getTime();
-        cal1.set(Calendar.MONTH, 11);
-        cal1.set(Calendar.DAY_OF_MONTH, 31);
+
+        cal1.set(Calendar.YEAR, Integer.parseInt(f2[0]));
+        cal1.set(Calendar.MONTH, Integer.parseInt(f2[1]) - 1);
+        cal1.set(Calendar.DAY_OF_MONTH, Integer.parseInt(f2[2]));
         Date end = cal1.getTime();
 
         List<Pqrs> peticiones = pqrsFacade.findPQRSxTipoyRango("Peticion", start, end);
         List<Pqrs> Quejas = pqrsFacade.findPQRSxTipoyRango("Queja", start, end);
         List<Pqrs> Reclamos = pqrsFacade.findPQRSxTipoyRango("Reclamo", start, end);
         List<Pqrs> Sugerencias = pqrsFacade.findPQRSxTipoyRango("Sugerencia", start, end);
-
 
         int[] mesesP = new int[12];
         int[] mesesQ = new int[12];
@@ -82,9 +93,13 @@ public class Comportamiento implements Action {
         sesion.setAttribute("Queja", mesesQ);
         sesion.setAttribute("Reclamo", mesesR);
         sesion.setAttribute("Sugerencia", mesesS);
+        sesion.setAttribute("finicio", finicio);
+        sesion.setAttribute("ffinal", ffinal);
 
         sesion.setAttribute("total", pqrsFacade.findAll());
-        return "informes/comportamiento.jsp";
+
+
+        return "informes/fragmentoComportamiento.jsp";
 
     }
 

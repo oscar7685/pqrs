@@ -62,7 +62,7 @@ public class CrearPQRS2 implements Action {
         java.util.Date date = new java.util.Date();
         pqrs.setFechaCreacion(date);
         pqrs.setReclamanteIdreclamante(r);
-        
+
         Calendar fecha = Calendar.getInstance();
         int anio = fecha.get(Calendar.YEAR);
         //armamos el codigo
@@ -78,9 +78,9 @@ public class CrearPQRS2 implements Action {
 
         pqrs.setCodigo(codigo);
         pqrsFacade.create(pqrs);
-
-        sesion.setAttribute("ultimaPQRS", pqrsFacade.findUltimo("idpqrs").getIdpqrs());
-        new JavaMail().sendMail();
+        String idpqrs = "" + pqrsFacade.findUltimo("idpqrs").getIdpqrs();
+        sesion.setAttribute("ultimaPQRS", idpqrs);
+        //  new JavaMail().sendMail();
         return "NA";
 
     }
