@@ -49,8 +49,7 @@ public class VerRespuestaPqrs implements Action {
         
         pqrsFacade.edit(p);
         
-        session.setAttribute(
-                "pqrs", p);
+        session.setAttribute("pqrs", p);
         
         return "pqrs/verRespuesta.jsp";
         

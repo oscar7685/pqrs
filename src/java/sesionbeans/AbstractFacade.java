@@ -79,7 +79,6 @@ public abstract class AbstractFacade<T> {
         q.setParameter("tipo", tipo);
         q.setParameter("finicio", finicio, TemporalType.DATE);
         q.setParameter("ffinal", ffinal, TemporalType.DATE);
-        System.out.println("" + q.toString());
         return q.getResultList();
     }
 
@@ -89,6 +88,20 @@ public abstract class AbstractFacade<T> {
         Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c." + property1 + " = :name1 and c." + property2 + " = :name2", entityClass);
         q.setParameter("name1", m1);
         q.setParameter("name2", m2);
+        return q.getResultList();
+    }
+
+    public List<T> findRemitidas() {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c WHERE c.estadoSolicitud <> 'Verificacion PQRS'", entityClass);
+        return q.getResultList();
+    }
+
+    public List<T> findByPertinentes() {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c  JOIN c.respuestaList r WHERE c.estadoSolicitud ='Respuesta enviada al usuario' and (r.evaluacion = '5' or r.evaluacion = '4')", entityClass);
         return q.getResultList();
     }
 

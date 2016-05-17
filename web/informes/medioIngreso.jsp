@@ -15,7 +15,7 @@
 </html>
 <script type="text/javascript">
     $(function () {
-        var chart = new Highcharts.Chart({
+        var chart2 = new Highcharts.Chart({
             chart: {
                 type: 'bar',
                 renderTo: 'container20'

@@ -84,8 +84,8 @@
                                     <a href="#listarPeticionarios"><i class="fa fa-user"></i> <span>Listar Peticionarios</span></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-line-chart"></i> <span>Informes</span></a>
-                                    <ul>
+                                    <a href="#dashboard"><i class="fa fa-desktop"></i> <span>Bussiness Inteligence</span></a>
+                                    <!--<ul>
                                         <li>
                                             <a href="#medioIngreso"><i class="fa fa-truck"></i> <span>PQRS-Medio de Ingreso </span></a>
                                         </li> 
@@ -96,6 +96,7 @@
                                             <a href="#comportamiento"><i class="fa fa-envelope"></i> <span>PQRS-Comportamiento</span></a>
                                         </li> 
                                     </ul>
+                                    -->
                                 </li>
 
                                 <li>
@@ -138,6 +139,7 @@
         <!--<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>-->     
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/data.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <script type="text/javascript" src="js/sweetalert.min.js"></script>
         <!--<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>-->
