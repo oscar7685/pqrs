@@ -112,7 +112,7 @@ public class Enviar2doRequerimiento implements Action {
             ex.getMessage();
         }
 
-        return "NA";
+        return "9";
 
     }
 

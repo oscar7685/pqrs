@@ -42,18 +42,17 @@ public class ComportamientoFragmento implements Action {
         String f1[] = finicio.split("-");
         String f2[] = ffinal.split("-");
 
-        Calendar cal1 = Calendar.getInstance();
 
+        Calendar cal1 = Calendar.getInstance();
         cal1.set(Calendar.YEAR, Integer.parseInt(f1[0]));
         cal1.set(Calendar.MONTH, Integer.parseInt(f1[1]) - 1);
         cal1.set(Calendar.DAY_OF_MONTH, Integer.parseInt(f1[2]));
         Date start = cal1.getTime();
-
         cal1.set(Calendar.YEAR, Integer.parseInt(f2[0]));
         cal1.set(Calendar.MONTH, Integer.parseInt(f2[1]) - 1);
         cal1.set(Calendar.DAY_OF_MONTH, Integer.parseInt(f2[2]));
         Date end = cal1.getTime();
-
+        String meses[] = {"enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"};
         List<Pqrs> peticiones = pqrsFacade.findPQRSxTipoyRango("Peticion", start, end);
         List<Pqrs> Quejas = pqrsFacade.findPQRSxTipoyRango("Queja", start, end);
         List<Pqrs> Reclamos = pqrsFacade.findPQRSxTipoyRango("Reclamo", start, end);

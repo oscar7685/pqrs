@@ -84,30 +84,34 @@
                 <div class="col-md-12">
                     <div class="page-subtitle">
                     </div>
-                    <div id="container20" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-                    <table id="datatable" class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Mes/Tipo PQRS</th>
-                                <th>Peticiones</th>
-                                <th>Quejas</th>
-                                <th>Reclamos</th>
-                                <th>Sugerencias</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${Peticion}" var="row" varStatus="iter">
+                    <div id="jajax">
+                        <div id="container20" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                        <table id="datatable" class="table table-bordered">
+                            <thead>
                                 <tr>
-                                    <td>${meses[iter.index]}</td>
-                                    <td>${Peticion[iter.index]}</td>
-                                    <td>${Queja[iter.index]}</td>
-                                    <td>${Reclamo[iter.index]}</td>
-                                    <td>${Sugerencia[iter.index]}</td>
+                                    <th>Mes/Tipo PQRS</th>
+                                    <th>Peticiones</th>
+                                    <th>Quejas</th>
+                                    <th>Reclamos</th>
+                                    <th>Sugerencias</th>
                                 </tr>
-                            </c:forEach>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${Peticion}" var="row" varStatus="iter">
+                                    <tr>
+                                        <td>${meses[iter.index]}</td>
+                                        <td>${Peticion[iter.index]}</td>
+                                        <td>${Queja[iter.index]}</td>
+                                        <td>${Reclamo[iter.index]}</td>
+                                        <td>${Sugerencia[iter.index]}</td>
+                                    </tr>
+                                </c:forEach>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
+
+
                 </div>
             </div>
         </div> 
@@ -142,7 +146,7 @@
     </body>
 </html>
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         $('#container20').highcharts({
             chart: {
                 type: 'line',
@@ -161,7 +165,7 @@
                 table: 'datatable'
             },
             tooltip: {
-                formatter: function () {
+                formatter: function() {
                     return '<b>' + this.series.name + '</b><br/>' +
                             this.point.y + ' ' + this.point.name.toLowerCase();
                 }
@@ -174,7 +178,7 @@
 
 <script>
     var charts = {
-        init: function () {
+        init: function() {
             // Sparkline                    
             if ($(".sparkline").length > 0)
                 $(".sparkline").sparkline('html', {enableTagOptions: true, disableHiddenCheck: true});
@@ -182,19 +186,19 @@
         }
     };
     var knob = {
-        init: function () {
+        init: function() {
             if ($(".knob").length > 0)
                 $(".knob").knob();
         }
     };
 
-    $(function () {
+    $(function() {
         charts.init();
         knob.init();
     });
 </script>
 <script type="text/javascript">
-    $(function () {
+    $(function() {
 
         function cb(start, end) {
             $('#reportrange span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
@@ -245,13 +249,14 @@
             }
         }, cb);
 
-        $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+        $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
             $.ajax({
                 url: 'Controller?accion=comportamientoFragmento',
                 data: 'inicio=' + picker.startDate.format('YYYY-MM-DD') + '&final=' + picker.endDate.format('YYYY-MM-DD'),
                 type: 'post',
-                success: function (data) {
-                    $("#container10").html(data);
+                success: function(data) {
+                    $("#jajax").empty();
+                    $("#jajax").html(data);
                 }
             });
 
@@ -261,7 +266,7 @@
 </script>
 
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         var chart2 = new Highcharts.Chart({
             chart: {
                 type: 'bar',
@@ -294,7 +299,7 @@
                 bar: {
                     dataLabels: {
                         enabled: true,
-                        formatter: function () {
+                        formatter: function() {
                             var pcnt = (this.y / ${fn:length(total)}) * 100;
                             return Highcharts.numberFormat(pcnt) + '%';
                         }
@@ -324,7 +329,7 @@
 </script>
 
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         var chart3 = new Highcharts.Chart({
             chart: {
                 type: 'column',
@@ -357,7 +362,7 @@
                 column: {
                     dataLabels: {
                         enabled: true,
-                        formatter: function () {
+                        formatter: function() {
                             var pcnt = (this.y / ${fn:length(total)}) * 100;
                             return Highcharts.numberFormat(pcnt) + '%';
                         }
@@ -387,7 +392,7 @@
 </script>
 
 <script type="text/javascript">
-    $(function () {
+    $(function() {
         var chart33 = new Highcharts.Chart({
             chart: {
                 type: 'bar',
@@ -420,7 +425,7 @@
                 bar: {
                     dataLabels: {
                         enabled: true,
-                        formatter: function () {
+                        formatter: function() {
                             var pcnt = (this.y / ${fn:length(total)}) * 100;
                             return Highcharts.numberFormat(pcnt) + '%';
                         }

@@ -3,19 +3,19 @@
  * and open the template in the editor.
  */
 
-$(function () {
+$(function() {
 
-    var actualizaEnlaces = function (hash) {
+    var actualizaEnlaces = function(hash) {
         $("li").removeClass("active");
         $("a[href='" + hash + "']").parent().addClass("active");
     };
 
     location = "/pqrs/#inicio";
-    location = "/pqrs/#listarTodasPQRS";
-    $(window).hashchange(function () {
+//    location = "/pqrs/#listarTodasPQRS";
+    $(window).hashchange(function() {
         var hash = location.hash;
         if (hash === "#cerrarSesion") {
-            $.post('Controller?accion=cerrarSesion', function () {
+            $.post('Controller?accion=cerrarSesion', function() {
                 location = "/pqrs";
             });
             //fin post
@@ -26,7 +26,9 @@ $(function () {
                 url: url3,
                 success: function (data)
                 {
-                    
+                    if (data === '9') {
+                        location = "/pqrs/#listarTodasPQRS";
+                    }
                 } //fin success
             }); //fin del $.ajax 
         } else {
@@ -38,8 +40,8 @@ $(function () {
                 url: url3,
                 success: function (data)
                 {
-                    $("div.dev-page-content").html(data);
-                    actualizaEnlaces(hash);
+                        $("div.dev-page-content").html(data);
+                        actualizaEnlaces(hash);
                 } //fin success
             }); //fin del $.ajax 
 

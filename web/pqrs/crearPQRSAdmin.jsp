@@ -61,6 +61,7 @@
                                 <option value="PROFESOR">Docente</option>
                                 <option value="PARTICULAR">Particular</option>
                                 <option value="ASPIRANTE">Aspirante</option>
+                                <option value="FUNCIONARIO">Funcionario</option>
                             </select>
                         </div>
                     </div>

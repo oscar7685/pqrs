@@ -112,7 +112,7 @@ public class Enviar1erRequerimiento implements Action {
             ex.getMessage();
         }
 
-        return "NA";
+       return "9";
 
     }
 

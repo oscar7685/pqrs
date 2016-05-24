@@ -104,7 +104,7 @@ public class EnviarRecordatorio implements Action {
             ex.getMessage();
         }
 
-        return "NA";
+        return "9";
 
     }
 
