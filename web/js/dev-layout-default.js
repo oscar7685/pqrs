@@ -35,7 +35,7 @@ var dev_layout_alpha_content = {
         /* ./end */
         
         /* remove height param from containers */
-        $(".dev-page-container .dev-page-content, .dev-page-sidebar, .dev-page-rightbar, .rightbar-chat, .rightbar-chat .rightbar-chat-frame-contacts, .rightbar-chat .rightbar-chat-frame-chat").css("height","");
+       // $(".dev-page-container .dev-page-content, .dev-page-sidebar, .dev-page-rightbar, .rightbar-chat, .rightbar-chat .rightbar-chat-frame-contacts, .rightbar-chat .rightbar-chat-frame-chat").css("height","");
         /* ./end */
         
         /* do not set height for containers in mobile mode */
@@ -53,27 +53,34 @@ var dev_layout_alpha_content = {
         /* ./end */
         
         /* get height of other elements to get minus value */                
-        var minus = settings.headerHeight + dev_layout_alpha_settings.footerHeightCurrent;
+        //var minus = settings.headerHeight + dev_layout_alpha_settings.footerHeightCurrent;
         /* ./end */
 
         /* get height of main container (sidebar and content) */
-        var content_height = $(".dev-page-container .dev-page-content > .container").height() + settings.containerPadding;            
+        //var content_height = $(".dev-page-container .dev-page-content > .container").height() + settings.containerPadding;            
         var sidebar_height = $(".dev-page-container .dev-page-sidebar").height();                
 
-        var height = content_height > sidebar_height ? content_height : sidebar_height;
+        /*var height = content_height > sidebar_height ? content_height : sidebar_height;
             height = height + minus;
+            */
         /* ./end */
 
+        if(window.innerHeight > sidebar_height){
+            console.log("si cabe");            
+        }else{
+         console.log("NO cabe");            
+        }
+
         /* compare it with window height and get new height value */
-        var new_height  = window.innerHeight > height ? window.innerHeight - minus : height - minus - 30; // i dont know why i -30px... probably its padding... :(                
+        //var new_height  = window.innerHeight > height ? window.innerHeight - minus : height - minus - 30; // i dont know why i -30px... probably its padding... :(                
         /* ./end */
 
         /* set height for inner boxes */
-        $(".dev-page-container .dev-page-sidebar,.dev-page-container .dev-page-content").height(new_height);
+        //$(".dev-page-container .dev-page-sidebar,.dev-page-container .dev-page-content").height(new_height);
         /* ./end */
 
         
-        return new_height;
+       // return new_height;
         
     /* ./content height control */
     },

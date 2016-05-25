@@ -1,6 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<style>
+.mCS-my-theme.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{ background-color: #df6255; }
+.mCS-my-theme.mCSB_scrollTools .mCSB_draggerRail{ background-color: white !important; }
+</style>
 <html lang="en">
     <head>        
         <!-- meta section -->
@@ -9,7 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
         <meta http-equiv="X-UA-Compatible" content="IE=edge" >
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" >
-
+        <link rel="stylesheet" type="text/css" href="css/dev-plugins/mcustomscrollbar/jquery.mCustomScrollbar.css" />
         <link rel="icon" href="favicon.ico" type="image/x-icon" >
         <!-- ./meta section -->
 
@@ -30,10 +34,10 @@
     </head>
     <body>
         <!-- page wrapper -->
-        <div class="dev-page">
+        <div class="dev-page dev-page-no-footer">
 
             <!-- page header -->    
-            <div class="dev-page-header">
+            <div class="dev-page-header" style='position:fixed'>
 
                 <div class="dph-logo">
                     <a href="inicio.jsp">PQRS</a>
@@ -53,7 +57,7 @@
             <div class="dev-page-container">
 
                 <!-- page sidebar -->
-                <div class="dev-page-sidebar">
+                <div class="dev-page-sidebar" style="position:fixed;">
 
                     <ul class="dev-page-navigation">
                         <li class="title">Mis PQRS</li>
@@ -119,13 +123,16 @@
                         <li>
                             <a href="#cerrarSesion"><i class="fa fa-power-off"></i> <span>Cerrar sesi&oacute;n</span></a>
                         </li>
+                        <li>
+                            <a href="#">&nbsp;</a>
+                        </li>
                     </ul>
 
                 </div>
                 <!-- ./page sidebar -->
 
                 <!-- page content -->
-                <div class="dev-page-content">                    
+                <div class="dev-page-content" style="overflow: auto">                    
 
 
                 </div>
@@ -136,8 +143,8 @@
         <!-- ./page wrapper -->
 
         <!-- javascript -->
-        <!--<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>-->     
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+        <!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/data.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -154,17 +161,18 @@
         <script type="text/javascript" src="js/plugins/datatables/jquery.dataTables.min.js"></script>
 
         <script type="text/javascript" src="js/plugins/sortable/sortable.min.js"></script>
-
+        
+        
         <script type="text/javascript" src="js/dev-layout-default.js"></script>
         <script type="text/javascript" src="js/dev-app.js"></script>
         <script type="text/javascript" src="js/jquery.ba-hashchange.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery-validate/jquery.validate.min.js"></script>  
         <script type="text/javascript" src="js/responsable.js"></script>
-        <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <!--<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>-->
         <!-- Include Date Range Picker -->
-        <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
+        <script type="text/javascript" src="js/plugins/datarangepicker/daterangepicker.js"></script>
+        <link rel="stylesheet" type="text/css" href="js/plugins/datarangepicker/daterangepicker.css" />
+        
         <!-- ./javascript -->                
     </body>
 </html>

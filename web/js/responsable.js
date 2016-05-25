@@ -6,7 +6,7 @@
 $(function() {
 
     var actualizaEnlaces = function(hash) {
-        $("li").removeClass("active");
+        $(".dev-page-sidebar li").removeClass("active");
         $("a[href='" + hash + "']").parent().addClass("active");
     };
 
@@ -24,7 +24,7 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function (data)
+                success: function(data)
                 {
                     if (data === '9') {
                         location = "/pqrs/#listarTodasPQRS";
@@ -38,10 +38,10 @@ $(function() {
             $.ajax({
                 type: "POST",
                 url: url3,
-                success: function (data)
+                success: function(data)
                 {
-                        $("div.dev-page-content").html(data);
-                        actualizaEnlaces(hash);
+                    $("div.dev-page-content").html(data);
+                    actualizaEnlaces(hash);
                 } //fin success
             }); //fin del $.ajax 
 

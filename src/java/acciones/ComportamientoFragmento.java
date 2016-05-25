@@ -48,11 +48,35 @@ public class ComportamientoFragmento implements Action {
         cal1.set(Calendar.MONTH, Integer.parseInt(f1[1]) - 1);
         cal1.set(Calendar.DAY_OF_MONTH, Integer.parseInt(f1[2]));
         Date start = cal1.getTime();
+        
         cal1.set(Calendar.YEAR, Integer.parseInt(f2[0]));
         cal1.set(Calendar.MONTH, Integer.parseInt(f2[1]) - 1);
         cal1.set(Calendar.DAY_OF_MONTH, Integer.parseInt(f2[2]));
         Date end = cal1.getTime();
+        
         String meses[] = {"enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"};
+        
+        int totalPQRS = pqrsFacade.countPqrs(start, end);
+        int CantP = pqrsFacade.countPqrsRecibidas("Peticion", start, end);
+        int CantQ = pqrsFacade.countPqrsRecibidas("Queja", start, end);
+        int CantR = pqrsFacade.countPqrsRecibidas("Reclamo", start, end);
+        int CantS = pqrsFacade.countPqrsRecibidas("Sugerencia", start, end);
+        int CantPr = pqrsFacade.countPqrsRespondidas("Peticion", start, end, "Respuesta enviada al usuario");
+        int CantQr = pqrsFacade.countPqrsRespondidas("Queja", start, end, "Respuesta enviada al usuario");
+        int CantRr = pqrsFacade.countPqrsRespondidas("Reclamo", start, end, "Respuesta enviada al usuario");
+        int CantSr = pqrsFacade.countPqrsRespondidas("Sugerencia", start, end, "Respuesta enviada al usuario");
+
+
+        sesion.setAttribute("totalPQRS", totalPQRS);
+        sesion.setAttribute("CantP", CantP);
+        sesion.setAttribute("CantQ", CantQ);
+        sesion.setAttribute("CantR", CantR);
+        sesion.setAttribute("CantS", CantS);
+        sesion.setAttribute("CantPr", CantPr);
+        sesion.setAttribute("CantQr", CantQr);
+        sesion.setAttribute("CantRr", CantRr);
+        sesion.setAttribute("CantSr", CantSr);
+
         List<Pqrs> peticiones = pqrsFacade.findPQRSxTipoyRango("Peticion", start, end);
         List<Pqrs> Quejas = pqrsFacade.findPQRSxTipoyRango("Queja", start, end);
         List<Pqrs> Reclamos = pqrsFacade.findPQRSxTipoyRango("Reclamo", start, end);
@@ -92,10 +116,29 @@ public class ComportamientoFragmento implements Action {
         sesion.setAttribute("Queja", mesesQ);
         sesion.setAttribute("Reclamo", mesesR);
         sesion.setAttribute("Sugerencia", mesesS);
-        sesion.setAttribute("finicio", finicio);
-        sesion.setAttribute("ffinal", ffinal);
 
-        sesion.setAttribute("total", pqrsFacade.findAll());
+        sesion.setAttribute("total", totalPQRS);
+
+        sesion.setAttribute("Web", pqrsFacade.findMedio("Web", start, end));
+        sesion.setAttribute("Correo", pqrsFacade.findMedio("Correo", start, end));
+        sesion.setAttribute("Telefono", pqrsFacade.findMedio("Telefono", start, end));
+        sesion.setAttribute("Manual", pqrsFacade.findMedio("Manual", start, end));
+        sesion.setAttribute("Verbal", pqrsFacade.findMedio("Verbal", start, end));
+        sesion.setAttribute("Fax", pqrsFacade.findMedio("Fax", start, end));
+        sesion.setAttribute("total", totalPQRS);
+
+        sesion.setAttribute("Aspirante", pqrsFacade.findTipoReclamante("ASPIRANTE", start, end));
+        sesion.setAttribute("Docente", pqrsFacade.findTipoReclamante("PROFESOR", start, end));
+        sesion.setAttribute("Egresado", pqrsFacade.findTipoReclamante("EGRESADO", start, end));
+        sesion.setAttribute("Estudiante", pqrsFacade.findTipoReclamante("ESTUDIANTE", start, end));
+        sesion.setAttribute("Particular", pqrsFacade.findTipoReclamante("PARTICULAR", start, end));
+        sesion.setAttribute("total", totalPQRS);
+
+        sesion.setAttribute("recibidas", totalPQRS);
+        sesion.setAttribute("remitidas", pqrsFacade.findRemitidas(start, end));
+        sesion.setAttribute("respondidas", pqrsFacade.findRespondidas(start, end));
+        sesion.setAttribute("pertinentes", pqrsFacade.findByPertinentes(start, end));
+        sesion.setAttribute("meses", meses);
 
 
         return "informes/fragmentoComportamiento.jsp";
