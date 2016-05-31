@@ -10,8 +10,22 @@ $(function() {
         $("a[href='" + hash + "']").parent().addClass("active");
     };
 
-    location = "/pqrs/#inicio";
-//    location = "/pqrs/#listarTodasPQRS";
+//    location = "/pqrs/#inicio";
+    location = "/pqrs/#listarTodasPQRS";
+
+    $(document).ajaxStart(function() {
+        var loading_layer = $("<div></div>").addClass("dev-page-loading");
+        $(".dev-page-content").append(loading_layer).find(".dev-page-loading").animate({opacity: 1},200,"linear");
+    });
+    
+    $(document).ajaxStop(function() {
+        if($(".dev-page-loading").length > 0){            
+            $(".dev-page-loading").animate({opacity: 0},300,"linear",function(){
+                $(this).remove();
+            });                        
+        }  
+    });
+
     $(window).hashchange(function() {
         var hash = location.hash;
         if (hash === "#cerrarSesion") {

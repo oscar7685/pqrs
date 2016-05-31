@@ -45,8 +45,22 @@ public class ListarTodasPQRS implements Action {
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession session = request.getSession();
         ResponsableArea r = (ResponsableArea) session.getAttribute("responsableArea");
+        int numberOfPages = 1;
+        int pageNumber = 1;
         if (r.getAreaIdarea().getIdarea() == 1000) {
-            List<Pqrs> listaPqrs = pqrsFacade.findAll();
+            int rango[] = new int[2];
+            rango[0] = 0; // menor
+            rango[1] = 50; //mayor
+            String numP = request.getParameter("numP");
+            if (numP != null && !"".equals(numP)) {
+                pageNumber = Integer.parseInt(numP);
+                rango[0] = (pageNumber - 1) * 50;
+                rango[1] = (pageNumber) * 50;
+            }
+
+            int total = pqrsFacade.count();
+
+            List<Pqrs> listaPqrs = pqrsFacade.findRange(rango);
             int[] diasHabilesRestantes = new int[listaPqrs.size()];
 
             Calendar fechaInicial = Calendar.getInstance();
@@ -73,8 +87,18 @@ public class ListarTodasPQRS implements Action {
 
             session.setAttribute("diasHabilesRestantes", diasHabilesRestantes);
             session.setAttribute("pqrsTotales", listaPqrs);
-            List<Asignacion> asignaciones = asignacionFacade.findByList2("asignadoA", r, "estado", "Aceptada");
-            session.setAttribute("asignaciones", asignaciones);
+
+
+            if (total % 50 == 0) {
+                numberOfPages = total / 50;
+            } else if (total < 50) {
+                numberOfPages = 1;
+            } else if (total > 50) {
+                numberOfPages = total / 50;
+            }
+
+            session.setAttribute("numberOfPages", numberOfPages);
+            session.setAttribute("pageNumber", pageNumber);
 
         } else {
             List<Asignacion> asignaciones = asignacionFacade.findByList2("asignadoA", r, "estado", "Aceptada");

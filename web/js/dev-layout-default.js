@@ -66,9 +66,9 @@ var dev_layout_alpha_content = {
         /* ./end */
 
         if(window.innerHeight > sidebar_height){
-            console.log("si cabe");            
+           // console.log("si cabe");            
         }else{
-         console.log("NO cabe");            
+         //console.log("NO cabe");            
         }
 
         /* compare it with window height and get new height value */

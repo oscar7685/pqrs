@@ -31,7 +31,7 @@
             <h3>Mis PQRS</h3>
         </div>
         <div class="table-responsive">
-            <table class="table table-bordered table-striped table-sortable">
+            <table class="table table-bordered table-striped table-sortable" id="tablaXX">
                 <thead>
                     <tr>
                         <c:choose>
@@ -184,6 +184,27 @@
 
                 </tbody>
             </table>
+
+            <div class="dataTables_paginate paging_simple_numbers">
+                <c:if test="${pageNumber gt 1}">
+                    <a href="#paginacion&numP=${pageNumber - 1}" class="paginate_button previous">Anterior</a>
+                </c:if>
+                <span>    
+                    <c:forEach begin="1" end="${numberOfPages}" var="i">
+                        <c:choose>
+                            <c:when test="${i!=pageNumber}">
+                                <a href="#paginacion&numP=${i}" class="paginate_button current" >${i}</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="#paginacion&numP=${i}" class="paginate_button">${i}</a>
+                            </c:otherwise>        
+                        </c:choose>       
+                    </c:forEach>  
+                </span>            
+                <c:if test="${pageNumber lt numberOfPages}">
+                    <a href="#paginacion&numP=${pageNumber + 1}" class="paginate_button next">Siguiente</a>
+                </c:if>
+            </div>
         </div>
     </div>
 

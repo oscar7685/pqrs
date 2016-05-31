@@ -56,6 +56,15 @@ public abstract class AbstractFacade<T> {
         return q.getResultList();
     }
 
+    public List<T> findRange2(int[] range) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName()+ " c  ORDER BY c.idpqrs ASC", entityClass);
+        q.setMaxResults(range[1] - range[0]);
+        q.setFirstResult(range[0]);
+        return q.getResultList();
+    }
+
     public int count() {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
@@ -106,10 +115,11 @@ public abstract class AbstractFacade<T> {
         q.setParameter("name", m);
         return q.getResultList();
     }
+
     public List<T> findTipoReclamante(String tipo, Date finicio, Date ffinal) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() 
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName()
                 + " c WHERE c.reclamanteIdreclamante.tipo = :tipo "
                 + "and c.fechaCreacion BETWEEN :finicio and :ffinal", entityClass);
         q.setParameter("tipo", tipo);
@@ -117,10 +127,11 @@ public abstract class AbstractFacade<T> {
         q.setParameter("ffinal", ffinal);
         return q.getResultList();
     }
+
     public List<T> findMedio(String medio, Date finicio, Date ffinal) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() 
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName()
                 + " c WHERE c.medioIngreso= :medio "
                 + "and c.fechaCreacion BETWEEN :finicio and :ffinal", entityClass);
         q.setParameter("medio", medio);
@@ -151,17 +162,18 @@ public abstract class AbstractFacade<T> {
     public int findRemitidas(Date finicio, Date ffinal) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName() 
+        Query q = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName()
                 + " c WHERE c.estadoSolicitud <> 'Verificacion PQRS'"
                 + " and c.fechaCreacion BETWEEN :finicio and :ffinal", entityClass);
         q.setParameter("finicio", finicio, TemporalType.DATE);
         q.setParameter("ffinal", ffinal, TemporalType.DATE);
         return ((Long) q.getSingleResult()).intValue();
     }
+
     public int findRespondidas(Date finicio, Date ffinal) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName() 
+        Query q = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName()
                 + " c WHERE c.estadoSolicitud = 'Respuesta enviada al usuario'"
                 + " and c.fechaCreacion BETWEEN :finicio and :ffinal", entityClass);
         q.setParameter("finicio", finicio, TemporalType.DATE);
@@ -172,7 +184,7 @@ public abstract class AbstractFacade<T> {
     public int findByPertinentes(Date finicio, Date ffinal) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName() 
+        Query q = getEntityManager().createQuery("SELECT count(c) FROM " + entityClass.getSimpleName()
                 + " c  JOIN c.respuestaList r WHERE c.estadoSolicitud ='Respuesta enviada al usuario' "
                 + " and (r.evaluacion = '5' or r.evaluacion = '4')"
                 + " and c.fechaCreacion BETWEEN :finicio and :ffinal", entityClass);

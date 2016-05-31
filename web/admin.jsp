@@ -4,6 +4,11 @@
 <style>
 .mCS-my-theme.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{ background-color: #df6255; }
 .mCS-my-theme.mCSB_scrollTools .mCSB_draggerRail{ background-color: white !important; }
+
+.dev-page-loading::before, .dev-page-loading::after{
+    left:40% !important;
+}
+
 </style>
 <html lang="en">
     <head>        
@@ -162,6 +167,7 @@
 
         <script type="text/javascript" src="js/plugins/sortable/sortable.min.js"></script>
         
+        <script type="text/javascript" src="js/dev-loaders.js"></script>
         
         <script type="text/javascript" src="js/dev-layout-default.js"></script>
         <script type="text/javascript" src="js/dev-app.js"></script>
