@@ -65,6 +65,9 @@
                             <a href="#crearPQRS"><i class="fa fa-plus"></i> <span>Crear PQRS</span></a>
                         </li>
                         <li>
+                            <a href="#cambiarContrasena"><i class="fa fa-exchange"></i> <span>Cambiar Contrase&nacute;a</span></a>
+                        </li>
+                        <li>
                             <a href="#cerrarSesion"><i class="fa fa-power-off"></i> <span>Cerrar sesi&oacute;n</span></a>
                         </li>
                     </ul>

@@ -50,12 +50,13 @@ public class ListarTodasPQRS implements Action {
         if (r.getAreaIdarea().getIdarea() == 1000) {
             int rango[] = new int[2];
             rango[0] = 0; // menor
-            rango[1] = 50; //mayor
+            rango[1] = 10; //cantidad
+            String searchTerm = request.getParameter("sSearch");
             String numP = request.getParameter("numP");
             if (numP != null && !"".equals(numP)) {
                 pageNumber = Integer.parseInt(numP);
-                rango[0] = (pageNumber - 1) * 50;
-                rango[1] = (pageNumber) * 50;
+                rango[0] = (pageNumber - 1) * 10;
+                rango[1] = (pageNumber) * 10;
             }
 
             int total = pqrsFacade.count();
@@ -89,12 +90,12 @@ public class ListarTodasPQRS implements Action {
             session.setAttribute("pqrsTotales", listaPqrs);
 
 
-            if (total % 50 == 0) {
-                numberOfPages = total / 50;
-            } else if (total < 50) {
+            if (total % 10 == 0) {
+                numberOfPages = (int)total / 10;
+            } else if (total < 10) {
                 numberOfPages = 1;
-            } else if (total > 50) {
-                numberOfPages = total / 50;
+            } else if (total > 10) {
+                numberOfPages = (int) total / 10;
             }
 
             session.setAttribute("numberOfPages", numberOfPages);

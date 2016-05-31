@@ -56,10 +56,10 @@ public abstract class AbstractFacade<T> {
         return q.getResultList();
     }
 
-    public List<T> findRange2(int[] range) {
+    public List<T> findRangeWeb(int[] range) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName()+ " c  ORDER BY c.idpqrs ASC", entityClass);
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName()+ " c  WHERE c.medioIngreso = 'Web' ORDER BY c.idpqrs ASC", entityClass);
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
         return q.getResultList();

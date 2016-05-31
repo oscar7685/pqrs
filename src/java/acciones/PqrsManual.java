@@ -43,8 +43,23 @@ public class PqrsManual implements Action {
     public String procesar(HttpServletRequest request) throws IOException, ServletException {
         HttpSession session = request.getSession();
         ResponsableArea r = (ResponsableArea) session.getAttribute("responsableArea");
+        int numberOfPages = 1;
+        int pageNumber = 1;
         if (r.getAreaIdarea().getIdarea() == 1000) {
-            List<Pqrs> listaPqrs = pqrsFacade.findByList("medioIngreso", "Manual");
+            int rango[] = new int[2];
+            rango[0] = 0; // menor
+            rango[1] = 10; //cantidad
+            String searchTerm = request.getParameter("sSearch");
+            String numP = request.getParameter("numP");
+            if (numP != null && !"".equals(numP)) {
+                pageNumber = Integer.parseInt(numP);
+                rango[0] = (pageNumber - 1) * 10;
+                rango[1] = (pageNumber) * 10;
+            }
+            List<Pqrs> listaPqrs0 = pqrsFacade.findByList("medioIngreso", "Manual");
+            int total = listaPqrs0.size();
+
+            List<Pqrs> listaPqrs = pqrsFacade.findRangeWeb(rango);
             int[] diasHabilesRestantes = new int[listaPqrs.size()];
 
             Calendar fechaInicial = Calendar.getInstance();
@@ -71,11 +86,21 @@ public class PqrsManual implements Action {
 
             session.setAttribute("diasHabilesRestantes", diasHabilesRestantes);
             session.setAttribute("pqrsTotales", listaPqrs);
-            List<Asignacion> asignaciones = asignacionFacade.findByList("asignadoA", r);
-            session.setAttribute("asignaciones", asignaciones);
+
+
+            if (total % 10 == 0) {
+                numberOfPages = (int)total / 10;
+            } else if (total < 10) {
+                numberOfPages = 1;
+            } else if (total > 10) {
+                numberOfPages = (int) total / 10;
+            }
+
+            session.setAttribute("numberOfPages", numberOfPages);
+            session.setAttribute("pageNumber", pageNumber);
 
         } else {
-            List<Asignacion> asignaciones = asignacionFacade.findByList("asignadoA", r);
+            List<Asignacion> asignaciones = asignacionFacade.findByList2("asignadoA", r, "estado", "Aceptada");
             session.setAttribute("asignaciones", asignaciones);
         }
 

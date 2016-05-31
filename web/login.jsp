@@ -134,7 +134,7 @@
                                             document.location.reload();
                                         } else {
                                             if (msg === '2') {
-                                                swal("Ops!", "Ha ocurrido un error al intentar entrar!", "error");
+                                                swal("Ops!", "El Usuario No está registrado, por favor regístrese para poder acceder", "error");
                                             } else {
                                                 if (msg === '3') {
                                                     swal("Confirme su registro","Debe confirmar su registro antes de continuar, Por favor revise su correo electrónico!", "info");
