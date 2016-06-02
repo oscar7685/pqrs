@@ -145,10 +145,8 @@ var dev_navigation = {
 
         });
         /* ./end */
-        console.log("adsf");
         $(".dev-page-sidebar").mCustomScrollbar({axis: "y", theme: "my-theme"});
-        console.log("jijiji");
-
+   
         if ($(".dev-page").hasClass("dev-page-sidebar-minimized"))
             $(".dev-page-sidebar").mCustomScrollbar("disable", true);
 

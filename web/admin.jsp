@@ -173,11 +173,12 @@
         <script type="text/javascript" src="js/dev-app.js"></script>
         <script type="text/javascript" src="js/jquery.ba-hashchange.min.js"></script>
         <script type="text/javascript" src="js/plugins/jquery-validate/jquery.validate.min.js"></script>  
-        <script type="text/javascript" src="js/responsable.js"></script>
+        
         <!--<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>-->
         <!-- Include Date Range Picker -->
         <script type="text/javascript" src="js/plugins/datarangepicker/daterangepicker.js"></script>
         <link rel="stylesheet" type="text/css" href="js/plugins/datarangepicker/daterangepicker.css" />
+        <script type="text/javascript" src="js/responsable.js"></script>
         
         <!-- ./javascript -->                
     </body>

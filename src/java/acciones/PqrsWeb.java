@@ -89,11 +89,11 @@ public class PqrsWeb implements Action {
 
 
             if (total % 10 == 0) {
-                numberOfPages = (int)total / 10;
+                numberOfPages = (int) total / 10;
             } else if (total < 10) {
                 numberOfPages = 1;
             } else if (total > 10) {
-                numberOfPages = (int) total / 10;
+                numberOfPages = (int) Math.ceil((double) total / 10);
             }
 
             session.setAttribute("numberOfPages", numberOfPages);

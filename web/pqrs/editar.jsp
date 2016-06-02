@@ -178,7 +178,7 @@
             <c:if test="${pqrs.estadoSolicitud != 'Respuesta enviada al usuario'}">
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-8">
-                        <button type="submit" class="btn btn-primary">Editar PQRS</button>
+                        <button type="submit" class="btn btn-primary">Enviar PQRS</button>
                     </div>
                 </div>
             </c:if>            

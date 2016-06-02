@@ -59,7 +59,7 @@ public class PqrsCorreo implements Action {
             List<Pqrs> listaPqrs0 = pqrsFacade.findByList("medioIngreso", "Correo");
             int total = listaPqrs0.size();
 
-            List<Pqrs> listaPqrs = pqrsFacade.findRangeWeb(rango);
+            List<Pqrs> listaPqrs = pqrsFacade.findRangeCorreo(rango);
             int[] diasHabilesRestantes = new int[listaPqrs.size()];
 
             Calendar fechaInicial = Calendar.getInstance();
@@ -93,7 +93,7 @@ public class PqrsCorreo implements Action {
             } else if (total < 10) {
                 numberOfPages = 1;
             } else if (total > 10) {
-                numberOfPages = (int) total / 10;
+                numberOfPages = (int) Math.ceil((double) total / 10);
             }
 
             session.setAttribute("numberOfPages", numberOfPages);

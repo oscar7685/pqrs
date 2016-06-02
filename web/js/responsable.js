@@ -2,15 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 $(function() {
 
     var actualizaEnlaces = function(hash) {
         $(".dev-page-sidebar li").removeClass("active");
         $("a[href='" + hash + "']").parent().addClass("active");
     };
-
-//    location = "/pqrs/#inicio";
+    location = "/pqrs/#inicio";
     location = "/pqrs/#listarTodasPQRS";
 
     $(document).ajaxStart(function() {

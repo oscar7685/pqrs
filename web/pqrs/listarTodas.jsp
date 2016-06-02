@@ -186,87 +186,88 @@
 
                 </tbody>
             </table>
-
-            <div class="dataTables_paginate paging_simple_numbers">
-                <c:if test="${pageNumber gt 1}">
-                    <a href="#paginacion&numP=${pageNumber - 1}" class="paginate_button previous">Anterior</a>
-                </c:if>
-                <span> 
-                    <c:choose>
-                        <c:when test="${1!=pageNumber}">
-                            <a href="#paginacion&numP=1" class="paginate_button current" >1</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="#paginacion&numP=1" class="paginate_button">1</a>
-                        </c:otherwise>        
-                    </c:choose>   
-                    <c:choose>
-                        <c:when test="${numberOfPages gt 15}">
-                            <c:if test="${pageNumber lt 5}">
-                                <c:forEach begin="2" end="${5}" var="i">
-                                    <c:choose>
-                                        <c:when test="${i!=pageNumber}">
-                                            <a href="#paginacion&numP=${i}" class="paginate_button current" >${i}</a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="#paginacion&numP=${i}" class="paginate_button">${i}</a>
-                                        </c:otherwise>        
-                                    </c:choose>       
-                                </c:forEach>  
-                            </c:if>
-                            <c:if test="${pageNumber gt 4 && pageNumber lt (numberOfPages-4)}">
-                                <c:forEach begin="${pageNumber-1}" end="${pageNumber+1}" var="i">
-                                    <c:choose>
-                                        <c:when test="${i!=pageNumber}">
-                                            <a href="#paginacion&numP=${i}" class="paginate_button current" >${i}</a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="#paginacion&numP=${i}" class="paginate_button">${i}</a>
-                                        </c:otherwise>        
-                                    </c:choose>       
-                                </c:forEach> 
-                            </c:if>    
-                            <c:if test="${pageNumber gt 4 && pageNumber gt (numberOfPages-5)}">
-                                <c:forEach begin="${numberOfPages-5}" end="${numberOfPages-1}" var="i">
-                                    <c:choose>
-                                        <c:when test="${i!=pageNumber}">
-                                            <a href="#paginacion&numP=${i}" class="paginate_button current" >${i}</a>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="#paginacion&numP=${i}" class="paginate_button">${i}</a>
-                                        </c:otherwise>        
-                                    </c:choose>       
-                                </c:forEach>  
-                            </c:if>
-                            <c:choose>
-                                <c:when test="${pageNumber==numberOfPages}">
-                                    <a href="#paginacion&numP=${numberOfPages}" class="paginate_button current" >${numberOfPages}</a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a href="#paginacion&numP=${numberOfPages}" class="paginate_button">${numberOfPages}</a>
-                                </c:otherwise>        
-                            </c:choose>                 
-                        </c:when>
-                        <c:otherwise>
-                            <c:forEach begin="1" end="${numberOfPages}" var="i">
+            <c:if test="${responsableArea.areaIdarea.idarea == 1000}">
+                <div class="dataTables_paginate paging_simple_numbers">
+                    <c:if test="${pageNumber gt 1}">
+                        <a href="#paginacion&numP=${pageNumber - 1}" class="paginate_button previous">Anterior</a>
+                    </c:if>
+                    <span> 
+                        <c:choose>
+                            <c:when test="${1!=pageNumber}">
+                                <a href="#paginacion&numP=1" class="paginate_button current" >1</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="#paginacion&numP=1" class="paginate_button">1</a>
+                            </c:otherwise>        
+                        </c:choose>   
+                        <c:choose>
+                            <c:when test="${numberOfPages gt 15}">
+                                <c:if test="${pageNumber lt 5}">
+                                    <c:forEach begin="2" end="${5}" var="i">
+                                        <c:choose>
+                                            <c:when test="${i!=pageNumber}">
+                                                <a href="#paginacion&numP=${i}" class="paginate_button current" >${i}</a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="#paginacion&numP=${i}" class="paginate_button">${i}</a>
+                                            </c:otherwise>        
+                                        </c:choose>       
+                                    </c:forEach>  
+                                </c:if>
+                                <c:if test="${pageNumber gt 4 && pageNumber lt (numberOfPages-4)}">
+                                    <c:forEach begin="${pageNumber-1}" end="${pageNumber+1}" var="i">
+                                        <c:choose>
+                                            <c:when test="${i!=pageNumber}">
+                                                <a href="#paginacion&numP=${i}" class="paginate_button current" >${i}</a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="#paginacion&numP=${i}" class="paginate_button">${i}</a>
+                                            </c:otherwise>        
+                                        </c:choose>       
+                                    </c:forEach> 
+                                </c:if>    
+                                <c:if test="${pageNumber gt 4 && pageNumber gt (numberOfPages-5)}">
+                                    <c:forEach begin="${numberOfPages-5}" end="${numberOfPages-1}" var="i">
+                                        <c:choose>
+                                            <c:when test="${i!=pageNumber}">
+                                                <a href="#paginacion&numP=${i}" class="paginate_button current" >${i}</a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="#paginacion&numP=${i}" class="paginate_button">${i}</a>
+                                            </c:otherwise>        
+                                        </c:choose>       
+                                    </c:forEach>  
+                                </c:if>
                                 <c:choose>
-                                    <c:when test="${i!=pageNumber}">
-                                        <a href="#paginacion&numP=${i}" class="paginate_button current" >${i}</a>
+                                    <c:when test="${pageNumber==numberOfPages}">
+                                        <a href="#paginacion&numP=${numberOfPages}" class="paginate_button current" >${numberOfPages}</a>
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="#paginacion&numP=${i}" class="paginate_button">${i}</a>
+                                        <a href="#paginacion&numP=${numberOfPages}" class="paginate_button">${numberOfPages}</a>
                                     </c:otherwise>        
-                                </c:choose>       
-                            </c:forEach>  
-                        </c:otherwise>
-                    </c:choose>
+                                </c:choose>                 
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach begin="1" end="${numberOfPages}" var="i">
+                                    <c:choose>
+                                        <c:when test="${i!=pageNumber}">
+                                            <a href="#paginacion&numP=${i}" class="paginate_button current" >${i}</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="#paginacion&numP=${i}" class="paginate_button">${i}</a>
+                                        </c:otherwise>        
+                                    </c:choose>       
+                                </c:forEach>  
+                            </c:otherwise>
+                        </c:choose>
 
 
-                </span>            
-                <c:if test="${pageNumber lt numberOfPages}">
-                    <a href="#paginacion&numP=${pageNumber + 1}" class="paginate_button next">Siguiente</a>
-                </c:if>
-            </div>
+                    </span>            
+                    <c:if test="${pageNumber lt numberOfPages}">
+                        <a href="#paginacion&numP=${pageNumber + 1}" class="paginate_button next">Siguiente</a>
+                    </c:if>
+                </div>
+            </c:if>
         </div>
     </div>
 

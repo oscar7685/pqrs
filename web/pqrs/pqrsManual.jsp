@@ -186,7 +186,7 @@
 
                 </tbody>
             </table>
-
+            <c:if test="${responsableArea.areaIdarea.idarea == 1000}">
             <div class="dataTables_paginate paging_simple_numbers">
                 <c:if test="${pageNumber gt 1}">
                     <a href="#paginacionM&numP=${pageNumber - 1}" class="paginate_button previous">Anterior</a>
@@ -248,7 +248,7 @@
                             </c:choose>                 
                         </c:when>
                         <c:otherwise>
-                            <c:forEach begin="1" end="${numberOfPages}" var="i">
+                            <c:forEach begin="2" end="${numberOfPages}" var="i">
                                 <c:choose>
                                     <c:when test="${i!=pageNumber}">
                                         <a href="#paginacionM&numP=${i}" class="paginate_button current" >${i}</a>
@@ -267,6 +267,7 @@
                     <a href="#paginacionM&numP=${pageNumber + 1}" class="paginate_button next">Siguiente</a>
                 </c:if>
             </div>
+            </c:if>
         </div>
     </div>
 

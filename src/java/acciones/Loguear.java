@@ -52,7 +52,11 @@ public class Loguear implements Action {
                     }
 
                 } else {
-                    return "2";
+                    if (ra == null && r == null) {
+                        return "2";
+                    } else {
+                        return "4";
+                    }
                 }
             }
 

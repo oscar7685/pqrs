@@ -46,7 +46,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Descripci&oacute;n</label>
                 <div class="col-md-8">
-                    <textarea name="descripcion" class="form-control" rows="4"></textarea>
+                    <textarea name="descripcion" class="form-control" rows="4">${pqrs.descripcion}</textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -92,6 +92,7 @@
 </div>
 <!-- ./page content container -->
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+
 
 
 <script type="text/javascript">
@@ -149,7 +150,7 @@
             });
         }
 
-        var url = 'SubirAdjunto';
+        var url = 'SubirAdjunto'; //POST
         $('#fileupload').fileupload({
             url: url,
             autoUpload: false,
@@ -175,6 +176,27 @@
 
             }
         }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+        // Cargar Archivos Existentes: (GET)
+        $('#fileupload').addClass('fileupload-processing');
+        $.ajax({
+            // Uncomment the following to send cross-domain cookies:
+            //xhrFields: {withCredentials: true},
+            url: $('#fileupload').fileupload('option', 'url'),
+            dataType: 'json',
+            context: $('#fileupload')[0]
+        }).always(function() {
+            $(this).removeClass('fileupload-processing');
+        }).done(function(result) {
+            $(this).fileupload('option', 'done')
+            $.each(result.files, function(index, file) {
+                $("<p><a href = '" + file.url + "' target = '_blank' title = '" + file.name + "' download = '" + file.name + "'>" + file.name + "</a></p>").appendTo('#files');
+
+            });
+
+
+        });
+
 
     });
 

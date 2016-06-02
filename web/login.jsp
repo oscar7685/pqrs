@@ -97,7 +97,7 @@
             "use strict";
 
             var demo_form_validation = {
-                init: function () {
+                init: function() {
 
                     if ($("#flogin").length > 0) {
                         $("#flogin").validate({
@@ -105,15 +105,15 @@
                             validClass: "has-success",
                             errorElement: "span",
                             ignore: [],
-                            errorPlacement: function (error, element) {
+                            errorPlacement: function(error, element) {
                                 $(element).after(error);
                                 $(element).parents(".form-group").addClass("has-error");
                             },
-                            highlight: function (element, errorClass) {
+                            highlight: function(element, errorClass) {
                                 $(element).parents(".form-group").removeClass("has-success").addClass(errorClass);
                                 dev_layout_alpha_content.init(dev_layout_alpha_settings);
                             },
-                            unhighlight: function (element, errorClass, validClass) {
+                            unhighlight: function(element, errorClass, validClass) {
                                 $(element).parents(".form-group").removeClass(errorClass).addClass(validClass);
                                 dev_layout_alpha_content.init(dev_layout_alpha_settings);
                             },
@@ -122,27 +122,27 @@
                                 pass: {required: true, minlength: 5, maxlength: 20}
 
                             },
-                            submitHandler: function () {
+                            submitHandler: function() {
                                 $.ajax({
                                     url: 'Controller?accion=loguear',
                                     data: $("#flogin").serialize(),
                                     type: 'post',
-                                    success: function (msg) {
+                                    success: function(msg) {
 
                                         if (msg === '1')
                                         {
                                             document.location.reload();
-                                        } else {
-                                            if (msg === '2') {
-                                                swal("Ops!", "El Usuario No está registrado, por favor regístrese para poder acceder", "error");
-                                            } else {
-                                                if (msg === '3') {
-                                                    swal("Confirme su registro","Debe confirmar su registro antes de continuar, Por favor revise su correo electrónico!", "info");
-                                                }
-
-                                            }
-
+                                        } else if (msg === '2') {
+                                            swal("Ops!", "El Usuario No está registrado, por favor regístrese para poder acceder", "error");
+                                        } else if (msg === '3') {
+                                            swal("Confirme su registro", "Debe confirmar su registro antes de continuar, Por favor revise su correo electrónico!", "info");
+                                        } else if (msg === '4') {
+                                            swal("Ops!", "La contraseña utilizada es incorrecta", "error");
                                         }
+
+
+
+
                                     }
 
                                 });
@@ -152,7 +152,7 @@
                     }
                 }
             };
-            $(function () {
+            $(function() {
                 demo_form_validation.init();
             });
         </script>
