@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author acreditacion
+ * @author Nelson
  */
 @Entity
 @Table(name = "programa", catalog = "pqrs", schema = "")

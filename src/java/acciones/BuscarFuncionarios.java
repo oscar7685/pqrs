@@ -26,7 +26,7 @@ import sesionbeans.ResponsableAreaFacade;
 
 /**
  *
- * @author Oscar
+ * @author Nelson
  */
 public class BuscarFuncionarios implements Action {
 

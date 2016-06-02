@@ -20,7 +20,7 @@ import sesionbeans.ProgramaFacade;
 
 /**
  *
- * @author acreditacion
+ * @author Nelson
  */
 public class registro extends HttpServlet {
 

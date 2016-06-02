@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author Oscar
+ * @author Nelson
  */
 public class JavaMail {
 

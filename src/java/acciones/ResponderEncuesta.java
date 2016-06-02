@@ -28,7 +28,7 @@ import sesionbeans.RespuestaFacade;
 
 /**
  *
- * @author Oscar
+ * @author Nelson
  */
 public class ResponderEncuesta implements Action {
     

@@ -20,7 +20,7 @@ import sesionbeans.ReclamanteFacade;
 
 /**
  *
- * @author Oscar
+ * @author Nelson
  */
 public class EditarPeticionario implements Action {
 

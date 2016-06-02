@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author acreditacion
+ * @author Nelson
  */
 @Entity
 @Table(name = "respuesta", catalog = "pqrs", schema = "")

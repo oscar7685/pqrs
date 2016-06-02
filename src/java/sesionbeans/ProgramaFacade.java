@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author acreditacion
+ * @author Nelson
  */
 @Stateless
 public class ProgramaFacade extends AbstractFacade<Programa> {
