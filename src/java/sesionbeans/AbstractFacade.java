@@ -50,7 +50,7 @@ public abstract class AbstractFacade<T> {
     public List<T> findRange(int[] range) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName()+ " c  ORDER BY c.fechaCreacion DESC", entityClass);
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c  ORDER BY c.fechaCreacion DESC", entityClass);
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
         return q.getResultList();
@@ -59,23 +59,25 @@ public abstract class AbstractFacade<T> {
     public List<T> findRangeWeb(int[] range) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName()+ " c  WHERE c.medioIngreso = 'Web' ORDER BY c.fechaCreacion DESC", entityClass);
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c  WHERE c.medioIngreso = 'Web' ORDER BY c.fechaCreacion DESC", entityClass);
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
         return q.getResultList();
     }
+
     public List<T> findRangeManual(int[] range) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName()+ " c  WHERE c.medioIngreso = 'Manual' ORDER BY c.fechaCreacion DESC", entityClass);
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c  WHERE c.medioIngreso = 'Manual' ORDER BY c.fechaCreacion DESC", entityClass);
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
         return q.getResultList();
     }
+
     public List<T> findRangeCorreo(int[] range) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
-        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName()+ " c  WHERE c.medioIngreso = 'Correo' ORDER BY c.fechaCreacion DESC", entityClass);
+        Query q = getEntityManager().createQuery("SELECT c FROM " + entityClass.getSimpleName() + " c  WHERE c.medioIngreso = 'Correo' ORDER BY c.fechaCreacion DESC", entityClass);
         q.setMaxResults(range[1] - range[0]);
         q.setFirstResult(range[0]);
         return q.getResultList();
@@ -99,6 +101,7 @@ public abstract class AbstractFacade<T> {
         q.setParameter("ffinal", ffinal);
         return ((Long) q.getSingleResult()).intValue();
     }
+
     public int countPqrsRecibidas(String tipo, Date finicio, Date ffinal) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -195,6 +198,21 @@ public abstract class AbstractFacade<T> {
         q.setParameter("finicio", finicio, TemporalType.DATE);
         q.setParameter("ffinal", ffinal, TemporalType.DATE);
         return ((Long) q.getSingleResult()).intValue();
+    }
+
+    public List findProcesosMasAfectados(String finicio, String ffinal) {
+        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        Query q = getEntityManager().createNativeQuery("SELECT DISTINCT proceso.proceso, COUNT(*) from pqrs\n"
+                + "inner join respuesta on respuesta.pqrs_idpqrs = pqrs.idpqrs\n"
+                + "inner join subproceso on subproceso.idsubproceso = respuesta.subproceso_idsubproceso\n"
+                + "inner join proceso on proceso.idproceso = subproceso.proceso_idproceso\n"
+                + "where pqrs.fecha_creacion BETWEEN '" + finicio + "' and '" + ffinal + "'\n"
+                + "GROUP BY proceso.idproceso ORDER BY COUNT(*) desc");
+        
+        System.out.println("query: "+q.toString());
+        return q.getResultList();
+
     }
 
     public int findByPertinentes(Date finicio, Date ffinal) {

@@ -79,6 +79,66 @@
     </div>
     <!-- ./page footer container -->
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="wrapper padding-bottom-0">
+                <div class="dev-table">    
+                    <c:if test="${fn:length(procesos)>0}">
+                        <div class="dev-col">                                    
+
+                            <div class="dev-widget dev-widget-transparent">
+                                <h2>${procesos.get(0)}</h2>
+                                <p>Porcentaje</p>                                        
+                                <div class="dev-stat"><span class="counter">
+                                        <fmt:formatNumber type="number" maxFractionDigits="0" value="${(cantidadXProceso.get(0)*100)/total}"/></span>%
+                                </div>                                                                                
+                                <div class="progress progress-bar-xs">
+                                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: ${cantidadXProceso.get(0)*100/total}%;"></div>
+                                </div>                                        
+                                <p><strong>Proceso más afectado</strong></p>
+                            </div>
+
+                        </div>
+                    </c:if>
+                    <c:if test="${fn:length(procesos)>1}">
+                        <div class="dev-col">                                    
+                            <div class="dev-widget dev-widget-transparent dev-widget-success">
+                                <h2>${procesos.get(1)}</h2>
+                                <p>Porcentaje</p>                                        
+                                <div class="dev-stat"><span class="counter">
+                                        <fmt:formatNumber type="number" maxFractionDigits="0" value="${(cantidadXProceso.get(1)*100)/total}"/></span>%    
+                                </div>                                                                                
+                                <div class="progress progress-bar-xs">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: ${cantidadXProceso.get(1)*100/total}%;"></div>
+                                </div>                                        
+                                <p><strong>Segundo Proceso más afectado</strong></p>
+                            </div>
+
+                        </div>
+                    </c:if>
+                    <c:if test="${fn:length(procesos)>2}">
+                        <div class="dev-col">                                    
+
+                            <div class="dev-widget dev-widget-transparent dev-widget-danger">
+                                <h2>${procesos.get(2)}</h2>
+                                <p>Porcentaje</p>     
+                                <div class="dev-stat"><span class="counter">
+                                        <fmt:formatNumber type="number" maxFractionDigits="0" value="${(cantidadXProceso.get(2)*100)/total}"/></span>%    
+                                </div>                                                                                
+                                <div class="progress progress-bar-xs">
+                                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: ${cantidadXProceso.get(2)*100/total}%;"></div>
+                                </div>                                        
+                                <p><strong>Tercer Proceso más afectado</strong></p>
+                            </div>
+                        </div>
+                    </c:if>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div id="container1" class="wrapper">
         <div class="row">
             <div class="col-md-12">
@@ -157,6 +217,8 @@
         </div>
     </div> 
 
+
+
     <script type="text/javascript">
         $(function() {
             $('#container20').highcharts({
@@ -183,6 +245,9 @@
                     }
                 }, credits: {
                     enabled: false
+                },
+                legend: {
+                    enabled: false
                 }
             });
         });
@@ -202,7 +267,9 @@
                 if ($(".knob").length > 0)
                     $(".knob").knob({
                         'readOnly': true,
-                        'draw' : function () { $(this.i).val(this.cv + '%'); }
+                        'draw': function() {
+                            $(this.i).val(this.cv + '%');
+                        }
                     });
             }
         };
@@ -254,15 +321,7 @@
                     }
                 },
                 legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'top',
-                    x: -40,
-                    y: 80,
-                    floating: true,
-                    borderWidth: 1,
-                    // backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-                    shadow: true
+                    enabled: false
                 },
                 credits: {
                     enabled: false
@@ -316,15 +375,7 @@
                     }
                 },
                 legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'top',
-                    x: -40,
-                    y: 80,
-                    floating: true,
-                    borderWidth: 1,
-                    // backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-                    shadow: true
+                    enabled: false
                 },
                 credits: {
                     enabled: false
@@ -378,15 +429,7 @@
                     }
                 },
                 legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'top',
-                    x: -40,
-                    y: 80,
-                    floating: true,
-                    borderWidth: 1,
-                    // backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-                    shadow: true
+                    enabled: false
                 },
                 credits: {
                     enabled: false
@@ -396,10 +439,10 @@
                     }]
             });
         });
-    
-        
-       
-        
+
+
+
+
     </script>
 
 </div>
@@ -407,58 +450,58 @@
 <script type="text/javascript">
     $(function() {
 
-                function cb(start, end) {
-                    $('#reportrange span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
         }
-                    cb(moment().startOf('year'), moment().endOf('year'));
+        cb(moment().startOf('year'), moment().endOf('year'));
 
-                    $('#reportrange').daterangepicker({
+        $('#reportrange').daterangepicker({
             "locale": {
-                    "format": "YYYY-MM-DD",
-                    "separator": " - ",
-                        "applyLabel": "Aplicar",
-                        "cancelLabel": "Cancelar",
-                        "fromLabel": "Desde",
-                        "toLabel": "Hasta",
-                    "customRangeLabel": "Intervalo personalizado",
-                        "daysOfWeek": [
+                "format": "YYYY-MM-DD",
+                "separator": " - ",
+                "applyLabel": "Aplicar",
+                "cancelLabel": "Cancelar",
+                "fromLabel": "Desde",
+                "toLabel": "Hasta",
+                "customRangeLabel": "Intervalo personalizado",
+                "daysOfWeek": [
                     "Do",
-                        "Lu",
-                        "Ma",
-                        "Mi",
-                        "Ju",
-                        "Vi",
-                        "Sa"
+                    "Lu",
+                    "Ma",
+                    "Mi",
+                    "Ju",
+                    "Vi",
+                    "Sa"
                 ],
-                        "monthNames": [
-                        "Enero",
-                        "Febrero",
-                        "Marzo",
-                        "Abril",
+                "monthNames": [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
                     "Mayo",
                     "Junio",
-                "Julio",
+                    "Julio",
                     "Agosto",
-                "Septiembre",                     "Octubre",
+                    "Septiembre", "Octubre",
                     "Noviembre",
                     "Diciembre"
                 ],
                 "firstDay": 1
-                    },
+            },
             "startDate": moment().startOf('year'),
-                    "endDate": moment().endOf('year'),
+            "endDate": moment().endOf('year'),
             ranges: {
-                    'Primer semestre': [moment().startOf('year'), moment().endOf('year').subtract(6, 'month')],
-            'Segundo semetre': [moment().startOf('year').add(6, 'month'), moment().endOf('year')],
+                'Primer semestre': [moment().startOf('year'), moment().endOf('year').subtract(6, 'month')],
+                'Segundo semetre': [moment().startOf('year').add(6, 'month'), moment().endOf('year')],
                 'Este Año': [moment().startOf('year'), moment().endOf('year')],
-                    'Año pasado': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
+                'Año pasado': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')]
             }
         }, cb);
 
-                    $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
-                    $.ajax({
-                        url: 'Controller?accion=comportamientoFragmento',
-        data: 'inicio=' + picker.startDate.format('YYYY-MM-DD') + '&final=' + picker.endDate.format('YYYY-MM-DD'),
+        $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+            $.ajax({
+                url: 'Controller?accion=comportamientoFragmento',
+                data: 'inicio=' + picker.startDate.format('YYYY-MM-DD') + '&final=' + picker.endDate.format('YYYY-MM-DD'),
                 type: 'post',
                 success: function(data) {
                     $("#jajax").empty();
@@ -470,3 +513,14 @@
 
     });
 </script>
+<script type="text/javascript" src="js/plugins/waypoint/waypoints.min.js"></script>
+<script type="text/javascript" src="js/plugins/counter/jquery.counterup.min.js"></script>
+<script>
+    jQuery(document).ready(function($) {
+        if ($(".counter").length > 0)
+            $(".counter").counterUp({delay: 10, time: 1000});
+    });
+</script>
+
+
+

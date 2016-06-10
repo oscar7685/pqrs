@@ -8,6 +8,7 @@ import entidades.Pqrs;
 import interfaz.Action;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,20 +43,21 @@ public class ComportamientoFragmento implements Action {
         String f1[] = finicio.split("-");
         String f2[] = ffinal.split("-");
 
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         Calendar cal1 = Calendar.getInstance();
         cal1.set(Calendar.YEAR, Integer.parseInt(f1[0]));
         cal1.set(Calendar.MONTH, Integer.parseInt(f1[1]) - 1);
         cal1.set(Calendar.DAY_OF_MONTH, Integer.parseInt(f1[2]));
         Date start = cal1.getTime();
-        
+
         cal1.set(Calendar.YEAR, Integer.parseInt(f2[0]));
         cal1.set(Calendar.MONTH, Integer.parseInt(f2[1]) - 1);
         cal1.set(Calendar.DAY_OF_MONTH, Integer.parseInt(f2[2]));
         Date end = cal1.getTime();
-        
+
         String meses[] = {"enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"};
-        
+
         int totalPQRS = pqrsFacade.countPqrs(start, end);
         int CantP = pqrsFacade.countPqrsRecibidas("Peticion", start, end);
         int CantQ = pqrsFacade.countPqrsRecibidas("Queja", start, end);
@@ -140,6 +142,31 @@ public class ComportamientoFragmento implements Action {
         sesion.setAttribute("pertinentes", pqrsFacade.findByPertinentes(start, end));
         sesion.setAttribute("meses", meses);
 
+
+        int total = 0;
+        List<Integer> cantidadXProceso = new ArrayList<Integer>();
+        List procesos = new ArrayList();
+
+
+        String fini = "";
+        String ffin = "";
+
+        fini = format.format(start);
+        ffin = format.format(end);
+
+        //PROCESOS MAS AFECTADOS
+        List<Object[]> procesoMasAfectados = pqrsFacade.findProcesosMasAfectados(fini, ffin);
+        if (procesoMasAfectados.size() > 0) {
+            for (Object[] objects : procesoMasAfectados) {
+                procesos.add(objects[0].toString());
+                cantidadXProceso.add(Integer.parseInt(objects[1].toString()));
+                total += Integer.parseInt(objects[1].toString());
+            }
+        }
+
+        sesion.setAttribute("procesos", procesos);
+        sesion.setAttribute("cantidadXProceso", cantidadXProceso);
+        sesion.setAttribute("total", total);
 
         return "informes/fragmentoComportamiento.jsp";
 

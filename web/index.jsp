@@ -37,7 +37,7 @@
         <!-- javascripts -->
         <script type="text/javascript" src="js/plugins/modernizr/modernizr.js"></script>
         <!-- ./javascripts -->
-        
+
         <style>
             .dev-page{visibility: hidden;}            
         </style>
@@ -137,19 +137,19 @@
                                     <a class="btn btn-primary" href="login.jsp">Registrar PQRS</a>                        
                                 </div>
                             </div>
-                        </div>      
-                        <!-- Copyright -->
-                        <div class="copyright">
+                            <br/>
                             <div class="row">
                                 <div style="margin-left: 0px" class="col-md-6">
-                                    <a target="_blank" href="http://www.unicartagena.edu.co/" title="Universidad de Cartagena"><img style="margin-top: 12px; margin-left: 0px;" src="img/logooficial2.png"></a>
+                                    <a target="_blank" href="http://www.unicartagena.edu.co/" title="Universidad de Cartagena"><img style="margin-top: 12px; margin-left: 0px;" src="img/logooficial2.png"></a>  
                                 </div>
                                 <div style="margin-left: 0px" class="col-md-6">
                                     <a href="#" title="PQRS"><img style="margin-top: 12px; margin-left: 0px;" src="img/boton-pqrs.png"></a>
                                 </div>
-                            </div>    
+                            </div>
+                        </div>      
+                        <div class="copyright">
                             <div class="pull-left">
-                                &copy; 2015 <strong>Universidad de Cartagena</strong>. Todos los derechos reservados.
+                                &copy; 2016 <strong>Universidad de Cartagena</strong>. / <a href="#" id="acercaDe">Acerca de</a>
                             </div>
                         </div>
                         <!-- ./Copyright -->
@@ -188,7 +188,19 @@
         <script type="text/javascript" src="js/demo.js"></script>
         <script type="text/javascript" src="js/dev-app.js"></script>
         <script type="text/javascript" src="js/demo-dashboard.js"></script>
+        <script type="text/javascript" src="js/sweetalert.min.js"></script>
         <!-- ./javascript -->
+        <script type="text/javascript">
+            $(function() {
+                $("#acercaDe").click(function() {
+                    swal({html: true, title: '<i>SysPQRS v1.0</i>', text: '<b>Desarrollado por:</b> David Franco Borré, Rober Flórez Yúnez, Nelson Ramirez Rodriguez', type: 'info'});
+                });
+
+            });
+        </script>
+
+
+
     </body>
 </html>
 
